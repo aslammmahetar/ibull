@@ -1,0 +1,28 @@
+/* Apply styles to the table container */
+.table-container {
+    /* border: 1px solid #000; */
+    /* This sets the border of the table */
+}
+
+/* Apply styles to table header cells */
+.table-container th {
+    font-size: 15px;
+    /* height: 25px; */
+    border: solid #E7E8EE;
+    border-width: thin;
+    text-align: center;
+    padding: 1px;
+    font-size: small;
+    /* This sets 
+    the border of the table header cells */
+}
+
+/* Apply styles to table data cells */
+.table-container td {
+    text-align: center;
+    border: solid #E7E8EE;
+    font-size: small;
+    border-width: thin;
+    padding: 1px;
+    /* This sets the border of the table data cells */
+}
