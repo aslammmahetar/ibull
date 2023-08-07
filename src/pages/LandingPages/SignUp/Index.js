@@ -70,7 +70,7 @@ function Signup({ handleToggle }) {
   return (
     <>
       <MKBox px={1} width="100%" height="100vh" mx="auto" position="relative" zIndex={2}>
-        <Grid container justifyContent="left" alignItems="center" height="100%" mt={3}>
+        <Grid container justifyContent="right" alignItems="center" height="100%" mt={3}>
           <Grid item xs={12} sm={10} md={6} lg={4}>
             <Card>
               <MKBox

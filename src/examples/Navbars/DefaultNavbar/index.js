@@ -82,7 +82,7 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
 
   const renderNavbarItems = routes.map(({ name, icon, href, route, collapse }) => (
     <DefaultNavbarDropdown
-      key={name}
+      // key={name}
       name={name}
       icon={icon}
       href={href}
@@ -550,7 +550,7 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
 
 // Setting default values for the props of DefaultNavbar
 DefaultNavbar.defaultProps = {
-  brand: "Material Kit 2",
+  brand: "IBull",
   transparent: false,
   light: false,
   action: false,

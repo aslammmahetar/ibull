@@ -28,6 +28,9 @@ import Presentation from "layouts/pages/presentation";
 
 // Material Kit 2 React routes
 import routes from "routes";
+import Router from "Router";
+import ChartComponent from "charts/IvChart";
+import BarChart from "charts/IvChart";
 
 export default function App() {
   const { pathname } = useLocation();
@@ -57,8 +60,10 @@ export default function App() {
       <Routes>
         {getRoutes(routes)}
         <Route path="/presentation" element={<Presentation />} />
+        <Route path="/pages/landing-pages/option-trade/ivchart" element={<BarChart/>}/>
         <Route path="*" element={<Navigate to="/presentation" />} />
       </Routes>
+      <Router/>
     </ThemeProvider>
   );
 }

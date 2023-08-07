@@ -62,6 +62,7 @@ import ProgressBars from "layouts/sections/elements/progress-bars";
 import Toggles from "layouts/sections/elements/toggles";
 import Typography from "layouts/sections/elements/typography";
 import Signup from "pages/LandingPages/SignUp/Index";
+import { Route, Routes } from "react-router-dom";
 
 const routes = [
   {
@@ -75,8 +76,8 @@ const routes = [
         name: "landing pages",
         collapse: [
           {
-            name: "about us",
-            route: "/pages/landing-pages/about-us",
+            name: "Option Trade",
+            route: "/pages/landing-pages/option-trade",
             component: <AboutUs />,
           },
           {
@@ -271,3 +272,4 @@ const routes = [
 ];
 
 export default routes;
+

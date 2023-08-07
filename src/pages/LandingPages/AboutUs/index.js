@@ -39,7 +39,10 @@ import { FormControl, IconButton, InputBase, MenuItem, Paper, Select, } from "@m
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { BarChartOutlined, OndemandVideo, Search, ShowChartOutlined } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 function AboutUs() {
+
+  const navigate = useNavigate()
 
   var expiryDates = [
     "03-Aug-2023",
@@ -182,7 +185,9 @@ function AboutUs() {
             <MKBox style={{ cursor: "pointer", display: "flex", alignItems: "center" }} fontSize='small'>ATM IV 8.7
               -1.6 </MKBox>
             <hr />
-            <MKBox style={{ cursor: "pointer" }} display={"flex"} alignItems={"center"} fontSize='small'>IV Chart
+            <MKBox style={{ cursor: "pointer" }} display={"flex"} alignItems={"center"} fontSize='small' onClick={()=>{
+              navigate("/pages/landing-pages/option-trade/ivchart")
+            }}>IV Chart
               <MKBox >
                 <BarChartOutlined />
               </MKBox>

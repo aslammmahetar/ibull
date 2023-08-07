@@ -92,7 +92,7 @@ const OptionChain = ({ data }) => {
       size: 50,
       Cell: ({ cell }) => {
         return (
-          <div style={{ display: "flex" }}>
+          <div style={{ display: "flex", justifyContent:"space-between" }}>
             <div
               style={{
                 display: "block",
@@ -174,20 +174,6 @@ const OptionChain = ({ data }) => {
           enableStickyHeader
         />
       </ThemeProvider>
-      {/* <Bar
-        data={chartData}
-        options={{
-          plugins: {
-            legend: { display: false },
-          },
-          scales: {
-            x: { display: false },
-            y: { display: false },
-          },
-        }}
-        width={100}
-        height={30}
-      /> */}
     </Box>
   );
 };

@@ -67,22 +67,15 @@ const Signin = ({ handleToggle }) => {
     if (credential.mobile === inputVal && credential.password === inpPassword) {
       // setError(!errorr);
       setVariant("success");
-      setAlert("Logged in Successfull");
       setState({ ...newState, open: true });
+      setAlert("Logged in Successfull");
       setTimeout(() => {
-        seetSetoading(false);
-      }, 5000);
-      if (!isLoading) {
-        return (
-          <Box>
-            <Typography>Loading...</Typography>
-          </Box>
-        );
-      } else {
         navigate("/pages/landing-pages/about-us");
-      }
+      }, 3000);
     } else {
-      alert("Wrong credential");
+      setVariant("error");
+      setState({ ...newState, open: true });
+      setAlert("Wrong credential");
     }
   };
 
@@ -93,7 +86,7 @@ const Signin = ({ handleToggle }) => {
   return (
     <>
       <MKBox width="100%" height="100vh" position="relative" zIndex={2}>
-        <Grid container justifyContent="left" alignItems="center" height="100%">
+        <Grid container justifyContent="right" alignItems="center" height="100%">
           <Grid xs={12} sm={10} md={6} lg={4}>
             <Card>
               <MKBox
