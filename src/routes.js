@@ -62,7 +62,8 @@ import ProgressBars from "layouts/sections/elements/progress-bars";
 import Toggles from "layouts/sections/elements/toggles";
 import Typography from "layouts/sections/elements/typography";
 import Signup from "pages/LandingPages/SignUp/Index";
-import { Route, Routes } from "react-router-dom";
+import OpenInterest from "pages/Presentation/OptionInterest/OpenInterest";
+
 
 const routes = [
   {
@@ -109,43 +110,43 @@ const routes = [
     // icon: <Icon>view_day</Icon>,
     collapse: [
       {
-        name: "page sections",
-        description: "See all sections",
-        dropdown: true,
-        collapse: [
-          {
-            name: "page headers",
-            route: "/sections/page-sections/page-headers",
-            component: <PageHeaders />,
-          },
-          {
-            name: "features",
-            route: "/sections/page-sections/features",
-            component: <Features />,
-          },
-        ],
-      },
-      {
-        name: "navigation",
-        description: "See all navigations",
-        dropdown: true,
-        collapse: [
-          {
-            name: "navbars",
-            route: "/sections/navigation/navbars",
-            component: <Navbars />,
-          },
-          {
-            name: "nav tabs",
-            route: "/sections/navigation/nav-tabs",
-            component: <NavTabs />,
-          },
-          {
-            name: "test",
-            route: "/sections/navigation/pagination",
-            component: <Pagination />,
-          },
-        ],
+        name: "Option Trade",
+        route: "/pages/landing-pages/option-trade",
+        dropdown: false,
+        // collapse: [
+          // {
+            //   name: "page headers",
+            //     component: <PageHeaders />,
+            //   },
+            //   {
+              //     name: "features",
+              //     route: "/sections/page-sections/features",
+              //     component: <Features />,
+              //   },
+              // ],
+            },
+            {
+              name: "Optioin Interest",
+              route: "/pages/landing-pages/option-trade/openinterest",
+              component: <OpenInterest />,
+        dropdown: false,
+        // description: "See all navigations",
+        // collapse: [
+        //   {
+        //     name: "navbars",  
+        //     component: <Navbars />,
+        //   },
+        //   {
+        //     name: "nav tabs",
+        //     route: "/sections/navigation/nav-tabs",
+        //     component: <NavTabs />,
+        //   },
+        //   {
+        //     name: "test",
+        //     route: "/sections/navigation/pagination",
+        //     component: <Pagination />,
+        //   },
+        // ],
       },
       {
         name: "input areas",

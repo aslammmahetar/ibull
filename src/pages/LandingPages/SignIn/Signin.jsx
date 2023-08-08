@@ -45,8 +45,8 @@ const Signin = ({ handleToggle }) => {
   const { vertical, horizontal, open } = state;
 
   const credential = {
-    mobile: "9106353530",
-    password: "Aslam@112",
+    mobile: "7016008039",
+    password: "Novity@123",
   };
 
   const navigate = useNavigate();

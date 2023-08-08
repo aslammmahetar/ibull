@@ -13,7 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 // react-router components
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
@@ -29,8 +29,7 @@ import Presentation from "layouts/pages/presentation";
 // Material Kit 2 React routes
 import routes from "routes";
 import Router from "Router";
-import ChartComponent from "charts/IvChart";
-import BarChart from "charts/IvChart";
+import OpenInterest from "pages/Presentation/OptionInterest/OpenInterest";
 
 export default function App() {
   const { pathname } = useLocation();
@@ -53,17 +52,15 @@ export default function App() {
 
       return null;
     });
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Routes>
         {getRoutes(routes)}
         <Route path="/presentation" element={<Presentation />} />
-        <Route path="/pages/landing-pages/option-trade/ivchart" element={<BarChart/>}/>
         <Route path="*" element={<Navigate to="/presentation" />} />
       </Routes>
-      <Router/>
+      <Router />
     </ThemeProvider>
   );
 }
