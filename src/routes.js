@@ -113,6 +113,8 @@ const routes = [
         name: "Option Trade",
         route: "/pages/landing-pages/option-trade",
         dropdown: false,
+        component: <OpenInterest />,
+
         // collapse: [
           // {
             //   name: "page headers",

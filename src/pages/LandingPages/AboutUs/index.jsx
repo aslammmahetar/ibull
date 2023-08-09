@@ -25,7 +25,6 @@ import DefaultFooter from "examples/Footers/DefaultFooter";
 
 // About Us page sections
 
-
 // Routes
 import routes from "routes";
 import footerRoutes from "footer.routes";
@@ -35,17 +34,15 @@ import footerRoutes from "footer.routes";
 import bgImage from "assets/images/Banner.jpeg";
 
 import OptionChain from "pages/Presentation/components/OptionChain/OptionChain";
-import { FormControl, IconButton, InputBase, MenuItem, Paper, Select, } from "@mui/material";
+import { FormControl, IconButton, InputBase, MenuItem, Paper, Select } from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { BarChartOutlined, OndemandVideo, Search, ShowChartOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 function AboutUs() {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   var expiryDates = [
-    "03-Aug-2023",
     "10-Aug-2023",
     "17-Aug-2023",
     "24-Aug-2023",
@@ -54,32 +51,33 @@ function AboutUs() {
     "26-Oct-2023",
     "28-Dec-2023",
     "28-Mar-2024",
-    "27-Jun-2024"
-  ]
+    "27-Jun-2024",
+  ];
 
-  const [data, setData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
-  const [selectedExpiry, setSelectedExpiry] = useState('All');
+  const [CEfilteredData, setCEFilteredData] = useState([]);
+  const [PEfilteredData, setPEFilteredData] = useState([]);
+  const [selectedExpiry, setSelectedExpiry] = useState("All");
+  const [CEdata, setCEdata] = useState([]);
+  const [underlayingPrice, setUnderlayingPrice] = useState(0);
+  const [PEdata, setPEdata] = useState([]);
 
   const getData = async (url) => {
     try {
       const response = await axios.get(url);
       const rawData = response.data;
-
+      console.log(rawData);
       const ceData = rawData.data
         ? rawData.data.map((item) => item.CE).filter((item) => item !== undefined)
         : [];
+      setCEdata(ceData);
+      setCEFilteredData(ceData);
       const peData = rawData.data
         ? rawData.data.map((item) => item.PE).filter((item) => item !== undefined)
         : [];
-
-      const combinedData = [
-        ...ceData.map((item) => ({ ...item, type: "CE" })),
-        ...peData.map((item) => ({ ...item, type: "PE" })),
-      ];
-
-      setData(combinedData);
-      setFilteredData(combinedData);
+      setPEdata(peData);
+      setPEFilteredData(peData);
+      setUnderlayingPrice(peData[0].underlyingValue);
+      console.log(peData[0].underlyingValue);
     } catch (error) {
       console.log(error);
     }
@@ -93,11 +91,15 @@ function AboutUs() {
     const selectedExpiry = event.target.value;
     setSelectedExpiry(selectedExpiry);
 
-    if (selectedExpiry === 'All') {
-      setFilteredData(data);
+    if (selectedExpiry === "All") {
+      // setFilteredData(data);
+      setCEFilteredData(CEdata);
+      setPEFilteredData(PEdata);
     } else {
-      const filteredData = data.filter(item => item.expiryDate === selectedExpiry);
-      setFilteredData(filteredData);
+      const CEfilteredData = CEdata.filter((item) => item.expiryDate === selectedExpiry);
+      setCEFilteredData(CEfilteredData);
+      const PEfilteredData = PEdata.filter((item) => item.expiryDate === selectedExpiry);
+      setPEFilteredData(PEfilteredData);
     }
   };
 
@@ -107,7 +109,6 @@ function AboutUs() {
     setOpen(!open);
   };
 
-
   return (
     <>
       <DefaultNavbar
@@ -115,7 +116,7 @@ function AboutUs() {
         action={{
           type: "external",
           route: "https://www.creative-tim.com/product/material-kit-react",
-          label: "free download", 
+          label: "free download",
           color: "default",
         }}
         sticky
@@ -127,18 +128,14 @@ function AboutUs() {
         width="100%"
         sx={{
           backgroundImage: ({ functions: { linearGradient, rgba }, palette: { gradients } }) =>
-            `${linearGradient(
-              rgba(gradients.dark.main, 0.6),
-              rgba(gradients.dark.state, 0.6)
-            )})`,
+            `${linearGradient(rgba(gradients.dark.main, 0.6), rgba(gradients.dark.state, 0.6))})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           display: "grid",
           placeItems: "center",
           backgroundImage: `url(${bgImage})`,
         }}
-      >
-      </MKBox >
+      ></MKBox>
       <Card
         sx={{
           p: 2,
@@ -148,31 +145,49 @@ function AboutUs() {
           boxShadow: ({ boxShadows: { xxl } }) => xxl,
         }}
       >
-        <Card style={{ margin: "auto", marginBottom: "20px" }} sx={{
-          p: 2,
-          mx: { xs: 2, lg: 3 },
-          mt: 0,
-          mb: 4,
-          width: "80%",
-          boxShadow: ({ boxShadows: { xxl } }) => xxl,
-        }}
+        <Card
+          style={{ margin: "auto", marginBottom: "20px" }}
+          sx={{
+            p: 2,
+            mx: { xs: 2, lg: 3 },
+            mt: 0,
+            mb: 4,
+            width: "80%",
+            boxShadow: ({ boxShadows: { xxl } }) => xxl,
+          }}
         >
           <MKBox display={"flex"} justifyContent={"space-around"}>
             <MKBox display={"flex"} alignItems={"center"} justifyContent={"center"}>
-              <IconButton onClick={handleSearchIconClick} >
+              <IconButton onClick={handleSearchIconClick}>
                 <Search />
               </IconButton>
-              <div style={{ top: '50px', right: '10px', backgroundColor: 'white', borderBottom: "1px solid black", transition: "transform 1s", marginRight: "5px" }}>
-                <InputBase placeholder="Search..." style={{ width: '200px' }} />
+              <div
+                style={{
+                  top: "50px",
+                  right: "10px",
+                  backgroundColor: "white",
+                  borderBottom: "1px solid black",
+                  transition: "transform 1s",
+                  marginRight: "5px",
+                }}
+              >
+                <InputBase placeholder="Search..." style={{ width: "200px" }} />
               </div>
               <FormControl fullWidth>
                 <Select
-                  style={{ padding: "5px", paddingLeft: "15px", paddingRight: "15px", marginLeft: "10px" }}
+                  style={{
+                    padding: "5px",
+                    paddingLeft: "15px",
+                    paddingRight: "15px",
+                    marginLeft: "10px",
+                  }}
                   value={selectedExpiry}
                   onChange={handleExpiryChange}
                   label="Expiry Date"
                 >
-                  <MenuItem value="All" style={{ fontFamily: "-moz-initial" }}>Expiry Dates</MenuItem>
+                  <MenuItem value="All" style={{ fontFamily: "-moz-initial" }}>
+                    Expiry Dates
+                  </MenuItem>
                   {/* Assuming you have a function to extract unique expiry dates from data */}
                   {expiryDates.map((item, ind) => (
                     <MenuItem key={ind} value={item}>
@@ -182,41 +197,81 @@ function AboutUs() {
                 </Select>
               </FormControl>
             </MKBox>
-            <MKBox style={{ cursor: "pointer", display: "flex", alignItems: "center" }} fontSize='small'>ATM IV 8.7
-              -1.6 </MKBox>
+            <MKBox
+              style={{ cursor: "pointer", display: "flex", alignItems: "center" }}
+              fontSize="small"
+            >
+              ATM IV 8.7 -1.6{" "}
+            </MKBox>
             <hr />
-            <MKBox style={{ cursor: "pointer" }} display={"flex"} alignItems={"center"} fontSize='small' onClick={()=>{
-              navigate("/pages/landing-pages/option-trade/ivchart")
-            }}>IV Chart
-              <MKBox >
+            <MKBox
+              style={{ cursor: "pointer" }}
+              display={"flex"}
+              alignItems={"center"}
+              fontSize="small"
+              onClick={() => {
+                navigate("/pages/landing-pages/option-trade/ivchart");
+              }}
+            >
+              IV Chart
+              <MKBox>
                 <BarChartOutlined />
               </MKBox>
             </MKBox>
             <hr />
-            <MKBox style={{ cursor: "pointer" }} display={"flex"} alignItems={"center"} fontSize='small'>OI Graphs
-              <MKBox >
+            <MKBox
+              style={{ cursor: "pointer" }}
+              display={"flex"}
+              alignItems={"center"}
+              fontSize="small"
+            >
+              OI Graphs
+              <MKBox>
                 <ShowChartOutlined />
               </MKBox>
             </MKBox>
             <hr />
-            <MKBox style={{ cursor: "pointer" }} display={"flex"} alignItems={"center"} fontSize='small'>IVP 6</MKBox>
+            <MKBox
+              style={{ cursor: "pointer" }}
+              display={"flex"}
+              alignItems={"center"}
+              fontSize="small"
+            >
+              IVP 6
+            </MKBox>
             <hr />
-            <MKBox style={{ cursor: "pointer" }} display={"flex"} alignItems={"center"} fontSize='small'>Per Lot</MKBox>
+            <MKBox
+              style={{ cursor: "pointer" }}
+              display={"flex"}
+              alignItems={"center"}
+              fontSize="small"
+            >
+              Per Lot
+            </MKBox>
             <hr />
-            <MKBox style={{ cursor: "pointer" }} display={"flex"} alignItems={"center"} fontSize='small'>
+            <MKBox
+              style={{ cursor: "pointer" }}
+              display={"flex"}
+              alignItems={"center"}
+              fontSize="small"
+            >
               <MKBox style={{ marginTop: "5px", color: "blue" }}>
                 <OndemandVideo />
               </MKBox>
               Demo
             </MKBox>
           </MKBox>
-        </Card >
-        <OptionChain data={filteredData} />
+        </Card>
+        <OptionChain
+          callsData={CEfilteredData}
+          putsData={PEfilteredData}
+          underlayingPrice={underlayingPrice}
+        />
         {/* <Information />
         <Team />
         <Featuring />
         <Newsletter /> */}
-      </Card >
+      </Card>
       <MKBox pt={6} px={1} mt={6}>
         <DefaultFooter content={footerRoutes} />
       </MKBox>
