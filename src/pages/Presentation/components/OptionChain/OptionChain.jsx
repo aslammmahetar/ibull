@@ -11,6 +11,7 @@ import {
   TableContainer,
 } from "@mui/material";
 import "./table.css";
+import { Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
 
 const OptionChain = ({ callsData, putsData, underlayingPrice }) => {
   console.log(callsData);
