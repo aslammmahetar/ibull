@@ -36,13 +36,13 @@ const OptionChain = ({ callsData, putsData, underlayingPrice }) => {
             <TableHead>
               <TableRow>
                 <TableCell
-                  colSpan={4}
+                  colSpan={3}
                   style={{ textAlign: "right", backgroundColor: "#FFF6F6", fontSize: "medium" }}
                 >
                   <b style={{ marginRight: "15px", color: "#785859" }}>CALLS (CE)</b>
                 </TableCell>
                 <TableCell></TableCell>
-                <TableCell style={{ textAlign: "left", backgroundColor: "#f1fbf6" }} colSpan={4}>
+                <TableCell style={{ textAlign: "left", backgroundColor: "#f1fbf6" }} colSpan={3}>
                   <b style={{ marginLeft: "15px", color: "#039855", fontSize: "medium" }}>
                     PUTS (PE)
                   </b>
@@ -52,12 +52,10 @@ const OptionChain = ({ callsData, putsData, underlayingPrice }) => {
                 <TableCell>Bid Price</TableCell>
                 <TableCell>Ask Price</TableCell>
                 <TableCell>OI</TableCell>
-                <TableCell>Expiry date</TableCell>
                 <TableCell>Strike Prices</TableCell>
                 <TableCell>Bid Price</TableCell>
                 <TableCell>Ask Price</TableCell>
                 <TableCell>OI</TableCell>
-                <TableCell>Expiry date</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -84,13 +82,6 @@ const OptionChain = ({ callsData, putsData, underlayingPrice }) => {
                     }}
                   >
                     <div>{call.openInterest.toFixed(2)}</div>
-                  </TableCell>
-                  <TableCell
-                    style={{
-                      backgroundColor: call.strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
-                    }}
-                  >
-                    <div>{call.expiryDate}</div>
                   </TableCell>
                   <TableCell style={{ backgroundColor: "E9ECF0" }}>
                     <div>
@@ -119,13 +110,6 @@ const OptionChain = ({ callsData, putsData, underlayingPrice }) => {
                     }}
                   >
                     {putsData[index] ? putsData[index].openInterest.toFixed(2) : 0}
-                  </TableCell>
-                  <TableCell
-                    style={{
-                      backgroundColor: call.strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
-                    }}
-                  >
-                    <div>{call.expiryDate}</div>
                   </TableCell>
                 </TableRow>
               ))}

@@ -56,7 +56,7 @@ function AboutUs() {
 
   const [CEfilteredData, setCEFilteredData] = useState([]);
   const [PEfilteredData, setPEFilteredData] = useState([]);
-  const [selectedExpiry, setSelectedExpiry] = useState("All");
+  const [selectedExpiry, setSelectedExpiry] = useState("10-Aug-2023");
   const [CEdata, setCEdata] = useState([]);
   const [underlayingPrice, setUnderlayingPrice] = useState(0);
   const [PEdata, setPEdata] = useState([]);
@@ -90,17 +90,10 @@ function AboutUs() {
   const handleExpiryChange = (event) => {
     const selectedExpiry = event.target.value;
     setSelectedExpiry(selectedExpiry);
-
-    if (selectedExpiry === "All") {
-      // setFilteredData(data);
-      setCEFilteredData(CEdata);
-      setPEFilteredData(PEdata);
-    } else {
-      const CEfilteredData = CEdata.filter((item) => item.expiryDate === selectedExpiry);
-      setCEFilteredData(CEfilteredData);
-      const PEfilteredData = PEdata.filter((item) => item.expiryDate === selectedExpiry);
-      setPEFilteredData(PEfilteredData);
-    }
+    const CEfilteredData = CEdata.filter((item) => item.expiryDate === selectedExpiry);
+    setCEFilteredData(CEfilteredData);
+    const PEfilteredData = PEdata.filter((item) => item.expiryDate === selectedExpiry);
+    setPEFilteredData(PEfilteredData);
   };
 
   const [open, setOpen] = useState(false);
@@ -185,10 +178,8 @@ function AboutUs() {
                   onChange={handleExpiryChange}
                   label="Expiry Date"
                 >
-                  <MenuItem value="All" style={{ fontFamily: "-moz-initial" }}>
-                    Expiry Dates
-                  </MenuItem>
-                  {/* Assuming you have a function to extract unique expiry dates from data */}
+                  {/* Include the default option */}
+                  {/* <MenuItem value="10-Aug-2023">10-Aug-2023</MenuItem> */}
                   {expiryDates.map((item, ind) => (
                     <MenuItem key={ind} value={item}>
                       {item}
