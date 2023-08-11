@@ -43,10 +43,11 @@ function AboutUs() {
   const navigate = useNavigate();
 
   var expiryDates = [
-    "10-Aug-2023",
     "17-Aug-2023",
     "24-Aug-2023",
     "31-Aug-2023",
+    "07-Sep-2023",
+    "14-Sep-2023",
     "28-Sep-2023",
     "26-Oct-2023",
     "28-Dec-2023",
@@ -54,40 +55,40 @@ function AboutUs() {
     "27-Jun-2024",
   ];
 
-  const [CEfilteredData, setCEFilteredData] = useState([]);
-  const [PEfilteredData, setPEFilteredData] = useState([]);
-  const [selectedExpiry, setSelectedExpiry] = useState("10-Aug-2023");
-  const [CEdata, setCEdata] = useState([]);
   const [underlayingPrice, setUnderlayingPrice] = useState(0);
-  const [PEdata, setPEdata] = useState([]);
-  const [combineddData, setCombineData] = useState([]);
   const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [selectedExpiryDate, setSelectedExpiryDate] = useState("");
 
   const getData = async (url) => {
     try {
       const response = await axios.get(url);
       const rawData = response.data;
-      setData(rawData.data);
-      const ceData = rawData.data
-        ? rawData.data.map((item) => item.CE).filter((item) => item !== undefined)
-        : [];
-      setCEdata(ceData);
-      setCEFilteredData(ceData);
-      const peData = rawData.data
-        ? rawData.data.map((item) => item.PE).filter((item) => item !== undefined)
-        : [];
-      console.log("CE", ceData);
-      console.log("PE", peData);
-      const combinedCeData = ceData.map((el) => ({ ...el, type: "CE" }));
-      const combinedPeData = peData.map((el) => ({ ...el, type: "PE" }));
+      const modifiedData = rawData.data.map((element) => {
+        const combinedCEPE = {};
 
-      const combinedData = [...combinedCeData, ...combinedPeData];
-      setCombineData(combinedData);
+        for (const key in element.CE) {
+          combinedCEPE[`CE_${key}`] = element.CE[key];
+        }
 
-      setPEdata(peData);
-      setPEFilteredData(peData);
-      setUnderlayingPrice(peData[0].underlyingValue);
-      console.log(peData[0].underlyingValue);
+        for (const key in element.PE) {
+          combinedCEPE[`PE_${key}`] = element.PE[key];
+        }
+
+        // Remove original "CE" and "PE" objects
+        const { CE, PE, ...rest } = element;
+
+        return {
+          ...rest,
+          combinedCEPE,
+        };
+      });
+
+      setData(modifiedData);
+      setFilteredData(modifiedData);
+      setSelectedExpiryDate(expiryDates[0]);
+      setUnderlayingPrice(modifiedData[0].combinedCEPE.CE_underlyingValue);
+      // console.log(modifiedData[0].combinedCEPE.CE_underlyingValue);
     } catch (error) {
       console.log(error);
     }
@@ -97,13 +98,13 @@ function AboutUs() {
     getData("http://localhost:3000/records");
   }, []);
 
-  const handleExpiryChange = (event) => {
-    const selectedExpiry = event.target.value;
-    setSelectedExpiry(selectedExpiry);
-    const CEfilteredData = CEdata.filter((item) => item.expiryDate === selectedExpiry);
-    setCEFilteredData(CEfilteredData);
-    const PEfilteredData = PEdata.filter((item) => item.expiryDate === selectedExpiry);
-    setPEFilteredData(PEfilteredData);
+  useEffect(() => {
+    const filtered = data.filter((item) => item.expiryDate === selectedExpiryDate);
+    setFilteredData(filtered);
+  }, [data, selectedExpiryDate]);
+
+  const handleExpiryDateChange = (event) => {
+    setSelectedExpiryDate(event.target.value);
   };
 
   const [open, setOpen] = useState(false);
@@ -184,8 +185,8 @@ function AboutUs() {
                     paddingRight: "15px",
                     marginLeft: "10px",
                   }}
-                  value={selectedExpiry}
-                  onChange={handleExpiryChange}
+                  value={selectedExpiryDate}
+                  onChange={handleExpiryDateChange}
                   label="Expiry Date"
                 >
                   {/* Include the default option */}
@@ -263,12 +264,7 @@ function AboutUs() {
             </MKBox>
           </MKBox>
         </Card>
-        <OptionChain
-          callsData={CEfilteredData}
-          putsData={PEfilteredData}
-          underlayingPrice={underlayingPrice}
-          combinedData={data}
-        />
+        <OptionChain underlayingPrice={underlayingPrice} combinedData={filteredData} />
         {/* <Information />
         <Team />
         <Featuring />
@@ -282,3 +278,12 @@ function AboutUs() {
 }
 
 export default AboutUs;
+// const ceData = rawData.data
+// ? rawData.data.map((item) => item.CE).filter((item) => item !== undefined)
+// : [];
+// setCEdata(ceData);
+// setCEFilteredData(ceData);
+// const peData = rawData.data
+// ? rawData.data.map((item) => item.PE).filter((item) => item !== undefined)
+// : [];
+//

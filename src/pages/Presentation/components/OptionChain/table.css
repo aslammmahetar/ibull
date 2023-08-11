@@ -5,12 +5,12 @@
 }
 
 /* Apply styles to table header cells */
-.table-container th {
+th {
     font-size: 15px;
+    position:sticky;
     /* height: 25px; */
-    border: solid #E7E8EE;
+    border: solid black;
     border-width: thin;
-    text-align: center;
     padding: 1px;
     font-size: small;
     /* This sets 
