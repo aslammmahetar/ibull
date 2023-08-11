@@ -11,9 +11,195 @@ import {
   TableContainer,
 } from "@mui/material";
 import "./table.css";
-import { Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
+import { MaterialReactTable } from "material-react-table";
 
-const OptionChain = ({ callsData, putsData, underlayingPrice }) => {
+const OptionChain = ({ callsData, putsData, underlayingPrice, combinedData }) => {
+  // console.log(combinedData);
+  const data = [
+    {
+      strikePrice: 31500,
+      expiryDate: "28-Sep-2023",
+      PE: {
+        strikePrice: 31500,
+        expiryDate: "28-Sep-2023",
+        underlying: "BANKNIFTY",
+        identifier: "OPTIDXBANKNIFTY28-09-2023PE31500.00",
+        openInterest: 0,
+        changeinOpenInterest: 0,
+        pchangeinOpenInterest: 0,
+        totalTradedVolume: 0,
+        impliedVolatility: 0,
+        lastPrice: 0,
+        change: 0,
+        pChange: 0,
+        totalBuyQuantity: 1875,
+        totalSellQuantity: 0,
+        bidQty: 990,
+        bidprice: 3.05,
+        askQty: 0,
+        askPrice: 0,
+        underlyingValue: 44648.1,
+      },
+      CE: {
+        strikePrice: 31500,
+        expiryDate: "28-Sep-2023",
+        underlying: "BANKNIFTY",
+        identifier: "OPTIDXBANKNIFTY28-09-2023CE31500.00",
+        openInterest: 0,
+        changeinOpenInterest: 0,
+        pchangeinOpenInterest: 0,
+        totalTradedVolume: 0,
+        impliedVolatility: 0,
+        lastPrice: 0,
+        change: 0,
+        pChange: 0,
+        totalBuyQuantity: 2550,
+        totalSellQuantity: 900,
+        bidQty: 750,
+        bidprice: 12350.95,
+        askQty: 885,
+        askPrice: 14463.35,
+        underlyingValue: 44648.1,
+      },
+    },
+    {
+      strikePrice: 33000,
+      expiryDate: "28-Sep-2023",
+      CE: {
+        strikePrice: 33000,
+        expiryDate: "28-Sep-2023",
+        underlying: "BANKNIFTY",
+        identifier: "OPTIDXBANKNIFTY28-09-2023CE33000.00",
+        openInterest: 0,
+        changeinOpenInterest: 0,
+        pchangeinOpenInterest: 0,
+        totalTradedVolume: 0,
+        impliedVolatility: 0,
+        lastPrice: 0,
+        change: 0,
+        pChange: 0,
+        totalBuyQuantity: 2550,
+        totalSellQuantity: 885,
+        bidQty: 750,
+        bidprice: 11235.05,
+        askQty: 885,
+        askPrice: 12894.35,
+        underlyingValue: 44648.1,
+      },
+      PE: {
+        strikePrice: 33000,
+        expiryDate: "28-Sep-2023",
+        underlying: "BANKNIFTY",
+        identifier: "OPTIDXBANKNIFTY28-09-2023PE33000.00",
+        openInterest: 163,
+        changeinOpenInterest: 0,
+        pchangeinOpenInterest: 0,
+        totalTradedVolume: 0,
+        impliedVolatility: 0,
+        lastPrice: 0,
+        change: 0,
+        pChange: 0,
+        totalBuyQuantity: 3855,
+        totalSellQuantity: 0,
+        bidQty: 2970,
+        bidprice: 3.05,
+        askQty: 0,
+        askPrice: 0,
+        underlyingValue: 44648.1,
+      },
+    },
+    {
+      strikePrice: 33000,
+      expiryDate: "28-Dec-2023",
+      PE: {
+        strikePrice: 33000,
+        expiryDate: "28-Dec-2023",
+        underlying: "BANKNIFTY",
+        identifier: "OPTIDXBANKNIFTY28-12-2023PE33000.00",
+        openInterest: 1.6666666666666667,
+        changeinOpenInterest: 0,
+        pchangeinOpenInterest: 0,
+        totalTradedVolume: 0,
+        impliedVolatility: 0,
+        lastPrice: 0,
+        change: 0,
+        pChange: 0,
+        totalBuyQuantity: 420,
+        totalSellQuantity: 0,
+        bidQty: 210,
+        bidprice: 0.85,
+        askQty: 0,
+        askPrice: 0,
+        underlyingValue: 44648.1,
+      },
+    },
+    {
+      strikePrice: 34500,
+      expiryDate: "28-Sep-2023",
+      CE: {
+        strikePrice: 34500,
+        expiryDate: "28-Sep-2023",
+        underlying: "BANKNIFTY",
+        identifier: "OPTIDXBANKNIFTY28-09-2023CE34500.00",
+        openInterest: 63.333333333333336,
+        changeinOpenInterest: 0,
+        pchangeinOpenInterest: 0,
+        totalTradedVolume: 0,
+        impliedVolatility: 0,
+        lastPrice: 0,
+        change: 0,
+        pChange: 0,
+        totalBuyQuantity: 2535,
+        totalSellQuantity: 885,
+        bidQty: 750,
+        bidprice: 9678.75,
+        askQty: 885,
+        askPrice: 11334.6,
+        underlyingValue: 44648.1,
+      },
+      PE: {
+        strikePrice: 34500,
+        expiryDate: "28-Sep-2023",
+        underlying: "BANKNIFTY",
+        identifier: "OPTIDXBANKNIFTY28-09-2023PE34500.00",
+        openInterest: 8.333333333333334,
+        changeinOpenInterest: 0,
+        pchangeinOpenInterest: 0,
+        totalTradedVolume: 0,
+        impliedVolatility: 0,
+        lastPrice: 0,
+        change: 0,
+        pChange: 0,
+        totalBuyQuantity: 2685,
+        totalSellQuantity: 0,
+        bidQty: 1800,
+        bidprice: 3.2,
+        askQty: 0,
+        askPrice: 0,
+        underlyingValue: 44648.1,
+      },
+    },
+  ];
+  const combinedColumns = [
+    {
+      header: "Calls(CE)",
+      columns: [
+        {
+          header: "Bid Price",
+          accessorFn: (row) => row.CE.bidprice,
+        },
+      ],
+    },
+    {
+      header: "Puts (PE)",
+      columns: [
+        {
+          header: "Bid Price",
+          accessorFn: (row) => row.PE.bidprice,
+        },
+      ],
+    },
+  ];
   console.log(callsData);
   const theme = createTheme({
     palette: {
@@ -32,6 +218,21 @@ const OptionChain = ({ callsData, putsData, underlayingPrice }) => {
   return (
     <Box className={"table-container"}>
       <ThemeProvider theme={theme}>
+        <MaterialReactTable
+          enableFullScreenToggle={false}
+          columns={combinedColumns}
+          data={data}
+          enableDensityToggle={false}
+          // positionGlobalFilter="right"
+          initialState={{
+            pagination: {
+              pageSize: 25,
+              pageIndex: 0,
+            },
+            density: "compact",
+          }}
+          enableStickyHeader
+        ></MaterialReactTable>
         <TableContainer component={Paper}>
           <Table>
             <TableHead>
@@ -124,26 +325,7 @@ const OptionChain = ({ callsData, putsData, underlayingPrice }) => {
 
 export default OptionChain;
 
-/* <MaterialReactTable
-          enableFullScreenToggle={false}
-          columns={combinedColumns}
-          data={data}
-          muiTableBodyRowProps={({ row }) => ({
-            sx: {
-              backgroundColor: row.getValue("type") === "CE" ? "#F9F4DC" : "#EBFBFF",
-            },
-          })}
-          enableDensityToggle={false}
-          // positionGlobalFilter="right"
-          initialState={{
-            pagination: {
-              pageSize: 25,
-              pageIndex: 0,
-            },
-            density: "compact",
-          }}
-          enableStickyHeader
-        /> */
+/* */
 
 // const data = [
 //   {
@@ -190,139 +372,5 @@ export default OptionChain;
 //     address: "32188 Larkin Turnpike",
 //     city: "Omaha",
 //     state: "Nebraska",
-//   },
-// ];
-// const combinedColumns = [
-//   {
-//     accessorKey: "type",
-//     header: "Type",
-//     size: 50,
-//     muiTableBodyCellProps: ({ cell }) => ({
-//       sx: {
-//         color: cell.getValue() === "CE" || "PE" ? "red" : undefined,
-//         fontWeight: cell.column.id === "age" && cell.getValue() > 40 ? "700" : "400",
-//       },
-//     }),
-//   },
-//   {
-//     accessorKey: "strikePrice",
-//     header: "Strike Price",
-//     size: 50,
-//     align: "center",
-//   },
-//   {
-//     accessorKey: "expiryDate",
-//     header: "Expiry Date",
-//     size: 50,
-//   },
-//   {
-//     accessorKey: "underlying",
-//     header: "CE Underlying",
-//     size: 50,
-//   },
-//   {
-//     accessorKey: "underlying",
-//     header: "PE Underlying",
-//     size: 50,
-//   },
-//   {
-//     accessorKey: "askPrice",
-//     header: "Ask Price",
-//     size: 50,
-//   },
-//   {
-//     accessorKey: "askQty",
-//     header: "Ask Quantity",
-//     size: 50,
-//   },
-//   {
-//     accessorKey: "bidprice",
-//     header: "Bid Price",
-//     size: 50,
-//   },
-//   {
-//     accessorKey: "bidQty",
-//     header: "Bid Quontity",
-//     size: 50,
-//   },
-//   {
-//     accessorKey: "totalSellQuantity",
-//     header: "Total sell quantitity",
-//     size: 50,
-//   },
-//   {
-//     accessorKey: "totalBuyQuantity",
-//     header: "Total Buy quantitity",
-//     size: 50,
-//   },
-//   {
-//     accessorKey: "pChange",
-//     header: "Price Change",
-//     size: 50,
-//   },
-//   {
-//     accessorKey: "change",
-//     header: "Change",
-//     size: 50,
-//   },
-//   {
-//     accessorKey: "lastPrice",
-//     header: "Last Price",
-//     size: 50,
-//   },
-//   {
-//     accessorKey: "impliedVolatility",
-//     header: "Implied Volatility",
-//     size: 50,
-//   },
-//   {
-//     accessorKey: "totalTradedVolume",
-//     header: "Total Trade Volume",
-//     size: 50,
-//     Cell: ({ cell }) => {
-//       return (
-//         <div style={{ display: "flex", justifyContent: "space-between" }}>
-//           <div
-//             style={{
-//               display: "block",
-//               width: `${cell.getValue()}%`,
-//               backgroundColor: "red",
-//               textAlign: "center",
-//               color: cell.getValue() === 0 ? "white" : "red",
-//               borderTopRightRadius: "10px",
-//               borderBottomRightRadius: "10px",
-//             }}
-//           >
-//             .
-//           </div>
-//           <p>{cell.getValue()}</p>
-//         </div>
-//       );
-//     },
-//   },
-//   {
-//     accessorKey: "pchangeinOpenInterest",
-//     header: "P Change Open Interest",
-//     size: 50,
-//   },
-//   {
-//     accessorKey: "changeinOpenInterest",
-//     header: "Change in Open Interest",
-//     size: 50,
-//   },
-//   {
-//     accessorKey: "openInterest",
-//     header: "Open Interest",
-//     size: 50,
-//   },
-//   {
-//     accessorKey: "identifier",
-//     header: "Indentifier",
-//     size: 50,
-//   },
-//   {
-//     accessorKey: "underlying",
-//     header: "Underlying",
-//     size: 50,
 //   },
 // ];

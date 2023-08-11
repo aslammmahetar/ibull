@@ -60,12 +60,14 @@ function AboutUs() {
   const [CEdata, setCEdata] = useState([]);
   const [underlayingPrice, setUnderlayingPrice] = useState(0);
   const [PEdata, setPEdata] = useState([]);
+  const [combineddData, setCombineData] = useState([]);
+  const [data, setData] = useState([]);
 
   const getData = async (url) => {
     try {
       const response = await axios.get(url);
       const rawData = response.data;
-      console.log(rawData);
+      setData(rawData.data);
       const ceData = rawData.data
         ? rawData.data.map((item) => item.CE).filter((item) => item !== undefined)
         : [];
@@ -74,6 +76,14 @@ function AboutUs() {
       const peData = rawData.data
         ? rawData.data.map((item) => item.PE).filter((item) => item !== undefined)
         : [];
+      console.log("CE", ceData);
+      console.log("PE", peData);
+      const combinedCeData = ceData.map((el) => ({ ...el, type: "CE" }));
+      const combinedPeData = peData.map((el) => ({ ...el, type: "PE" }));
+
+      const combinedData = [...combinedCeData, ...combinedPeData];
+      setCombineData(combinedData);
+
       setPEdata(peData);
       setPEFilteredData(peData);
       setUnderlayingPrice(peData[0].underlyingValue);
@@ -257,6 +267,7 @@ function AboutUs() {
           callsData={CEfilteredData}
           putsData={PEfilteredData}
           underlayingPrice={underlayingPrice}
+          combinedData={data}
         />
         {/* <Information />
         <Team />
