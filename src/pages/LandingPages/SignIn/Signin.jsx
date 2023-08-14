@@ -21,6 +21,7 @@ import MKInput from "components/MKInput";
 import { Box, Button, Snackbar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MuiAlert from "@mui/material/Alert";
+import { Logotag } from "../logotag/Logotag";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -83,11 +84,8 @@ const Signin = ({ handleToggle }) => {
   return (
     <>
       <MKBox width="100%" height="100vh" position="relative" zIndex={2}>
-        <Grid container justifyContent="right" alignItems="center" height="100%">
-          <Grid xs={12} sm={10} md={6} lg={4}>
-            <h1 style={{ textAlign: "center", color: "white" }}>iBull</h1>
-          </Grid>
-          <Grid xs={12} sm={10} md={6} lg={4}></Grid>
+        <Grid container justifyContent="space-between" alignItems="center" height="100%">
+          <Logotag />
           <Grid xs={12} sm={10} md={6} lg={4}>
             <Card>
               <MKBox

@@ -50,10 +50,33 @@ const OptionChain = ({ underlayingPrice, combinedData }) => {
           accessorFn: (rows) => (
             <div
               style={{
+                display: "flex",
+                justifyContent: "space-between",
                 backgroundColor: rows.strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
               }}
             >
-              {rows.combinedCEPE.CE_openInterest ? rows.combinedCEPE.CE_openInterest.toFixed(2) : 0}
+              <div
+                style={{
+                  backgroundColor: rows.strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
+                }}
+              >
+                {rows.combinedCEPE.CE_openInterest
+                  ? rows.combinedCEPE.CE_openInterest.toFixed(2)
+                  : 0}
+              </div>
+              <div
+                style={{
+                  position: "inherit",
+                  width: `${rows.combinedCEPE.CE_openInterest}%`,
+                  backgroundColor: "red",
+                  color: "red",
+                  borderTopLeftRadius: "10px",
+                  borderBottomLeftRadius: "10px",
+                  opacity: "0.5",
+                }}
+              >
+                .
+              </div>
             </div>
           ),
         },
@@ -72,6 +95,43 @@ const OptionChain = ({ underlayingPrice, combinedData }) => {
     {
       header: <div style={{ color: "#039855", fontSize: "medium" }}>Puts(PE)</div>,
       columns: [
+        {
+          id: "peio",
+          header: <Typography>OI</Typography>,
+          accessorFn: (rows) => (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                backgroundColor: rows.strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
+              }}
+            >
+              <div
+                style={{
+                  position: "inherit",
+                  width: `${rows.combinedCEPE.PE_openInterest}%`,
+                  backgroundColor: "green",
+
+                  color: "green",
+                  borderTopRightRadius: "10px",
+                  borderBottomRightRadius: "10px",
+                  opacity: "0.5",
+                }}
+              >
+                .
+              </div>
+              <div
+                style={{
+                  backgroundColor: rows.strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
+                }}
+              >
+                {rows.combinedCEPE.PE_openInterest
+                  ? rows.combinedCEPE.PE_openInterest.toFixed(2)
+                  : 0}
+              </div>
+            </div>
+          ),
+        },
         {
           id: "pebidprice",
           header: <Typography>Bid Price</Typography>,
@@ -95,19 +155,6 @@ const OptionChain = ({ underlayingPrice, combinedData }) => {
               }}
             >
               {rows.combinedCEPE.PE_askPrice || 0}
-            </div>
-          ),
-        },
-        {
-          id: "peio",
-          header: <Typography>OI</Typography>,
-          accessorFn: (rows) => (
-            <div
-              style={{
-                backgroundColor: rows.strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
-              }}
-            >
-              {rows.combinedCEPE.PE_openInterest ? rows.combinedCEPE.PE_openInterest.toFixed(2) : 0}
             </div>
           ),
         },

@@ -35,6 +35,7 @@ import MKTypography from "components/MKTypography";
 import MKInput from "components/MKInput";
 import MKButton from "components/MKButton";
 import { Button } from "@mui/material";
+import { Logotag } from "../logotag/Logotag";
 
 // Material Kit 2 React example components
 
@@ -70,7 +71,8 @@ function Signup({ handleToggle }) {
   return (
     <>
       <MKBox px={1} width="100%" height="100vh" mx="auto" position="relative" zIndex={2}>
-        <Grid container justifyContent="right" alignItems="center" height="100%" mt={3}>
+        <Grid container justifyContent="space-between" alignItems="center" height="100%" mt={3}>
+          <Logotag />
           <Grid item xs={12} sm={10} md={6} lg={4}>
             <Card>
               <MKBox
