@@ -29,7 +29,7 @@ import DefaultFooter from "examples/Footers/DefaultFooter";
 // import FilledInfoCard from "examples/Cards/InfoCards/FilledInfoCard";
 
 // Presentation page sections
-// import Counters from "pages/Presentation/sections/Counters";
+import Counters from "pages/Presentation/sections/Counters";
 // import Information from "pages/Presentation/sections/Information";
 // import DesignBlocks from "pages/Presentation/sections/DesignBlocks";
 // import Pages from "pages/Presentation/sections/Pages";
@@ -89,7 +89,7 @@ function Presentation() {
           boxShadow: ({ boxShadows: { xxl } }) => xxl,
         }}
       >
-        {/* <Counters /> */}
+        <Counters />
         {/* <Information /> */}
         {/* <DesignBlocks /> */}
         {/* <Pages />

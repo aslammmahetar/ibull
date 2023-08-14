@@ -2,7 +2,11 @@ import { Box, ThemeProvider, createTheme, Typography } from "@mui/material";
 import "./table.css";
 import { MaterialReactTable } from "material-react-table";
 
-const OptionChain = ({ underlayingPrice, combinedData }) => {
+const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
+  console.log(CemaxOI);
+  console.log(PeMaxOI);
+  console.log(combinedData);
+
   const combinedColumns = [
     {
       header: (
@@ -50,24 +54,26 @@ const OptionChain = ({ underlayingPrice, combinedData }) => {
           accessorFn: (rows) => (
             <div
               style={{
+                position: "relative",
                 display: "flex",
-                justifyContent: "space-between",
+                flexDirection: "row-reverse",
+                textAlign: "left",
                 backgroundColor: rows.strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
               }}
             >
               <div
                 style={{
+                  textAlign: "left",
+                  marginRight: "170px",
                   backgroundColor: rows.strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
                 }}
               >
-                {rows.combinedCEPE.CE_openInterest
-                  ? rows.combinedCEPE.CE_openInterest.toFixed(2)
-                  : 0}
+                {rows.combinedCEPE.CE_openInterest ? rows.combinedCEPE.CE_openInterest : 0}
               </div>
               <div
                 style={{
-                  position: "inherit",
-                  width: `${rows.combinedCEPE.CE_openInterest}%`,
+                  position: "absolute",
+                  width: `${(rows.combinedCEPE.CE_openInterest / CemaxOI) * 100}%`,
                   backgroundColor: "red",
                   color: "red",
                   borderTopLeftRadius: "10px",
@@ -101,18 +107,18 @@ const OptionChain = ({ underlayingPrice, combinedData }) => {
           accessorFn: (rows) => (
             <div
               style={{
-                display: "flex",
-                justifyContent: "space-between",
+                position: "relative",
                 backgroundColor: rows.strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
               }}
             >
               <div
                 style={{
-                  position: "inherit",
-                  width: `${rows.combinedCEPE.PE_openInterest}%`,
-                  backgroundColor: "green",
-
-                  color: "green",
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: `${(rows.combinedCEPE.CE_openInterest / CemaxOI) * 100}%`,
+                  backgroundColor: "lightgreen",
+                  color: "lightgreen",
                   borderTopRightRadius: "10px",
                   borderBottomRightRadius: "10px",
                   opacity: "0.5",
@@ -123,25 +129,11 @@ const OptionChain = ({ underlayingPrice, combinedData }) => {
               <div
                 style={{
                   backgroundColor: rows.strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
+                  textAlign: "right",
                 }}
               >
-                {rows.combinedCEPE.PE_openInterest
-                  ? rows.combinedCEPE.PE_openInterest.toFixed(2)
-                  : 0}
+                {rows.combinedCEPE.PE_openInterest ? rows.combinedCEPE.PE_openInterest : 0}
               </div>
-            </div>
-          ),
-        },
-        {
-          id: "pebidprice",
-          header: <Typography>Bid Price</Typography>,
-          accessorFn: (rows) => (
-            <div
-              style={{
-                backgroundColor: rows.strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
-              }}
-            >
-              {rows.combinedCEPE.PE_bidprice || 0}
             </div>
           ),
         },
@@ -155,6 +147,19 @@ const OptionChain = ({ underlayingPrice, combinedData }) => {
               }}
             >
               {rows.combinedCEPE.PE_askPrice || 0}
+            </div>
+          ),
+        },
+        {
+          id: "pebidprice",
+          header: <Typography>Bid Price</Typography>,
+          accessorFn: (rows) => (
+            <div
+              style={{
+                backgroundColor: rows.strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
+              }}
+            >
+              {rows.combinedCEPE.PE_bidprice || 0}
             </div>
           ),
         },

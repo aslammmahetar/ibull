@@ -59,6 +59,8 @@ function AboutUs() {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [selectedExpiryDate, setSelectedExpiryDate] = useState("");
+  const [callMax, setCallmaxOI] = useState(0);
+  const [putMax, setPutmaxOI] = useState(0);
 
   const getData = async (url) => {
     try {
@@ -100,6 +102,22 @@ function AboutUs() {
 
   useEffect(() => {
     const filtered = data.filter((item) => item.expiryDate === selectedExpiryDate);
+    console.log(filtered);
+    let CEmaxOI = -Infinity;
+    let PEmaxOI = -Infinity;
+
+    for (let el of filtered) {
+      if (CEmaxOI < el.combinedCEPE.CE_openInterest) {
+        CEmaxOI = el.combinedCEPE.CE_openInterest;
+      }
+      if (PEmaxOI < el.combinedCEPE.PE_openInterest) {
+        PEmaxOI = el.combinedCEPE.PE_openInterest;
+      }
+      // console.log(el.combinedCEPE);
+    }
+    setCallmaxOI(CEmaxOI);
+    setPutmaxOI(PEmaxOI);
+
     setFilteredData(filtered);
   }, [data, selectedExpiryDate]);
 
@@ -264,7 +282,12 @@ function AboutUs() {
             </MKBox>
           </MKBox>
         </Card>
-        <OptionChain underlayingPrice={underlayingPrice} combinedData={filteredData} />
+        <OptionChain
+          underlayingPrice={underlayingPrice}
+          combinedData={filteredData}
+          CemaxOI={callMax}
+          PeMaxOI={putMax}
+        />
         {/* <Information />
         <Team />
         <Featuring />
