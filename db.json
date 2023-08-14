@@ -18,7 +18,7 @@
         "strikePrice": 31500,
         "expiryDate": "28-Sep-2023",
         "CE": {
-          "strikePrice": 31500,
+          "strikePrice": -31500,
           "expiryDate": "28-Sep-2023",
           "underlying": "BANKNIFTY",
           "identifier": "OPTIDXBANKNIFTY28-09-2023CE31500.00",

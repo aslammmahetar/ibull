@@ -130,6 +130,7 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
                 style={{
                   backgroundColor: rows.strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
                   textAlign: "right",
+                  marginRight: "20px",
                 }}
               >
                 {rows.combinedCEPE.PE_openInterest ? rows.combinedCEPE.PE_openInterest : 0}

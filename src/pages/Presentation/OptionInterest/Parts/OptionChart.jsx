@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Line } from "react-chartjs-2";
+import { Bar, Line } from "react-chartjs-2";
 import axios from "axios";
 import MKBox from "components/MKBox";
 
@@ -35,12 +35,14 @@ const OptionChart = () => {
     data: ceData.map((option) => option.strikePrice || 0),
     fill: false,
     borderColor: "red",
+    backgroundColor: "  blue",
   };
 
   const peDataset = {
     label: "PE Data",
     data: peData.map((option) => option.strikePrice || 0),
     fill: false,
+    backgroundColor: "red",
     borderColor: "blue",
   };
 
@@ -66,7 +68,7 @@ const OptionChart = () => {
     },
   };
 
-  return optionsData.length > 0 ? <Line data={data} options={options} /> : <p>Loading data...</p>;
+  return optionsData.length > 0 ? <Bar data={data} options={options} /> : <p>Loading data...</p>;
 };
 
 export default OptionChart;
