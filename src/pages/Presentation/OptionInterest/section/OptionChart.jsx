@@ -34,16 +34,16 @@ const OptionChart = () => {
     label: "CE Data",
     data: ceData.map((option) => option.strikePrice || 0),
     fill: false,
-    borderColor: "red",
-    backgroundColor: "  blue",
+    borderColor: "#FF4747",
+    backgroundColor: "#FF4747",
   };
 
   const peDataset = {
     label: "PE Data",
     data: peData.map((option) => option.strikePrice || 0),
     fill: false,
-    backgroundColor: "red",
-    borderColor: "blue",
+    backgroundColor: "#B2BD4C",
+    borderColor: "#B2BD4C",
   };
 
   const data = {
