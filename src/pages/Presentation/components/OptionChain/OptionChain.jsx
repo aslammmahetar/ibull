@@ -3,10 +3,6 @@ import "./table.css";
 import { MaterialReactTable } from "material-react-table";
 
 const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
-  console.log(CemaxOI);
-  console.log(PeMaxOI);
-  console.log(combinedData);
-
   const combinedColumns = [
     {
       header: (

@@ -1,18 +1,3 @@
-/*
-=========================================================
-* Material Kit 2 React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-kit-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 // @mui material components
 import Card from "@mui/material/Card";
 
@@ -34,20 +19,21 @@ import footerRoutes from "footer.routes";
 import bgImage from "assets/images/Banner.jpeg";
 
 import OptionChain from "pages/Presentation/components/OptionChain/OptionChain";
-import { FormControl, IconButton, InputBase, MenuItem, Paper, Select } from "@mui/material";
+import { FormControl, IconButton, InputBase, MenuItem, Select } from "@mui/material";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { BarChartOutlined, OndemandVideo, Search, ShowChartOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getReq } from "Redux/action";
 function AboutUs() {
   const navigate = useNavigate();
 
   var expiryDates = [
-    "17-Aug-2023",
     "24-Aug-2023",
     "31-Aug-2023",
     "07-Sep-2023",
     "14-Sep-2023",
+    "21-Sep-2023",
     "28-Sep-2023",
     "26-Oct-2023",
     "28-Dec-2023",
@@ -62,71 +48,48 @@ function AboutUs() {
   const [callMax, setCallmaxOI] = useState(0);
   const [putMax, setPutmaxOI] = useState(0);
 
-  const getData = async (url) => {
-    try {
-      const response = await axios.get(url);
-      const rawData = response.data;
-      const modifiedData = rawData.data.map((element) => {
-        const combinedCEPE = {};
+  const store = useSelector((store) => store.reducer.data);
+  const ulValue = useSelector((store) => store.reducer.underlyingValue);
+  console.log(ulValue);
 
-        for (const key in element.CE) {
-          combinedCEPE[`CE_${key}`] = element.CE[key];
-        }
-
-        for (const key in element.PE) {
-          combinedCEPE[`PE_${key}`] = element.PE[key];
-        }
-
-        // Remove original "CE" and "PE" objects
-        const { CE, PE, ...rest } = element;
-
-        return {
-          ...rest,
-          combinedCEPE,
-        };
-      });
-
-      setData(modifiedData);
-      setFilteredData(modifiedData);
-      setSelectedExpiryDate(expiryDates[0]);
-      setUnderlayingPrice(modifiedData[0].combinedCEPE.CE_underlyingValue);
-      // console.log(modifiedData[0].combinedCEPE.CE_underlyingValue);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getReq);
+    setData(store);
+    setSelectedExpiryDate(expiryDates[0]);
+    setUnderlayingPrice(ulValue);
+  }, [ulValue]);
 
   useEffect(() => {
-    getData("http://localhost:3000/records");
-  }, []);
-
-  useEffect(() => {
-    const filtered = data.filter((item) => item.expiryDate === selectedExpiryDate);
-    console.log(filtered);
+    //filteration by the exprydates
+    const filtered2 =
+      store.length > 0 ? store.filter((item) => item.expiryDate === selectedExpiryDate) : [];
+    console.log(filtered2);
     let CEmaxOI = -Infinity;
     let PEmaxOI = -Infinity;
 
-    for (let el of filtered) {
+    //getting maximum values of openInterests
+    for (let el of filtered2) {
       if (CEmaxOI < el.combinedCEPE.CE_openInterest) {
         CEmaxOI = el.combinedCEPE.CE_openInterest;
       }
       if (PEmaxOI < el.combinedCEPE.PE_openInterest) {
         PEmaxOI = el.combinedCEPE.PE_openInterest;
       }
-      // console.log(el.combinedCEPE);
     }
     setCallmaxOI(CEmaxOI);
     setPutmaxOI(PEmaxOI);
-
-    setFilteredData(filtered);
+    setFilteredData(filtered2);
+    // console.log(filtered);
   }, [data, selectedExpiryDate]);
 
+  //handling expirydates filter
   const handleExpiryDateChange = (event) => {
     setSelectedExpiryDate(event.target.value);
   };
 
+  //
   const [open, setOpen] = useState(false);
-
   const handleSearchIconClick = () => {
     setOpen(!open);
   };
@@ -310,3 +273,35 @@ export default AboutUs;
 // ? rawData.data.map((item) => item.PE).filter((item) => item !== undefined)
 // : [];
 //
+// const getData = async (url) => {
+//   try {
+//     const response = await axios.get(url);
+//     const rawData = response.data;
+//     const modifiedData = rawData.data.map((element) => {
+//       const combinedCEPE = {};
+
+//       for (const key in element.CE) {
+//         combinedCEPE[`CE_${key}`] = element.CE[key];
+//       }
+
+//       for (const key in element.PE) {
+//         combinedCEPE[`PE_${key}`] = element.PE[key];
+//       }
+
+//       // Remove original "CE" and "PE" objects
+//       const { CE, PE, ...rest } = element;
+
+//       return {
+//         ...rest,
+//         combinedCEPE,
+//       };
+//     });
+
+//     // setFilteredData(modifiedData);
+//     // console.log(modifiedData[0].combinedCEPE.CE_underlyingValue);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+// const filtered = data.filter((item) => item.expiryDate === selectedExpiryDate);
+// getData("http://localhost:3000/records");

@@ -1,25 +1,24 @@
 import MKBox from "components/MKBox";
 import React from "react";
 import { Filters } from "./Filters";
-import OptionChart from "./OptionChart";
-import ChartsSection from "./ChartsSection";
-import { Card, Grid, Paper } from "@mui/material";
-// import { makeStyles } from "@material-ui/styles";
 import { makeStyles } from "@mui/styles";
+import LineBarCombinedChart from "./test";
+import BarChart from "./ChartsSection";
+import { Box } from "@mui/material";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     padding: theme.spacing(2),
   },
   filteration: {
-    position: "sticky",
+    position: "fixed",
     top: 0,
   },
   chartContainer: {
     maxHeight: "calc(100vh - 100px)", // Adjust this as needed
     overflowY: "scroll",
     width: "67%",
-    marginTop: "25px",
+    position: "sticky",
   },
 }));
 const ChartAndFilter = () => {
@@ -28,22 +27,23 @@ const ChartAndFilter = () => {
     <div className={classes.root}>
       <MKBox
         sx={{
-          flexDirection: { xs: "column", sm: "column", md: "row" },
+          flexDirection: { xs: "column", sm: "column", md: "column", lg: "row" },
         }}
         style={{
           width: "100%",
           margin: "auto",
           display: "flex",
-          paddingTop: "15px",
           justifyContent: "space-around",
         }}
       >
         <Filters />
-        <div className={classes.chartContainer}>
-          <ChartsSection />
-          <ChartsSection />
-          <ChartsSection />
-        </div>
+        <Box
+          className={classes.chartContainer}
+          width={{ xs: "100%", sm: "100%", md: "67%", lg: "67%" }}
+        >
+          <BarChart />
+          <LineBarCombinedChart />
+        </Box>
       </MKBox>
     </div>
   );

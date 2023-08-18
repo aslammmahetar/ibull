@@ -24,26 +24,27 @@ export default function FullWidthTabs() {
     setValue(newValue);
   };
   return (
-    <MKBox
-      width="96%"
-      style={{
-        backgroundColor: "white",
-        display: "flex",
-        justifyContent: "space-between",
-        marginTop: "5px",
-        borderRadius: "3px",
-        position: "fixed",
-        zIndex: "2",
-      }}
-    >
-      <Box
-        sx={{
-          bgcolor: "background.paper",
-          width: 500,
+    <>
+      <MKBox
+        width="100%"
+        style={{
+          backgroundColor: "white",
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: "5px",
+          borderRadius: "10px",
+          zIndex: "2",
+          padding: "10px",
         }}
       >
-        {/* <Box> */}
-        <AppBar position="static">
+        <Box
+          sx={{
+            bgcolor: "background.paper",
+            width: 500,
+            position: "static",
+          }}
+        >
+          {/* <Box> */}
           <Tabs
             value={value}
             onChange={handleChange}
@@ -55,23 +56,23 @@ export default function FullWidthTabs() {
             <Tab label="Open Interest" {...a11yProps(0)} />
             <Tab label="Multi strike IO" {...a11yProps(1)} />
           </Tabs>
-        </AppBar>
-      </Box>
+        </Box>
 
-      <Box
-        alignItems={"center"}
-        sx={{ display: { xs: "none", md: "none", sm: "none", lg: "flex" } }}
-      >
-        <Typography fontSize={"small"} style={{ display: "flex", alignItems: "center" }}>
-          PCR 0.84
-          <Tooltip title="NOTE: This PCR is computed based on open interest of options in Aug 10 expiry. This does not change with date pickers, time sliders and strike range selector controls below.">
-            <InfoIcon />
-          </Tooltip>
-        </Typography>
-      </Box>
-      <Button startIcon={<PlayCircleFilledIcon />}>
-        {isSmallScreen ? "Demo" : "Watch Demo Video "}
-      </Button>
-    </MKBox>
+        <Box
+          alignItems={"center"}
+          sx={{ display: { xs: "none", md: "none", sm: "none", lg: "flex" } }}
+        >
+          <Typography fontSize={"small"} style={{ display: "flex", alignItems: "center" }}>
+            PCR 0.84
+            <Tooltip title="NOTE: This PCR is computed based on open interest of options in Aug 10 expiry. This does not change with date pickers, time sliders and strike range selector controls below.">
+              <InfoIcon />
+            </Tooltip>
+          </Typography>
+        </Box>
+        <Button startIcon={<PlayCircleFilledIcon />}>
+          {isSmallScreen ? "Demo" : "Watch Demo Video "}
+        </Button>
+      </MKBox>
+    </>
   );
 }

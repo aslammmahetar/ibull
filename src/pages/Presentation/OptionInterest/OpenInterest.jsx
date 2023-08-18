@@ -1,32 +1,15 @@
-import MKBox from "components/MKBox";
-import DefaultNavbar from "examples/Navbars/DefaultNavbar";
-import React, { useState } from "react";
-import routes from "routes";
-import OptionChart from "./section/OptionChart";
-import bgImage from "assets/images/Banner.jpeg";
-import {
-  Box,
-  Button,
-  Card,
-  Checkbox,
-  FormControlLabel,
-  FormGroup,
-  IconButton,
-  InputBase,
-  TextField,
-  Tooltip,
-  Typography,
-} from "@mui/material";
-import { Search } from "@mui/icons-material";
-import MKButton from "components/MKButton";
-import FullWidthTabs from "./section/Tabs";
-import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
-import InfoIcon from "@mui/icons-material/Info";
+import { Card, CssBaseline } from "@mui/material";
 import ChartAndFilter from "./section/ChartAndFilter";
+import DefaultNavbar from "examples/Navbars/DefaultNavbar";
+import routes from "routes";
+import MKBox from "components/MKBox";
+import bgImage from "assets/images/Banner.jpeg";
+import StickyNavbar from "./section/StickyNavbar";
 
 const OpenInterest = () => {
   return (
     <>
+      <CssBaseline />
       <DefaultNavbar
         routes={routes}
         action={{
@@ -39,6 +22,7 @@ const OpenInterest = () => {
         transparent={false}
         dark
         zIndex={999}
+        width="100%"
       />
       <MKBox
         minHeight="27vh"
@@ -53,20 +37,21 @@ const OpenInterest = () => {
           backgroundImage: `url(${bgImage})`,
         }}
       ></MKBox>
-
       <Card
-        style={{ width: "98%", margin: "auto", marginTop: "-25px" }}
         sx={{
           p: 2,
           mx: { xs: 2, lg: 3 },
-          mt: -8,
           mb: 4,
+          mt: -10,
           backgroundColor: "#E2E8EB",
           backdropFilter: "saturate(200%) blur(30px)",
           boxShadow: ({ boxShadows: { xxl } }) => xxl,
+          position: "sticky",
+          // top: isSticky ? "80px" : "auto",
+          zIndex: 2,
         }}
       >
-        <FullWidthTabs />
+        <StickyNavbar />
         <ChartAndFilter />
       </Card>
     </>

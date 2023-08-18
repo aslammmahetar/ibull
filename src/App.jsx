@@ -30,6 +30,7 @@ import Presentation from "layouts/pages/presentation";
 import routes from "routes";
 import Router from "Router";
 import OpenInterest from "pages/Presentation/OptionInterest/OpenInterest";
+import axios from "axios";
 
 export default function App() {
   const { pathname } = useLocation();
@@ -39,6 +40,12 @@ export default function App() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
   }, [pathname]);
+
+  // useEffect(() => {
+  //   axios
+  //     .get("https://www.nseindia.com/api/option-chain-indices?symbol=NIFTY")
+  //     .then((res) => console.log(res));
+  // }, []);
 
   const getRoutes = (allRoutes) =>
     allRoutes.map((route) => {

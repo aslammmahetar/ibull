@@ -18,6 +18,9 @@ import MKBox from "components/MKBox";
 import React, { useState } from "react";
 import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import MKButton from "components/MKButton";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleWithCurrentMonth } from "Redux/action";
+import { toggleWithNextMonth } from "Redux/action";
 
 export const Filters = () => {
   const [open, setOpen] = useState(false);
@@ -26,8 +29,20 @@ export const Filters = () => {
   const handleSearchIconClick = () => {
     setOpen(!open);
   };
+
+  const currentIsChecked = useSelector((state) => state.reducer.currentMonth);
+  const nextIscChecked = useSelector((store) => store.reducer.nextMonth);
+  const dispatch = useDispatch();
+
+  const handleCurrentBoxChange = () => {
+    dispatch(toggleWithCurrentMonth());
+  };
+  const handleNextBoxXChange = () => {
+    dispatch(toggleWithNextMonth());
+  };
+
   return (
-    <MKBox style={{ width: "30%", marginTop: "50px" }}>
+    <MKBox width={{ sm: "100%", md: "100%", lg: "30%" }} display={{ lg: "block" }}>
       <Card>
         <MKBox display={"flex"} style={{ padding: "5px" }} justifyContent="space-around">
           <IconButton onClick={handleSearchIconClick}>
@@ -59,8 +74,13 @@ export const Filters = () => {
         </MKBox>
       </Card>
       <Card sx={{ mt: "10px" }}>
-        <Box display={"flex"} padding={2}>
-          <Box width={"50%"}>
+        <Box
+          display={"flex"}
+          flexDirection={{ sm: "column", md: "column", lg: "row" }}
+          justifyContent={"center"}
+          padding={2}
+        >
+          <Box margin={{ sm: "auto", md: "auto" }}>
             <Typography fontSize={"small"} marginLeft={"3px"}>
               NIFTY
             </Typography>
@@ -93,7 +113,7 @@ export const Filters = () => {
             </Box>
           </Box>
           <hr style={{ marginLeft: "1px" }} />
-          <Box width={"50%"} marginLeft={"13px"}>
+          <Box margin={{ sm: "auto", md: "auto" }}>
             <Typography fontSize={"small"}>BANKNIFTY</Typography>
             <Box display={"flex"}>
               <MKButton
@@ -134,8 +154,14 @@ export const Filters = () => {
         <Typography fontSize={"small"}>Expiries</Typography>
         <FormGroup>
           <Box style={{ display: "flex" }}>
-            <FormControlLabel control={<Checkbox defaultChecked />} label="Current" />
-            <FormControlLabel control={<Checkbox defaultChecked />} label="Next" />
+            <FormControlLabel
+              control={<Checkbox checked={currentIsChecked} onChange={handleCurrentBoxChange} />}
+              label="Current"
+            />
+            <FormControlLabel
+              control={<Checkbox checked={nextIscChecked} onChange={handleNextBoxXChange} />}
+              label="Next"
+            />
           </Box>
         </FormGroup>
       </Card>

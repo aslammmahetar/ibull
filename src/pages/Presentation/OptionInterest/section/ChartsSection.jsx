@@ -1,4 +1,4 @@
-import { AppBar, Box, Card, Paper, Toolbar, Typography } from "@mui/material";
+import { Card, Typography } from "@mui/material";
 import MKBox from "components/MKBox";
 import React from "react";
 import OptionChart from "./OptionChart";
@@ -6,9 +6,9 @@ import MinimumDistanceSlider from "./Slider";
 import Timebuttons from "./Timebuttons";
 import ChartFooter from "./ChartFooter";
 
-const ChartsSection = () => {
+const BarChart = () => {
   return (
-    <Card sx={{ padding: "10px", marginTop: "25px" }}>
+    <Card sx={{ padding: "10px" }}>
       <MKBox style={{ padding: "5px" }}>
         <Typography variant="h5">OI Change - Aug & Sep Expiries</Typography>
       </MKBox>
@@ -22,4 +22,4 @@ const ChartsSection = () => {
   );
 };
 
-export default ChartsSection;
+export default BarChart;
