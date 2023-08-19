@@ -5,6 +5,7 @@ import routes from "routes";
 import MKBox from "components/MKBox";
 import bgImage from "assets/images/Banner.jpeg";
 import StickyNavbar from "./section/StickyNavbar";
+import Footer from "pages/LandingPages/Author/sections/Footer";
 
 const OpenInterest = () => {
   return (
@@ -54,6 +55,7 @@ const OpenInterest = () => {
         <StickyNavbar />
         <ChartAndFilter />
       </Card>
+      <Footer />
     </>
   );
 };

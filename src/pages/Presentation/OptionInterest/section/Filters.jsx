@@ -41,6 +41,9 @@ export const Filters = () => {
     dispatch(toggleWithNextMonth());
   };
 
+  const [minStike, setMinStrike] = useState(0);
+  const [maxStrike, setMaxStrike] = useState(0);
+
   return (
     <MKBox width={{ sm: "100%", md: "100%", lg: "30%" }} display={{ lg: "block" }}>
       <Card>
@@ -182,13 +185,22 @@ export const Filters = () => {
             <Typography fontSize={"small"} style={{ marginLeft: "3px" }}>
               Min
             </Typography>
-            <TextField size="small" style={{ marginRight: "5px" }} />
+            <TextField
+              size="small"
+              style={{ marginRight: "5px" }}
+              value={minStike}
+              onChange={(e) => setMinStrike(e.target.value)}
+            />
           </Box>
           <Box>
             <Typography fontSize={"small"} style={{ marginLeft: "3px" }}>
               Max
             </Typography>
-            <TextField size="small" />
+            <TextField
+              size="small"
+              value={maxStrike}
+              onChange={(e) => setMaxStrike(e.target.value)}
+            />
           </Box>
         </Box>
         <Typography fontSize={"small"} mt={"14px"}>

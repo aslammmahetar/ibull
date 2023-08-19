@@ -48,7 +48,6 @@ import bgImage from "assets/images/Banner.jpeg";
 
 // import Signup from "pages/LandingPages/SignUp/Index";
 import SignInBasic from "pages/LandingPages/SignIn";
-import { Box } from "@mui/material";
 
 function Presentation() {
   return (

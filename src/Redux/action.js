@@ -23,7 +23,7 @@ export const getReq = (dispatch) => {
     .get("http://localhost:3000/records")
     .then((res) => dispatch(getReqSuc(res.data)))
     .then((err) => dispatch(getReqFails));
-  axios.get("http://localhost:3000/filtered").then((res) => console.log(res.data));
+  // axios.get("http://localhost:3000/filtered").then((res) => console.log(res.data));
 };
 
 //

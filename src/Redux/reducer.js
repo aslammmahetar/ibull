@@ -8,7 +8,7 @@ const intialState = {
   strikePrices: [],
   twoMonthData: [],
   firstMonth: [],
-  sndMonth: [],
+  secondMonth: [],
   currentMonth: true,
   nextMonth: true,
 };
@@ -25,6 +25,7 @@ const reducer = (state = intialState, { type, payload }) => {
     }
 
     case GET_REQ_SUC: {
+      console.log(payload);
       const strikePricesArry = payload.strikePrices;
       const ulValue = payload.underlyingValue;
       const data = payload.data;
@@ -49,16 +50,10 @@ const reducer = (state = intialState, { type, payload }) => {
         };
       });
 
-      const septData = modifieddData.filter(
-        (item) =>
-          item.expiryDate === item.expiryDate.includes("Aug") || item.expiryDate.includes("Sep")
-      );
-      // console.log(septData);
-      const augData = modifieddData.filter(
-        (item) =>
-          item.expiryDate === item.expiryDate.includes("Sep") || item.expiryDate.includes("Aug")
-      );
-      // console.log(augData);
+      const septData = modifieddData.filter((item) => item.expiryDate.includes("Sep"));
+      console.log(septData);
+      const augData = modifieddData.filter((item) => item.expiryDate.includes("Aug"));
+      console.log(augData);
       return {
         ...state,
         isLoading: false,
@@ -79,10 +74,7 @@ const reducer = (state = intialState, { type, payload }) => {
       };
     }
     case CURRENT_MONTH_DATA: {
-      const septData = state.data.filter(
-        (item) =>
-          item.expiryDate === item.expiryDate.includes("Aug") || item.expiryDate.includes("Sep")
-      );
+      const septData = state.data.filter((item) => item.expiryDate.includes("Sep"));
       console.log(septData);
       return {
         ...state,
@@ -91,15 +83,12 @@ const reducer = (state = intialState, { type, payload }) => {
       };
     }
     case NEXT_MONTH_DATA: {
-      const augData = state.data.filter(
-        (item) =>
-          item.expiryDate === item.expiryDate.includes("Sep") || item.expiryDate.includes("Aug")
-      );
+      const augData = state.data.filter((item) => item.expiryDate.includes("Aug"));
       console.log(augData);
       return {
         ...state,
         nextMonth: !state.nextMonth,
-        sndMonth: augData,
+        secondMonth: augData,
       };
     }
     default:

@@ -2,9 +2,10 @@ import MKBox from "components/MKBox";
 import React from "react";
 import { Filters } from "./Filters";
 import { makeStyles } from "@mui/styles";
-import LineBarCombinedChart from "./test";
 import BarChart from "./ChartsSection";
-import { Box } from "@mui/material";
+import { Box, Card, Typography } from "@mui/material";
+import OpenIntrestes from "./OpenInterestsChart";
+import ChartFooter from "./ChartFooter";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -42,7 +43,15 @@ const ChartAndFilter = () => {
           width={{ xs: "100%", sm: "100%", md: "67%", lg: "67%" }}
         >
           <BarChart />
-          <LineBarCombinedChart />
+          <Card sx={{ padding: "10px", marginTop: "20px" }}>
+            <MKBox style={{ padding: "5px" }}>
+              <Typography variant="h5">Open Interest - Aug & Sep Expiries</Typography>
+            </MKBox>
+            <hr />
+            <OpenIntrestes />
+            <hr />
+            <ChartFooter />
+          </Card>
         </Box>
       </MKBox>
     </div>

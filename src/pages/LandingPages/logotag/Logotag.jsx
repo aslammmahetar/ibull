@@ -6,12 +6,18 @@ export const Logotag = () => {
     <Grid xs={12} sm={10} md={6} lg={6}>
       <h1
         style={{
-          textAlign: "center",
-          color: "black",
-          fontFamily: `'Dancing Script', 'cursive'`,
+          textAlign: "left",
         }}
       >
-        iBull
+        Welcome to{" "}
+        <span
+          style={{
+            color: "black",
+            fontFamily: `'Dancing Script', 'cursive'`,
+          }}
+        >
+          iBull
+        </span>
       </h1>
       <h3
         style={{

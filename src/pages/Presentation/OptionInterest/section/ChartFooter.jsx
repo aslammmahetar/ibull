@@ -42,21 +42,25 @@ const ChartFooter = () => {
       />
       <Box
         display={"flex"}
-        style={{ width: "30%" }}
+        style={{ width: "35%" }}
         justifyContent={"space-around"}
-        textAlign={"center"}
+        textAlign={"left"}
       >
         <Box>
           <Typography sx={{ fontSize: "small" }}>Call Change</Typography>
           <Typography variant="h6">2.36</Typography>
         </Box>
         <Box>
-          <Typography sx={{ fontSize: "small" }}>Call Change</Typography>
+          <Typography sx={{ fontSize: "small" }}>Put Change</Typography>
           <Typography variant="h6">2.36</Typography>
         </Box>
         <Box>
-          <Typography sx={{ fontSize: "small" }}>Call Change</Typography>
-          <Typography variant="h6">2.36</Typography>
+          <Typography sx={{ fontSize: "small" }}>17th Aug Prices</Typography>
+          <Typography variant="h6">2538</Typography>
+        </Box>
+        <Box>
+          <Typography sx={{ fontSize: "small" }}>18th Aug Prices</Typography>
+          <Typography variant="h6">2552</Typography>
         </Box>
       </Box>
     </MKBox>
