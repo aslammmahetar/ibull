@@ -1,4 +1,13 @@
-import { GET_REQ, GET_REQ_FAILS, GET_REQ_SUC, CURRENT_MONTH_DATA, NEXT_MONTH_DATA } from "./action";
+import {
+  GET_REQ,
+  GET_REQ_FAILS,
+  GET_REQ_SUC,
+  CURRENT_MONTH_DATA,
+  NEXT_MONTH_DATA,
+  FIVE_MIN_DATA_SUC,
+  FIVE_MIN_DATA,
+  FIVE_MIN_DATA_FAIL,
+} from "./action";
 
 const intialState = {
   isLoading: false,
@@ -11,6 +20,32 @@ const intialState = {
   secondMonth: [],
   currentMonth: true,
   nextMonth: true,
+  fiveMinData: [],
+  isLoading5: false,
+  isError5: false,
+};
+
+const modifyData = (data) => {
+  const modifieddData = data.map((element) => {
+    const combinedCEPE = {};
+
+    for (const key in element.CE) {
+      combinedCEPE[`CE_${key}`] = element.CE[key];
+    }
+
+    for (const key in element.PE) {
+      combinedCEPE[`PE_${key}`] = element.PE[key];
+    }
+
+    // Remove original "CE" and "PE" objects
+    const { CE, PE, ...rest } = element;
+
+    return {
+      ...rest,
+      combinedCEPE,
+    };
+  });
+  return modifieddData;
 };
 
 const reducer = (state = intialState, { type, payload }) => {
@@ -30,35 +65,16 @@ const reducer = (state = intialState, { type, payload }) => {
       const ulValue = payload.underlyingValue;
       const data = payload.data;
       // console.log(data);
-      const modifieddData = data.map((element) => {
-        const combinedCEPE = {};
-
-        for (const key in element.CE) {
-          combinedCEPE[`CE_${key}`] = element.CE[key];
-        }
-
-        for (const key in element.PE) {
-          combinedCEPE[`PE_${key}`] = element.PE[key];
-        }
-
-        // Remove original "CE" and "PE" objects
-        const { CE, PE, ...rest } = element;
-
-        return {
-          ...rest,
-          combinedCEPE,
-        };
-      });
-
-      const septData = modifieddData.filter((item) => item.expiryDate.includes("Sep"));
+      modifyData(data);
+      const septData = modifyData(data).filter((item) => item.expiryDate.includes("Sep"));
       console.log(septData);
-      const augData = modifieddData.filter((item) => item.expiryDate.includes("Aug"));
+      const augData = modifyData(data).filter((item) => item.expiryDate.includes("Aug"));
       console.log(augData);
       return {
         ...state,
         isLoading: false,
         isError: false,
-        data: modifieddData,
+        data: modifyData(data),
         underlyingValue: ulValue,
         strikePrices: strikePricesArry,
         twoMonthData: [...augData, ...septData],
@@ -89,6 +105,28 @@ const reducer = (state = intialState, { type, payload }) => {
         ...state,
         nextMonth: !state.nextMonth,
         secondMonth: augData,
+      };
+    }
+
+    case FIVE_MIN_DATA: {
+      return {
+        ...state,
+        isLoading5: true,
+        isError5: false,
+        fiveMinData: [],
+      };
+    }
+    case FIVE_MIN_DATA_FAIL: {
+      return {
+        ...state,
+        isLoading5: false,
+        isError5: true,
+        fiveMinData: [],
+      };
+    }
+    case FIVE_MIN_DATA_SUC: {
+      return {
+        ...state,
       };
     }
     default:

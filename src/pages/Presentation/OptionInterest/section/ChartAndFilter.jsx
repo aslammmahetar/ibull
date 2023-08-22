@@ -4,8 +4,8 @@ import { Filters } from "./Filters";
 import { makeStyles } from "@mui/styles";
 import BarChart from "./ChartsSection";
 import { Box, Card, Typography } from "@mui/material";
-import OpenIntrestes from "./OpenInterestsChart";
 import ChartFooter from "./ChartFooter";
+import OpenIntrestes from "./OpenInterestsChart";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,

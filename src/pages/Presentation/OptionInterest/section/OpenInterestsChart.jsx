@@ -11,7 +11,7 @@ const OpenIntrestes = () => {
   const nextMonth = useSelector((store) => store.reducer.nextMonth);
   const firstMonth = useSelector((store) => store.reducer.firstMonth);
   const secondMonth = useSelector((store) => store.reducer.secondMonth);
-
+  console.log(twoMonthData);
   useEffect(() => {
     // Fetch options data from the API
     dispatch(getReq);
@@ -38,6 +38,8 @@ const OpenIntrestes = () => {
     backgroundColor: "#FF4747",
   };
 
+  console.log(ceDataset);
+
   const peDataset = {
     label: "PE Data",
     data: (() => {
@@ -55,6 +57,7 @@ const OpenIntrestes = () => {
     backgroundColor: "#B2BD4C",
     borderColor: "#B2BD4C",
   };
+  console.log(peDataset);
 
   const data = {
     labels: labels,

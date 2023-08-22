@@ -19,6 +19,7 @@ import { BrowserRouter } from "react-router-dom";
 import App from "App";
 import { Provider } from "react-redux";
 import { store } from "Redux/store";
+import { ChakraProvider } from "@chakra-ui/react";
 
 const container = document.getElementById("root");
 
@@ -28,7 +29,9 @@ const root = ReactDOMClient.createRoot(container);
 root.render(
   <Provider store={store}>
     <BrowserRouter>
-      <App />
+      <ChakraProvider>
+        <App />
+      </ChakraProvider>
     </BrowserRouter>
   </Provider>
 );

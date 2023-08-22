@@ -1,21 +1,11 @@
 import MKBox from "components/MKBox";
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
-import React, { useState } from "react";
+import React from "react";
 import routes from "routes";
 import bgImage from "assets/images/Banner.jpeg";
-import {
-  Box,
-  Button,
-  Card,
-  FormControl,
-  IconButton,
-  InputBase,
-  InputLabel,
-  MenuItem,
-  Select,
-  Tooltip,
-} from "@mui/material";
+import { Box, Card } from "@mui/material";
 import SBFilters from "./Sections/SBFilters";
+import SearchANdSetting from "./Sections/SearchANdSetting";
 
 const StretergyBuilder = () => {
   return (
@@ -49,7 +39,7 @@ const StretergyBuilder = () => {
       ></MKBox>
       <Card
         sx={{
-          p: 1,
+          p: 2,
           mx: { xs: 2, lg: 3 },
           mb: 4,
           mt: -5,
@@ -59,9 +49,13 @@ const StretergyBuilder = () => {
           position: "sticky",
           // top: isSticky ? "80px" : "auto",
           zIndex: 2,
+          display: "flex",
         }}
       >
-        <SBFilters />
+        <Box display={"flex"}>
+          <SBFilters />
+          jkdhbfed
+        </Box>
       </Card>
     </>
   );

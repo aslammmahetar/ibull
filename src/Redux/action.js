@@ -5,6 +5,9 @@ export const GET_REQ_SUC = "GET_REQ_SUC";
 export const GET_REQ_FAILS = "GET_REQ_FAILS";
 export const CURRENT_MONTH_DATA = "CURRENT_MONTH_DATA";
 export const NEXT_MONTH_DATA = "NEXT_MONTH_DATA";
+export const FIVE_MIN_DATA_SUC = "FIVE_MIN_DATA_SUC";
+export const FIVE_MIN_DATA_FAIL = "FIVE_MIN_DATA_FAIL";
+export const FIVE_MIN_DATA = "FIVE_MIN_DATA";
 
 export const getData = () => {
   return { type: GET_REQ };
@@ -33,4 +36,23 @@ export const toggleWithCurrentMonth = () => {
 
 export const toggleWithNextMonth = () => {
   return { type: NEXT_MONTH_DATA };
+};
+
+export const getFiveMinData = () => {
+  return { type: FIVE_MIN_DATA };
+};
+
+export const getFiveMinDataSuc = (payload) => {
+  return { type: FIVE_MIN_DATA_SUC, payload };
+};
+
+export const getFiveMinDataFails = () => {
+  return { type: FIVE_MIN_DATA_FAIL };
+};
+export const get5MInData = (dispatch) => {
+  dispatch(getFiveMinData);
+  axios
+    .get("http://localhost:3000/records2")
+    .then((res) => dispatch(getFiveMinDataSuc(res.data)))
+    .then((err) => dispatch(getFiveMinDataFails));
 };

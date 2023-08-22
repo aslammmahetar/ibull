@@ -15,6 +15,8 @@ import {
 } from "@mui/material";
 import MKBox from "components/MKBox";
 import InfoIcon from "@mui/icons-material/Info";
+import Builder from "./Builder";
+
 const SearchANdSetting = () => {
   const [open, setOpen] = useState(false);
 
@@ -38,7 +40,7 @@ const SearchANdSetting = () => {
   return (
     <div>
       <MKBox
-        width={{ sm: "100%", md: "100%", lg: "45%" }}
+        width={{ sm: "100%", md: "100%", lg: "100%" }}
         display={{ lg: "block" }}
         style={{ borderRadius: "10px" }}
       >
@@ -115,9 +117,9 @@ const SearchANdSetting = () => {
           flexDirection: "row",
           alignItems: "center",
           backgroundColor: "#FDFFFC",
-          marginTop: "6px",
+          marginTop: "5px",
         }}
-        width={{ sm: "100%", md: "100%", lg: "45%" }}
+        width={{ sm: "100%", md: "100%", lg: "100%" }}
         borderRadius="5px"
       >
         <Switch
