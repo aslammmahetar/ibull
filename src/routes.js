@@ -37,19 +37,19 @@ Coded by www.creative-tim.com
 */
 
 // Pages
-import AboutUs from "layouts/pages/landing-pages/about-us";
+// import AboutUs from "layouts/pages/landing-pages/about-us";
 import ContactUs from "layouts/pages/landing-pages/contact-us";
 import Author from "layouts/pages/landing-pages/author";
 // import SignIn from "layouts/pages/authentication/sign-in";
 
 // Sections
-import PageHeaders from "layouts/sections/page-sections/page-headers";
-import Features from "layouts/sections/page-sections/featuers";
-import Navbars from "layouts/sections/navigation/navbars";
-import NavTabs from "layouts/sections/navigation/nav-tabs";
-import Pagination from "layouts/sections/navigation/pagination";
-import Inputs from "layouts/sections/input-areas/inputs";
-import Forms from "layouts/sections/input-areas/forms";
+// import PageHeaders from "layouts/sections/page-sections/page-headers";
+// import Features from "layouts/sections/page-sections/featuers";
+// import Navbars from "layouts/sections/navigation/navbars";
+// import NavTabs from "layouts/sections/navigation/nav-tabs";
+// import Pagination from "layouts/sections/navigation/pagination";
+// import Inputs from "layouts/sections/input-areas/inputs";
+// import Forms from "layouts/sections/input-areas/forms";
 import Alerts from "layouts/sections/attention-catchers/alerts";
 import Modals from "layouts/sections/attention-catchers/modals";
 import TooltipsPopovers from "layouts/sections/attention-catchers/tooltips-popovers";
@@ -63,7 +63,9 @@ import Toggles from "layouts/sections/elements/toggles";
 import Typography from "layouts/sections/elements/typography";
 import Signup from "pages/LandingPages/SignUp/Index";
 import OpenInterest from "pages/Presentation/OptionInterest/OpenInterest";
-
+import MSoi from "pages/Presentation/MultiStrikeOI/Index";
+import StretergyBuilder from "pages/Presentation/StretergyBuilder/Index";
+import AboutUs from "pages/LandingPages/OptionChainPage";
 
 const routes = [
   {
@@ -74,12 +76,11 @@ const routes = [
     dropdown: true,
     collapse: [
       {
-        name: "landing pages",
         collapse: [
           {
-            name: "Option Trade",
-            route: "/pages/landing-pages/option-trade",
-            component: <AboutUs />,
+            name: "Stretergy Builder",
+            component: <StretergyBuilder />,
+            route: "/pages/landing-pages/stretergybuilder",
           },
           {
             name: "contact us",
@@ -113,29 +114,29 @@ const routes = [
         name: "Option Trade",
         route: "/pages/landing-pages/option-trade",
         dropdown: false,
-        component: <OpenInterest />,
+        component: <AboutUs />,
 
         // collapse: [
-          // {
-            //   name: "page headers",
-            //     component: <PageHeaders />,
-            //   },
-            //   {
-              //     name: "features",
-              //     route: "/sections/page-sections/features",
-              //     component: <Features />,
-              //   },
-              // ],
-            },
-            {
-              name: "Optioin Interest",
-              route: "/pages/landing-pages/option-trade/openinterest",
-              component: <OpenInterest />,
+        // {
+        //   name: "page headers",
+        //     component: <PageHeaders />,
+        //   },
+        //   {
+        //     name: "features",
+        //     route: "/sections/page-sections/features",
+        //     component: <Features />,
+        //   },
+        // ],
+      },
+      {
+        name: "Optioin Interest",
+        route: "/pages/landing-pages/option-trade/openinterest",
+        component: <OpenInterest />,
         dropdown: false,
         // description: "See all navigations",
         // collapse: [
         //   {
-        //     name: "navbars",  
+        //     name: "navbars",
         //     component: <Navbars />,
         //   },
         //   {
@@ -151,21 +152,23 @@ const routes = [
         // ],
       },
       {
-        name: "input areas",
-        description: "See all input areas",
-        dropdown: true,
-        collapse: [
-          {
-            name: "inputs",
-            route: "/sections/input-areas/inputs",
-            component: <Inputs />,
-          },
-          {
-            name: "forms",
-            route: "/sections/input-areas/forms",
-            component: <Forms />,
-          },
-        ],
+        name: "Multi Strike OI",
+        // description: "See all input areas",
+        route: "/pages/landing-pages/option-trade/multistrikeio",
+        component: <MSoi />,
+        dropdown: false,
+        // collapse: [
+        //   {
+        //     name: "inputs",
+        //     route: "/sections/input-areas/inputs",
+        //     component: <Inputs />,
+        //   },
+        //   {
+        //     name: "forms",
+        //     route: "/sections/input-areas/forms",
+        //     component: <Forms />,
+        //   },
+        // ],
       },
       {
         name: "attention catchers",
@@ -275,4 +278,3 @@ const routes = [
 ];
 
 export default routes;
-

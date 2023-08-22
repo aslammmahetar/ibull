@@ -18,13 +18,13 @@ import footerRoutes from "footer.routes";
 // import bgImage from "/"
 import bgImage from "assets/images/Banner.jpeg";
 
-import OptionChain from "pages/Presentation/components/OptionChain/OptionChain";
 import { FormControl, IconButton, InputBase, MenuItem, Select } from "@mui/material";
 import { useEffect, useState } from "react";
 import { BarChartOutlined, OndemandVideo, Search, ShowChartOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getReq } from "Redux/action";
+import OptionChain from "./OptionChain/OptionChain";
 function AboutUs() {
   const navigate = useNavigate();
 

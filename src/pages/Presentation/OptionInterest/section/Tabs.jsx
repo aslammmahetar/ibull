@@ -8,6 +8,8 @@ import InfoIcon from "@mui/icons-material/Info";
 import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
 import MKBox from "components/MKBox";
 import { useMediaQuery } from "@mui/material";
+import { TabContext, TabList, TabPanel } from "@mui/lab";
+import ChartAndFilter from "./ChartAndFilter";
 
 function a11yProps(index) {
   return {
@@ -17,7 +19,7 @@ function a11yProps(index) {
 }
 
 export default function FullWidthTabs() {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState("1");
   const isSmallScreen = useMediaQuery("(max-width:600px)");
 
   const handleChange = (event, newValue) => {
@@ -45,17 +47,14 @@ export default function FullWidthTabs() {
           }}
         >
           {/* <Box> */}
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            indicatorColor="secondary"
-            textColor="inherit"
-            variant="fullWidth"
-            aria-label="full width tabs example"
-          >
-            <Tab label="Open Interest" {...a11yProps(0)} />
-            <Tab label="Multi strike IO" {...a11yProps(1)} />
-          </Tabs>
+          <TabContext value={value}>
+            <Box>
+              <TabList onChange={handleChange}>
+                <Tab label="Option Stratergies" value="1" />
+                <Tab label="Multi Stike OI" value="2" />
+              </TabList>
+            </Box>
+          </TabContext>
         </Box>
 
         <Box
