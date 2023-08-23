@@ -6,6 +6,7 @@ import bgImage from "assets/images/Banner.jpeg";
 import { Box, Card } from "@mui/material";
 import SBFilters from "./Sections/SBFilters";
 import SearchANdSetting from "./Sections/SearchANdSetting";
+import BuilderColRight from "./Sections/BuilderColRight";
 
 const StretergyBuilder = () => {
   return (
@@ -21,7 +22,7 @@ const StretergyBuilder = () => {
         sticky
         transparent={false}
         dark
-        zIndex={999}
+        zIndex={1}
         width="100%"
       />
       <MKBox
@@ -48,13 +49,12 @@ const StretergyBuilder = () => {
           boxShadow: ({ boxShadows: { xxl } }) => xxl,
           position: "sticky",
           // top: isSticky ? "80px" : "auto",
-          zIndex: 2,
           display: "flex",
         }}
       >
-        <Box display={"flex"}>
+        <Box display={"flex"} justifyContent={"space-between"}>
           <SBFilters />
-          jkdhbfed
+          <BuilderColRight />
         </Box>
       </Card>
     </>

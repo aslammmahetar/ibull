@@ -4,7 +4,7 @@ import Builder from "./Builder";
 import { Box, Stack } from "@mui/material";
 const SBFilters = () => {
   return (
-    <Box width={"45%"}>
+    <Box width={"43%"}>
       <SearchANdSetting />
       <Builder />
     </Box>

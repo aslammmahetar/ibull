@@ -113,7 +113,6 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
                   top: 0,
                   left: 0,
                   width: `${(rows.combinedCEPE.CE_openInterest / CemaxOI) * 100}%`,
-                  backgroundColor: "lightgreen",
                   color: "lightgreen",
                   borderTopRightRadius: "10px",
                   borderBottomRightRadius: "10px",

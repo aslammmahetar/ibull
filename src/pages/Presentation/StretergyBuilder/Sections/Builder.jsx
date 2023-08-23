@@ -1,10 +1,22 @@
 import React from "react";
 import { makeStyles } from "@mui/styles";
-import { Box, IconButton, InputBase, Paper, TextField, Typography } from "@mui/material";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Button,
+  IconButton,
+  InputBase,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
 import AnnouncementIcon from "@mui/icons-material/Announcement";
 import MKButton from "components/MKButton";
 import MKBox from "components/MKBox";
 import SearchIcon from "@mui/icons-material/Search";
+import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import {
   Tabs,
   TabList,
@@ -14,7 +26,17 @@ import {
   TabIndicator,
   Grid,
   GridItem,
+  useDisclosure,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerHeader,
+  DrawerBody,
+  Card,
 } from "@chakra-ui/react";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import OptionChain from "pages/LandingPages/OptionChainPage/OptionChain/OptionChain";
+import SbDrawer from "./SbDrawer";
 const useStyles = makeStyles((theme) => ({
   builderContiner: {
     maxHeight: "calc(80vh - 100px)", // Adjust this as needed
@@ -23,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
     position: "sticky",
     borderRadius: "5px",
     marginTop: "5px",
+    zIndex: 0,
   },
 }));
 
@@ -41,9 +64,7 @@ const Builder = () => {
           <AnnouncementIcon />
         </MKBox>
         <Typography marginTop={-5}>No Trade's Added</Typography>
-        <MKButton color="info" style={{ marginTop: -20 }}>
-          Build A Custom New Stratergy
-        </MKButton>
+        <SbDrawer />
       </Box>
       <Tabs bgColor={"#FDFFFC"} mt={2} p={5}>
         <TabList display={"flex"} justifyContent={"space-around"} fontSize={"medium"}>
@@ -185,6 +206,47 @@ const Builder = () => {
           </TabPanel>
         </TabPanels>
       </Tabs>
+      <MKBox
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        style={{ backgroundColor: "#FDFFFC", padding: 5, marginTop: 5 }}
+        // bgcolor={"#FDFFFC"}
+        borderRadius={"5px"}
+      >
+        <Typography fontSize={"medium"}>How to use Stretergy Buider</Typography>
+        <MKBox>
+          <Button
+            startIcon={<PlayCircleIcon />}
+            style={{ border: "solid black 1px", color: "black" }}
+            size="small"
+          >
+            English
+          </Button>
+          <Button
+            startIcon={<PlayCircleIcon />}
+            style={{ border: "solid black 1px", color: "black", marginLeft: 2 }}
+            size="small"
+          >
+            Hindi
+          </Button>
+        </MKBox>
+      </MKBox>
+      <Typography fontSize={"small"} mt={2}>
+        Prices last updated at 11:52 AM. (Prices are auto-refreshed every 30 seconds).
+      </Typography>
+
+      <Accordion>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+          <Typography variant="h6">Important Information</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography fontSize={"small"}>
+            The profit and loss are projections, and they depend on premia, liquidity, IV, etc.
+            While we make the best effort to ensure they are right, the actual numbers may vary.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
     </Box>
   );
 };

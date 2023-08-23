@@ -1,0 +1,19 @@
+.container {
+    position: relative;
+    background-color: lightgray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .button {
+    display: none;
+    background-color: blue;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+
+  .container:hover .button {
+    display: block;
+  }
