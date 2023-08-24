@@ -146,6 +146,8 @@ const SBDrawerTable = () => {
             position: "relative",
             backgroundColor: rows.strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
             padding: 7,
+            display: "flex",
+            flexDirection: "row-reverse",
           }}
         >
           <div
@@ -157,6 +159,7 @@ const SBDrawerTable = () => {
               backgroundColor: "lightgreen",
               color: "lightgreen",
               marginTop: 6,
+              zIndex: 0,
               borderTopRightRadius: "10px",
               borderBottomRightRadius: "10px",
               opacity: "0.5",
@@ -166,9 +169,15 @@ const SBDrawerTable = () => {
           </div>
           <div
             style={{
-              backgroundColor: rows.strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
+              // backgroundColor: rows.strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
               textAlign: "right",
-              marginRight: "20px",
+              marginRight: "20%",
+              width: "50%",
+              // border: "solid black 1px",
+              display: "flex",
+              alignItems: "center",
+              opacity: 0.5,
+              padding: 2,
             }}
           >
             <div className="bAndC" style={{ marginLeft: 5, width: "20px" }}>
@@ -180,6 +189,7 @@ const SBDrawerTable = () => {
                   border: "solid black 1px",
                   backgroundColor: "whitesmoke",
                   marginRight: 5,
+                  zIndex: 999,
                 }}
               >
                 B
@@ -196,7 +206,7 @@ const SBDrawerTable = () => {
                 S
               </button>
             </div>
-            <div>
+            <div style={{ marginLeft: "30%" }}>
               <p>{rows.combinedCEPE.CE_openInterest ? rows.combinedCEPE.CE_openInterest : 0}</p>
             </div>
           </div>

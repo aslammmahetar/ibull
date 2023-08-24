@@ -66,6 +66,7 @@ import OpenInterest from "pages/Presentation/OptionInterest/OpenInterest";
 import MSoi from "pages/Presentation/MultiStrikeOI/Index";
 import StretergyBuilder from "pages/Presentation/StretergyBuilder/Index";
 import AboutUs from "pages/LandingPages/OptionChainPage";
+import StretergyWizard from "pages/Presentation/StretergyWizard/StretergyWizard";
 
 const routes = [
   {
@@ -83,9 +84,9 @@ const routes = [
             route: "/pages/landing-pages/stretergybuilder",
           },
           {
-            name: "contact us",
-            route: "/pages/landing-pages/contact-us",
-            component: <ContactUs />,
+            name: "Stretergy Wizard",
+            route: "/pages/landing-pages/stretergywizard",
+            component: <StretergyWizard />,
           },
           {
             name: "author",

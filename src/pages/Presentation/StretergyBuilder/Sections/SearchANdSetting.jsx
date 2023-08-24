@@ -6,16 +6,20 @@ import { Search } from "@mui/icons-material";
 import {
   Box,
   Button,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
   IconButton,
   InputBase,
   MenuItem,
+  Radio,
+  RadioGroup,
   Switch,
   Tooltip,
   Typography,
 } from "@mui/material";
 import MKBox from "components/MKBox";
 import InfoIcon from "@mui/icons-material/Info";
-import Builder from "./Builder";
 
 const SearchANdSetting = () => {
   const [open, setOpen] = useState(false);
@@ -35,6 +39,11 @@ const SearchANdSetting = () => {
 
   const handleSwitchChange = (event) => {
     setIsChecked(event.target.checked);
+  };
+  const [value, setValue] = React.useState("female");
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
   };
 
   return (
@@ -103,9 +112,40 @@ const SearchANdSetting = () => {
                   horizontal: "left",
                 }}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <Typography fontSize={"small"}>Buider Setting</Typography>
+                <hr />
+                <FormControl>
+                  <RadioGroup
+                    aria-labelledby="demo-controlled-radio-buttons-group"
+                    name="controlled-radio-buttons-group"
+                    value={value}
+                    onChange={handleChange}
+                  >
+                    <div style={{ display: "flex" }}>
+                      <FormControlLabel value="lots" control={<Radio />} label="Lots" />
+                      <FormControlLabel value="qty" control={<Radio />} label="Qty" />
+                    </div>
+                  </RadioGroup>
+                </FormControl>
+                <br />
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <Switch
+                    checked={isChecked}
+                    onChange={handleSwitchChange}
+                    color="primary"
+                    inputProps={{ "aria-label": "controlled" }}
+                  />
+                  <Typography fontSize={"small"}>Include booked P/L</Typography>
+                </div>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <Switch
+                    checked={isChecked}
+                    onChange={handleSwitchChange}
+                    color="primary"
+                    inputProps={{ "aria-label": "controlled" }}
+                  />
+                  <Typography fontSize={"small"}>Show Manual P&L</Typography>
+                </div>
               </Menu>
             </div>
           </MKBox>
