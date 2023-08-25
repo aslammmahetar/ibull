@@ -4,9 +4,14 @@ import {
   GET_REQ_SUC,
   CURRENT_MONTH_DATA,
   NEXT_MONTH_DATA,
-  FIVE_MIN_DATA_SUC,
-  FIVE_MIN_DATA,
-  FIVE_MIN_DATA_FAIL,
+  GET_TWO_MONTH_DATA,
+  EMPTY_DATA,
+  FIRST_MONTH,
+  SECOND_MONTH,
+  // FIVE_MIN_DATA_SUC,
+  // FIVE_MIN_DATA,
+  // FIVE_MIN_DATA_FAIL,
+  // GET_TWO_MONTH_DATA,
 } from "./action";
 
 const intialState = {
@@ -16,13 +21,8 @@ const intialState = {
   underlyingValue: 0,
   strikePrices: [],
   twoMonthData: [],
-  firstMonth: [],
-  secondMonth: [],
   currentMonth: true,
   nextMonth: true,
-  fiveMinData: [],
-  isLoading5: false,
-  isError5: false,
 };
 
 const modifyData = (data) => {
@@ -60,16 +60,13 @@ const reducer = (state = intialState, { type, payload }) => {
     }
 
     case GET_REQ_SUC: {
-      console.log(payload);
       const strikePricesArry = payload.strikePrices;
       const ulValue = payload.underlyingValue;
       const data = payload.data;
       // console.log(data);
       modifyData(data);
       const septData = modifyData(data).filter((item) => item.expiryDate.includes("Sep"));
-      console.log(septData);
       const augData = modifyData(data).filter((item) => item.expiryDate.includes("Aug"));
-      console.log(augData);
       return {
         ...state,
         isLoading: false,
@@ -90,43 +87,45 @@ const reducer = (state = intialState, { type, payload }) => {
       };
     }
     case CURRENT_MONTH_DATA: {
+      return {
+        ...state,
+        currentMonth: !state.currentMonth,
+      };
+    }
+    case NEXT_MONTH_DATA: {
+      return {
+        ...state,
+        nextMonth: !state.nextMonth,
+      };
+    }
+    case GET_TWO_MONTH_DATA: {
+      const septData = state.data.filter((item) => item.expiryDate.includes("Sep"));
+      const augData = state.data.filter((item) => item.expiryDate.includes("Aug"));
+      return {
+        ...state,
+        twoMonthData: [...augData, ...septData],
+      };
+    }
+    case EMPTY_DATA: {
+      return {
+        ...state,
+        twoMonthData: [],
+      };
+    }
+    case FIRST_MONTH: {
       const septData = state.data.filter((item) => item.expiryDate.includes("Sep"));
       console.log(septData);
       return {
         ...state,
-        currentMonth: !state.currentMonth,
-        firstMonth: septData,
+        twoMonthData: septData,
       };
     }
-    case NEXT_MONTH_DATA: {
+    case SECOND_MONTH: {
       const augData = state.data.filter((item) => item.expiryDate.includes("Aug"));
       console.log(augData);
       return {
         ...state,
-        nextMonth: !state.nextMonth,
-        secondMonth: augData,
-      };
-    }
-
-    case FIVE_MIN_DATA: {
-      return {
-        ...state,
-        isLoading5: true,
-        isError5: false,
-        fiveMinData: [],
-      };
-    }
-    case FIVE_MIN_DATA_FAIL: {
-      return {
-        ...state,
-        isLoading5: false,
-        isError5: true,
-        fiveMinData: [],
-      };
-    }
-    case FIVE_MIN_DATA_SUC: {
-      return {
-        ...state,
+        twoMonthData: augData,
       };
     }
     default:
@@ -135,3 +134,42 @@ const reducer = (state = intialState, { type, payload }) => {
 };
 
 export default reducer;
+
+// case GET_TWO_MONTH_DATA: {
+//   const augData = state.data.filter((item) => item.expiryDate.includes("Aug"));
+//   const septData = state.data.filter((item) => item.expiryDate.includes("Sep"));
+//   console.log([...augData, ...septData]);
+//   return {
+//     ...state,
+//     twoMonthData:
+//       state.currentMonth == true && state.nextMonth == true ? [...augData, ...septData] : [],
+//   };
+// }
+
+// case FIVE_MIN_DATA: {
+//   return {
+//     ...state,
+//     isLoading5: true,
+//     isError5: false,
+//     fiveMinData: [],
+//   };
+// }
+// case FIVE_MIN_DATA_FAIL: {
+//   return {
+//     ...state,
+//     isLoading5: false,
+//     isError5: true,
+//     fiveMinData: [],
+//   };
+// }
+// case FIVE_MIN_DATA_SUC: {
+//   console.log(payload);
+//   return {
+//     ...state,
+//   };
+// }
+// isError5: false,
+// fiveMinData: [],
+// isLoading5: false,
+// secondMonth: [],
+// firstMonth: [],

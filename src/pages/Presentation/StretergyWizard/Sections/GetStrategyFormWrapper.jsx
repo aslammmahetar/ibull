@@ -21,18 +21,11 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MKButton from "components/MKButton";
 const GetStrategyFormWrapper = () => {
   const [open, setOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const opened = Boolean(anchorEl);
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
   const handleSearchIconClick = () => {
     setOpen(!open);
   };
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+
   return (
     <Box
       sx={{
@@ -94,10 +87,11 @@ const GetStrategyFormWrapper = () => {
         <FormControl>
           <InputLabel id="prediction-label">Prediction</InputLabel>
           <Select
-            style={{ width: "100px", height: "40px" }}
+            style={{ width: "110px", height: "40px" }}
             labelId="prediction-label"
             id="prediction-select"
             label="Prediction"
+            defaultValue={1}
           >
             <MenuItem value={1}>24 Aug Expiry </MenuItem>
             <MenuItem value={2}>31 AUg Expiry</MenuItem>

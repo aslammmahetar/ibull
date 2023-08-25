@@ -15,12 +15,16 @@ import {
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 
 import MKBox from "components/MKBox";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import MKButton from "components/MKButton";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleWithCurrentMonth } from "Redux/action";
 import { toggleWithNextMonth } from "Redux/action";
+import { getTwoMonthData } from "Redux/action";
+import { emptyData } from "Redux/action";
+import { firstMonth } from "Redux/action";
+import { secondMonth } from "Redux/action";
 
 export const Filters = () => {
   const [open, setOpen] = useState(false);
@@ -33,13 +37,31 @@ export const Filters = () => {
   const currentIsChecked = useSelector((state) => state.reducer.currentMonth);
   const nextIscChecked = useSelector((store) => store.reducer.nextMonth);
   const dispatch = useDispatch();
-
+  const nextMonth = useSelector((store) => store.reducer.nextMonth);
+  const currentMonth = useSelector((store) => store.reducer.currentMonth);
+  const displayData = () => {
+    if (currentMonth && nextMonth) {
+      return dispatch(getTwoMonthData());
+    } else if (!currentMonth && nextMonth) {
+      return dispatch(firstMonth());
+    } else if (currentMonth && !nextMonth) {
+      return dispatch(secondMonth());
+    } else if (!currentMonth && !nextMonth) {
+      return dispatch(emptyData());
+    }
+  };
   const handleCurrentBoxChange = () => {
     dispatch(toggleWithCurrentMonth());
+    displayData();
   };
   const handleNextBoxXChange = () => {
     dispatch(toggleWithNextMonth());
+    displayData();
   };
+
+  useEffect(() => {
+    displayData();
+  }, [currentMonth, nextMonth]);
 
   const [minStike, setMinStrike] = useState(0);
   const [maxStrike, setMaxStrike] = useState(0);

@@ -8,6 +8,10 @@ export const NEXT_MONTH_DATA = "NEXT_MONTH_DATA";
 export const FIVE_MIN_DATA_SUC = "FIVE_MIN_DATA_SUC";
 export const FIVE_MIN_DATA_FAIL = "FIVE_MIN_DATA_FAIL";
 export const FIVE_MIN_DATA = "FIVE_MIN_DATA";
+export const GET_TWO_MONTH_DATA = "GET_TWO_MONTH_DATA";
+export const EMPTY_DATA = "EMPTY_DATA";
+export const FIRST_MONTH = "FIRST_MONTH";
+export const SECOND_MONTH = "SECOND_MONTH";
 
 export const getData = () => {
   return { type: GET_REQ };
@@ -49,6 +53,23 @@ export const getFiveMinDataSuc = (payload) => {
 export const getFiveMinDataFails = () => {
   return { type: FIVE_MIN_DATA_FAIL };
 };
+
+export const getTwoMonthData = () => {
+  return { type: GET_TWO_MONTH_DATA };
+};
+
+export const emptyData = () => {
+  return { type: EMPTY_DATA };
+};
+
+export const firstMonth = () => {
+  return { type: FIRST_MONTH };
+};
+
+export const secondMonth = () => {
+  return { type: SECOND_MONTH };
+};
+
 export const get5MInData = (dispatch) => {
   dispatch(getFiveMinData);
   axios
