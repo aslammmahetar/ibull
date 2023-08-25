@@ -8,6 +8,7 @@ import {
   EMPTY_DATA,
   FIRST_MONTH,
   SECOND_MONTH,
+  FIVE_MIN_DATA_SUC,
   // FIVE_MIN_DATA_SUC,
   // FIVE_MIN_DATA,
   // FIVE_MIN_DATA_FAIL,
@@ -23,6 +24,7 @@ const intialState = {
   twoMonthData: [],
   currentMonth: true,
   nextMonth: true,
+  fiveMinData: [],
 };
 
 const modifyData = (data) => {
@@ -128,6 +130,18 @@ const reducer = (state = intialState, { type, payload }) => {
         twoMonthData: augData,
       };
     }
+    case FIVE_MIN_DATA_SUC: {
+      const data = payload.data;
+      modifyData(data);
+      const septData = modifyData(data).filter((item) => item.expiryDate.includes("Sep"));
+      const augData = modifyData(data).filter((item) => item.expiryDate.includes("Aug"));
+      console.log(septData);
+      console.log(augData);
+      return {
+        ...state,
+        fiveMinData: [...augData, ...septData],
+      };
+    }
     default:
       return state;
   }
@@ -162,12 +176,7 @@ export default reducer;
 //     fiveMinData: [],
 //   };
 // }
-// case FIVE_MIN_DATA_SUC: {
-//   console.log(payload);
-//   return {
-//     ...state,
-//   };
-// }
+
 // isError5: false,
 // fiveMinData: [],
 // isLoading5: false,

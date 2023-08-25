@@ -6,20 +6,8 @@ import MKBox from "components/MKBox";
 import bgImage from "assets/images/Banner.jpeg";
 import StickyNavbar from "./section/StickyNavbar";
 import Footer from "pages/LandingPages/Author/sections/Footer";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { getTwoMonthData } from "Redux/action";
 
 const OpenInterest = () => {
-  const currentMonth = useSelector((store) => store.reducer.currentMonth);
-  const nextMonth = useSelector((store) => store.reducer.nextMonth);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (currentMonth && nextMonth) {
-      dispatch(getTwoMonthData);
-    }
-  }, [currentMonth, nextMonth]);
   return (
     <>
       <CssBaseline />

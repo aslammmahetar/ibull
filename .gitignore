@@ -3,7 +3,7 @@
 # dependencies
 /node_modules
 .DS_Store
-/db.json
+db.json
 # testing
 /coverage
 
