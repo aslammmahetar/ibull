@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@mui/styles";
 import {
   Accordion,
@@ -6,9 +6,15 @@ import {
   AccordionSummary,
   Box,
   Button,
+  Checkbox,
+  FormControl,
+  FormControlLabel,
   IconButton,
   InputBase,
+  InputLabel,
+  MenuItem,
   Paper,
+  Select,
   TextField,
   Typography,
 } from "@mui/material";
@@ -16,7 +22,9 @@ import AnnouncementIcon from "@mui/icons-material/Announcement";
 import MKButton from "components/MKButton";
 import MKBox from "components/MKBox";
 import SearchIcon from "@mui/icons-material/Search";
+import WarningIcon from "@mui/icons-material/Warning";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
+import CachedIcon from "@mui/icons-material/Cached";
 import {
   Tabs,
   TabList,
@@ -26,17 +34,10 @@ import {
   TabIndicator,
   Grid,
   GridItem,
-  useDisclosure,
-  Drawer,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerHeader,
-  DrawerBody,
-  Card,
 } from "@chakra-ui/react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import OptionChain from "pages/LandingPages/OptionChainPage/OptionChain/OptionChain";
 import SbDrawer from "./SbDrawer";
+import { useSelector } from "react-redux";
 const useStyles = makeStyles((theme) => ({
   builderContiner: {
     maxHeight: "calc(80vh - 100px)", // Adjust this as needed
@@ -51,21 +52,139 @@ const useStyles = makeStyles((theme) => ({
 
 const Builder = () => {
   const classes = useStyles();
-  const [value, setValue] = React.useState("1");
+  const stretergyCreated = useSelector((store) => store.sbReducer.stretergyCreated);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+  const [checked, setChecked] = useState(false);
+
+  const handleCheckboxChange = (event) => {
+    setChecked(event.target.checked);
   };
 
   return (
     <Box className={classes.builderContiner}>
-      <Box bgcolor={"#FDFFFC"} textAlign={"center"} fontSize={"100px"}>
-        <MKBox>
-          <AnnouncementIcon />
-        </MKBox>
-        <Typography marginTop={-5}>No Trade's Added</Typography>
-        <SbDrawer />
-      </Box>
+      {!stretergyCreated ? (
+        <Box bgcolor={"#FDFFFC"} textAlign={"center"} fontSize={"100px"}>
+          <MKBox>
+            <AnnouncementIcon />
+          </MKBox>
+          <Typography marginTop={-5}>No Trade's Added</Typography>
+          <SbDrawer />
+        </Box>
+      ) : (
+        <Box bgcolor={"#FDFFFC"} fontSize={"100px"}>
+          <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
+            <Typography fontSize={"small"} p={1}>
+              New stretergy <WarningIcon />
+            </Typography>
+            <Button size="small">Clear New Trades</Button>
+          </Box>
+          <Box p={1} display={"flex"} justifyContent={"space-between"}>
+            <FormControlLabel
+              style={{ display: "flex" }}
+              control={<Checkbox checked={checked} onChange={handleCheckboxChange} />}
+              label="1 Tarde Selected"
+            />
+            <Button startIcon={<CachedIcon />}>Reset Prices</Button>
+          </Box>
+          <Box display={"flex"} justifyContent={"space-around"}>
+            <Typography fontSize={"small"} color={"grey"}>
+              B/S
+            </Typography>
+            <Typography fontSize={"small"} color={"grey"}>
+              Expiry
+            </Typography>
+            <Typography fontSize={"small"} color={"grey"}>
+              Strike
+            </Typography>
+            <Typography fontSize={"small"} color={"grey"}>
+              Type
+            </Typography>
+            <Typography fontSize={"small"} color={"grey"}>
+              QTY
+            </Typography>
+            <Typography fontSize={"small"} color={"grey"}>
+              Price
+            </Typography>
+          </Box>
+          <Box p={1} display={"flex"} justifyContent={"space-around"} alignItems={"center"}>
+            <Box display={"flex"} alignItems={"center"}>
+              <FormControlLabel
+                style={{ display: "flex" }}
+                control={<Checkbox checked={checked} onChange={handleCheckboxChange} />}
+              />
+              <Typography
+                fontSize={"small"}
+                color={"red"}
+                style={{
+                  backgroundColor: "#F0A8A8",
+                  padding: 2,
+                  paddingLeft: 6,
+                  paddingRight: 6,
+                  marginLeft: -11,
+                  borderRadius: 5,
+                }}
+              >
+                B
+              </Typography>
+            </Box>
+            <FormControl>
+              <Select
+                style={{ width: "80px", height: "40px", marginLeft: "-25px" }}
+                defaultValue={1}
+              >
+                <MenuItem value={1}>31 AUg</MenuItem>
+                <MenuItem value={2}>28 Sept</MenuItem>
+              </Select>
+            </FormControl>
+            <Box
+              marginLeft="-25px"
+              height="40px"
+              fontSize={"12px"}
+              p={1}
+              display={"flex"}
+              borderRadius={3}
+              border={"solid grey 1px"}
+              alignItems={"center"}
+            >
+              <Box>
+                <Typography>-</Typography>
+              </Box>
+              <div style={{ padding: 1 }}>19300</div>
+              <Box>
+                <Typography>+</Typography>
+              </Box>
+            </Box>
+            <Box
+              height="40px"
+              padding={1}
+              marginLeft={"-5px"}
+              fontSize={"15px"}
+              border={"solid grey 1px"}
+              borderRadius={3}
+              display={"flex"}
+              alignItems={"center"}
+            >
+              CE
+            </Box>
+            <Select style={{ height: "40px" }} defaultValue={1}>
+              <MenuItem value={1}>50</MenuItem>
+              <MenuItem value={2}>100</MenuItem>
+              <MenuItem value={3}>150</MenuItem>
+              <MenuItem value={4}>200</MenuItem>
+              <MenuItem value={5}>250</MenuItem>
+              <MenuItem value={6}>300</MenuItem>
+              <MenuItem value={7}>350</MenuItem>
+              <MenuItem value={8}>400</MenuItem>
+              <MenuItem value={9}>450</MenuItem>
+              <MenuItem value={10}>500</MenuItem>
+              <MenuItem value={11}>650</MenuItem>
+              <MenuItem value={12}>700</MenuItem>
+              <MenuItem value={13}>750</MenuItem>
+            </Select>
+            <TextField style={{ width: "40px" }} />
+          </Box>
+        </Box>
+      )}
       <Tabs bgColor={"#FDFFFC"} mt={2} p={5}>
         <TabList display={"flex"} justifyContent={"space-around"} fontSize={"medium"}>
           <Tab>Ready-Made</Tab>

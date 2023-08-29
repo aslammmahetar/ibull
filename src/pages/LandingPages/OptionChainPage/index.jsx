@@ -29,12 +29,12 @@ function AboutUs() {
   const navigate = useNavigate();
 
   var expiryDates = [
-    "24-Aug-2023",
     "31-Aug-2023",
     "07-Sep-2023",
     "14-Sep-2023",
     "21-Sep-2023",
     "28-Sep-2023",
+    "05-Oct-2023",
     "26-Oct-2023",
     "28-Dec-2023",
     "28-Mar-2024",

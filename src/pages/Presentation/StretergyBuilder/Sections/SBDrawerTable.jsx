@@ -1,12 +1,12 @@
 import { Box, ThemeProvider, Typography, createTheme } from "@mui/material";
 import { getReq } from "Redux/action";
+import { stretergyCreating } from "Redux/sbAction";
 import { MaterialReactTable } from "material-react-table";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const SBDrawerTable = () => {
   var expiryDates = [
-    "24-Aug-2023",
     "31-Aug-2023",
     "07-Sep-2023",
     "14-Sep-2023",
@@ -17,7 +17,6 @@ const SBDrawerTable = () => {
     "28-Mar-2024",
     "27-Jun-2024",
   ];
-  const [hoveredRow, setHoveredRow] = useState(null);
   const [underlayingPrice, setUnderlayingPrice] = useState(0);
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
@@ -27,8 +26,7 @@ const SBDrawerTable = () => {
 
   const store = useSelector((store) => store.reducer.data);
   const ulValue = useSelector((store) => store.reducer.underlyingValue);
-  console.log(ulValue);
-
+  const stretergyCreated = useSelector((store) => store.sbReducer.stretergyCreated);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getReq);
@@ -98,6 +96,7 @@ const SBDrawerTable = () => {
                   backgroundColor: "whitesmoke",
                   marginRight: 5,
                 }}
+                onClick={() => dispatch(stretergyCreating())}
               >
                 B
               </button>
