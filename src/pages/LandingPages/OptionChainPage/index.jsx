@@ -18,7 +18,7 @@ import footerRoutes from "footer.routes";
 // import bgImage from "/"
 import bgImage from "assets/images/Banner.jpeg";
 
-import { FormControl, IconButton, InputBase, MenuItem, Select } from "@mui/material";
+import { FormControl, IconButton, InputBase, MenuItem, Select, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { BarChartOutlined, OndemandVideo, Search, ShowChartOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
@@ -141,7 +141,14 @@ function AboutUs() {
             boxShadow: ({ boxShadows: { xxl } }) => xxl,
           }}
         >
-          <MKBox display={"flex"} justifyContent={"space-around"}>
+          <MKBox
+            display={"flex"}
+            justifyContent={"space-around"}
+            sx={{
+              flexDirection: { xs: "column", sm: "column", md: "column", lg: "row" },
+              textAlign: "center",
+            }}
+          >
             <MKBox display={"flex"} alignItems={"center"} justifyContent={"center"}>
               <IconButton onClick={handleSearchIconClick}>
                 <Search />
@@ -156,7 +163,10 @@ function AboutUs() {
                   marginRight: "5px",
                 }}
               >
-                <InputBase placeholder="Search..." style={{ width: "200px" }} />
+                <InputBase
+                  placeholder="Search..."
+                  style={{ width: { xs: "80px", sm: "100px", md: "200px", lg: "200px" } }}
+                />
               </div>
               <FormControl fullWidth>
                 <Select
@@ -181,15 +191,21 @@ function AboutUs() {
               </FormControl>
             </MKBox>
             <MKBox
-              style={{ cursor: "pointer", display: "flex", alignItems: "center" }}
+              style={{
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
               fontSize="small"
             >
-              ATM IV 8.7 -1.6{" "}
+              <Typography fontSize={"small"}>ATM IV 8.7 -1.6</Typography>
             </MKBox>
             <hr />
             <MKBox
               style={{ cursor: "pointer" }}
               display={"flex"}
+              justifyContent={"center"}
               alignItems={"center"}
               fontSize="small"
               onClick={() => {
@@ -206,6 +222,7 @@ function AboutUs() {
               style={{ cursor: "pointer" }}
               display={"flex"}
               alignItems={"center"}
+              justifyContent={"center"}
               fontSize="small"
             >
               OI Graphs
@@ -219,6 +236,7 @@ function AboutUs() {
               display={"flex"}
               alignItems={"center"}
               fontSize="small"
+              justifyContent={"center"}
             >
               IVP 6
             </MKBox>
@@ -227,6 +245,7 @@ function AboutUs() {
               style={{ cursor: "pointer" }}
               display={"flex"}
               alignItems={"center"}
+              justifyContent={"center"}
               fontSize="small"
             >
               Per Lot
@@ -236,6 +255,7 @@ function AboutUs() {
               style={{ cursor: "pointer" }}
               display={"flex"}
               alignItems={"center"}
+              justifyContent={"center"}
               fontSize="small"
             >
               <MKBox style={{ marginTop: "5px", color: "blue" }}>

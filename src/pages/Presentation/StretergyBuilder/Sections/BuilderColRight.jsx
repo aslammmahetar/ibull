@@ -5,14 +5,13 @@ import EmptyChartBox from "./EmptyChartBox";
 
 const BuilderColRight = () => {
   return (
-    <Stack
-      width={"56%"}
-      spacing={1}
+    <Box
+      width={{ xs: "100%", sm: "100%", md: "100%", lg: "56%" }}
       // border={"solid black 1px "}
     >
       <InstrumentInfo />
       <EmptyChartBox />
-    </Stack>
+    </Box>
   );
 };
 

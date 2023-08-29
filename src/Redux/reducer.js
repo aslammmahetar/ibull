@@ -9,10 +9,6 @@ import {
   FIRST_MONTH,
   SECOND_MONTH,
   FIVE_MIN_DATA_SUC,
-  // FIVE_MIN_DATA_SUC,
-  // FIVE_MIN_DATA,
-  // FIVE_MIN_DATA_FAIL,
-  // GET_TWO_MONTH_DATA,
 } from "./action";
 
 const intialState = {
@@ -24,6 +20,7 @@ const intialState = {
   twoMonthData: [],
   currentMonth: true,
   nextMonth: true,
+  fiveMinBool: false,
   fiveMinData: [],
 };
 
@@ -139,6 +136,7 @@ const reducer = (state = intialState, { type, payload }) => {
       console.log(augData);
       return {
         ...state,
+        fiveMinBool: !state.fiveMinBool,
         fiveMinData: [...augData, ...septData],
       };
     }

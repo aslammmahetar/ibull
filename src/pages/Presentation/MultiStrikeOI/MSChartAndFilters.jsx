@@ -41,9 +41,10 @@ const MSChartAndFilters = () => {
         <MSfilters />
         <Box
           className={classes.chartContainer}
-          width={{ xs: "100%", sm: "100%", md: "67%", lg: "67%" }}
+          sx={{
+            width: { xs: "100%", sm: "100%", md: "67%", lg: "67%" },
+          }}
         >
-          {/* <BarChart /> */}
           <Card sx={{ padding: "10px" }}>
             <MKBox style={{ padding: "5px" }}>
               <Typography variant="h5">Open Interest - Aug & Sep Expiries</Typography>

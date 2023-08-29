@@ -48,11 +48,16 @@ const StretergyBuilder = () => {
           backdropFilter: "saturate(200%) blur(30px)",
           boxShadow: ({ boxShadows: { xxl } }) => xxl,
           position: "sticky",
-          // top: isSticky ? "80px" : "auto",
           display: "flex",
         }}
       >
-        <Box display={"flex"} justifyContent={"space-between"}>
+        <Box
+          display={"flex"}
+          justifyContent={"space-between"}
+          sx={{
+            flexDirection: { xs: "column", sm: "column", md: "column", lg: "row" },
+          }}
+        >
           <SBFilters />
           <BuilderColRight />
         </Box>

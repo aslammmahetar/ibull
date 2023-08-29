@@ -40,7 +40,9 @@ const ChartAndFilter = () => {
         <Filters />
         <Box
           className={classes.chartContainer}
-          width={{ xs: "100%", sm: "100%", md: "67%", lg: "67%" }}
+          sx={{
+            width: { xs: "100%", sm: "100%", md: "100%", lg: "67%" },
+          }}
         >
           <BarChart />
           <Card sx={{ padding: "10px", marginTop: "20px" }}>

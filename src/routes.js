@@ -38,8 +38,8 @@ Coded by www.creative-tim.com
 
 // Pages
 // import AboutUs from "layouts/pages/landing-pages/about-us";
-import ContactUs from "layouts/pages/landing-pages/contact-us";
-import Author from "layouts/pages/landing-pages/author";
+// import ContactUs from "layouts/pages/landing-pages/contact-us";
+// import Author from "layouts/pages/landing-pages/author";
 // import SignIn from "layouts/pages/authentication/sign-in";
 
 // Sections
@@ -67,6 +67,7 @@ import MSoi from "pages/Presentation/MultiStrikeOI/Index";
 import StretergyBuilder from "pages/Presentation/StretergyBuilder/Index";
 import AboutUs from "pages/LandingPages/OptionChainPage";
 import StretergyWizard from "pages/Presentation/StretergyWizard/StretergyWizard";
+import EasyOptions from "pages/Presentation/Easy Options/EasyOptions";
 
 const routes = [
   {
@@ -89,9 +90,9 @@ const routes = [
             component: <StretergyWizard />,
           },
           {
-            name: "author",
-            route: "/pages/landing-pages/author",
-            component: <Author />,
+            name: "Easy options",
+            route: "/pages/landing-pages/easyoptions",
+            component: <EasyOptions />,
           },
         ],
       },

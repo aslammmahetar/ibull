@@ -1,9 +1,9 @@
 import MKBox from "components/MKBox";
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
-import React, { useState } from "react";
+import React from "react";
 import routes from "routes";
 import bgImage from "assets/images/Banner.jpeg";
-import { Box, Card, Paper, Typography } from "@mui/material";
+import { Card, Paper, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import Stocks from "./Sections/Stocks";
 import VideoButtom from "./Sections/VideoButtom";
@@ -14,10 +14,18 @@ const StretergyWizard = () => {
     container: {
       display: "flex",
       height: "80vh",
-      flexDirection: "column",
+      flexDirection: "row",
       // overflow: "hidden",
       [theme.breakpoints.up("sm")]: {
+        flexDirection: "column",
+      },
+      [theme.breakpoints.up("xs")]: {
+        flexDirection: "column",
+        height: "auto",
+      },
+      [theme.breakpoints.up("md")]: {
         flexDirection: "row",
+        height: "80vh",
       },
     },
     left: {
@@ -33,11 +41,11 @@ const StretergyWizard = () => {
       borderRight: "1px solid grey",
       [theme.breakpoints.down("sm")]: {
         flex: "0 0 100%",
-        height: "50vh", // Adjust the height for smaller screens
+        // height: "50vh", // Adjust the height for smaller screens
       },
       [theme.breakpoints.up("md")]: {
         flex: "0 0 22%",
-        height: "80vh",
+        // height: "80vh",
       },
     },
     right: {
@@ -86,13 +94,15 @@ const StretergyWizard = () => {
           backdropFilter: "saturate(200%) blur(30px)",
           boxShadow: ({ boxShadows: { xxl } }) => xxl,
           position: "sticky",
-          // top: isSticky ? "80px" : "auto",
           display: "flex",
         }}
       >
-        <div className={classes.container}>
+        <div
+          className={classes.container}
+          style={{ flexDirection: { xs: "column", sm: "column" } }}
+        >
           <Paper className={classes.left}>
-            <Stocks />
+            <Stocks bgColor={"whitesmoke"} buttonContent={"NIFTY FUT 19745.45"} />
             <Instruction />
           </Paper>
           <Paper className={classes.right}>
