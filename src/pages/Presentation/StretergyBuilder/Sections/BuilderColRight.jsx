@@ -1,9 +1,10 @@
-import { Box, Stack } from "@mui/material";
+import { Box } from "@mui/material";
 import React from "react";
 import InstrumentInfo from "./InstrumentInfo";
 import EmptyChartBox from "./EmptyChartBox";
 import { useSelector } from "react-redux";
 import ChartAndDeatils from "./ChartAndDeatils";
+import InstrumentOtherInfo from "./InstrumentOtherInfo";
 
 const BuilderColRight = () => {
   const stretergyCreated = useSelector((store) => store.sbReducer.stretergyCreated);
@@ -15,6 +16,7 @@ const BuilderColRight = () => {
     >
       <InstrumentInfo />
       {!stretergyCreated ? <EmptyChartBox /> : <ChartAndDeatils />}
+      {stretergyCreated && <InstrumentOtherInfo />}
     </Box>
   );
 };

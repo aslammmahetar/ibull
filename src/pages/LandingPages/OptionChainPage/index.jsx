@@ -12,13 +12,25 @@ import DefaultFooter from "examples/Footers/DefaultFooter";
 
 // Routes
 import routes from "routes";
+import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
+
 import footerRoutes from "footer.routes";
 
 // Images
 // import bgImage from "/"
 import bgImage from "assets/images/Banner.jpeg";
 
-import { FormControl, IconButton, InputBase, MenuItem, Select, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormControl,
+  IconButton,
+  InputBase,
+  MenuItem,
+  Select,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import { BarChartOutlined, OndemandVideo, Search, ShowChartOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
@@ -150,30 +162,31 @@ function AboutUs() {
             }}
           >
             <MKBox display={"flex"} alignItems={"center"} justifyContent={"center"}>
-              <IconButton onClick={handleSearchIconClick}>
-                <Search />
-              </IconButton>
-              <div
-                style={{
-                  top: "50px",
-                  right: "10px",
-                  backgroundColor: "white",
-                  borderBottom: "1px solid black",
-                  transition: "transform 1s",
-                  marginRight: "5px",
-                }}
-              >
-                <InputBase
-                  placeholder="Search..."
-                  style={{ width: { xs: "80px", sm: "100px", md: "200px", lg: "200px" } }}
-                />
-              </div>
+              <MKBox display={"flex"} style={{ padding: "5px" }} justifyContent="space-around">
+                <IconButton onClick={handleSearchIconClick}>
+                  <Search />
+                </IconButton>
+                <div
+                  style={{
+                    top: "50px",
+                    right: "10px",
+                    // borderBottom: "1px solid black",
+                    marginRight: "5px",
+                  }}
+                >
+                  <InputBase
+                    placeholder="Type Stock Name :SBIN, RELIANCE etc."
+                    style={{ width: "110%", fontSize: "small" }}
+                    value={"NIFTY FUT 19500 50 0.0%"}
+                  />
+                </div>
+              </MKBox>
               <FormControl fullWidth>
                 <Select
                   style={{
                     padding: "5px",
-                    paddingLeft: "15px",
-                    paddingRight: "15px",
+                    paddingLeft: "10px",
+                    paddingRight: "10px",
                     marginLeft: "10px",
                   }}
                   value={selectedExpiryDate}

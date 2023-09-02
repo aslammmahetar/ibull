@@ -27396,7 +27396,7 @@
           "totalSellQuantity": 274950,
           "bidQty": 345,
           "bidprice": 45.15,
-          "askQty": 510,
+         "askQty": 510,
           "askPrice": 45.25,
           "underlyingValue": 44531.25
         },

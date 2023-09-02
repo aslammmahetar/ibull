@@ -1,6 +1,7 @@
 import { Box, ThemeProvider, createTheme, Typography } from "@mui/material";
 import "./table.css";
 import { MaterialReactTable } from "material-react-table";
+import SettingComp from "./SettingComp";
 
 const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
   const combinedColumns = [
@@ -13,7 +14,7 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
             color: "#785859",
           }}
         >
-          Calls(CE)
+          Calls
         </div>
       ),
 
@@ -95,7 +96,7 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
       ],
     },
     {
-      header: <div style={{ color: "#039855", fontSize: "medium" }}>Puts(PE)</div>,
+      header: <div style={{ color: "#039855", fontSize: "medium" }}>Puts</div>,
       columns: [
         {
           id: "peio",
@@ -204,6 +205,7 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
           }}
         />
       </ThemeProvider>
+      <SettingComp />
     </Box>
   );
 };

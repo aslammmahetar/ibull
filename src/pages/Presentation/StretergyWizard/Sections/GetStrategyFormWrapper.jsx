@@ -4,20 +4,16 @@ import {
   Button,
   FormControl,
   IconButton,
-  InputAdornment,
   InputBase,
   InputLabel,
-  Menu,
   MenuItem,
   Select,
   TextField,
   Tooltip,
-  Typography,
 } from "@mui/material";
 import MKBox from "components/MKBox";
 import React, { useState } from "react";
 import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MKButton from "components/MKButton";
 const GetStrategyFormWrapper = () => {
   const [open, setOpen] = useState(false);

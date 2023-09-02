@@ -2,6 +2,7 @@
 .table-container {
     /* border: 1px solid #000; */
     /* This sets the border of the table */
+    z-index: 0;
 }
 
 /* Apply styles to table header cells */
@@ -9,7 +10,7 @@ th {
     font-size: 15px;
     position:sticky;
     /* height: 25px; */
-    border: solid black;
+    /* border: solid black; */
     border-width: thin;
     padding: 1px;
     font-size: small;
@@ -26,3 +27,15 @@ th {
     padding: 1px;
     /* This sets the border of the table data cells */
 }
+.setting_container {
+    background-color: "";
+  }
+  
+  .left-div {
+    background-color: "whitesmoke";
+  }
+  
+  .right-div {
+    background-color: "#ffffff";
+  }
+  

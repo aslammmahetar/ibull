@@ -6,38 +6,31 @@ import {
   DrawerOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import { Box, Button, IconButton, InputBase, Menu, MenuItem, Tooltip } from "@mui/material";
+import { Box, Button, IconButton, InputBase, Tooltip } from "@mui/material";
 import MKButton from "components/MKButton";
 import React, { useState } from "react";
-import SearchANdSetting from "./SearchANdSetting";
-
-import SettingsIcon from "@mui/icons-material/Settings";
 
 import MKBox from "components/MKBox";
 import { Search } from "@mui/icons-material";
 import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import SBDrawerTable from "./SBDrawerTable";
+import { useSelector } from "react-redux";
 
 const SbDrawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [open, setOpen] = useState(false);
+  const stretergyCreated = useSelector((store) => store.sbReducer.stretergyCreated);
 
   const handleSearchIconClick = () => {
     setOpen(!open);
   };
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const opened = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   return (
     <>
-      <MKButton color="info" style={{ marginTop: -20 }} onClick={onOpen}>
+      <MKButton
+        color="info"
+        style={{ display: stretergyCreated ? "none" : "block", margin: "auto", marginTop: 5 }}
+        onClick={onOpen}
+      >
         Build A Custom New Stratergy
       </MKButton>
       <div style={{ zIndex: 999 }}>

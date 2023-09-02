@@ -15,6 +15,7 @@ import React, { useState } from "react";
 import { Search } from "@mui/icons-material";
 import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import StarHalfIcon from "@mui/icons-material/StarHalf";
+import MSDrawer from "./MSDrawer";
 
 const MSfilters = () => {
   const [open, setOpen] = useState(false);
@@ -79,6 +80,7 @@ const MSfilters = () => {
           <FormControlLabel control={<Checkbox />} label="31 Aug 2540PE" />
         </FormGroup>
       </Card>
+      <MSDrawer />
     </MKBox>
   );
 };

@@ -9,15 +9,18 @@ import {
   Checkbox,
   FormControl,
   FormControlLabel,
+  FormGroup,
   IconButton,
   InputBase,
-  InputLabel,
+  Menu,
   MenuItem,
   Paper,
   Select,
+  Stack,
   TextField,
   Typography,
 } from "@mui/material";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import AnnouncementIcon from "@mui/icons-material/Announcement";
 import MKButton from "components/MKButton";
 import MKBox from "components/MKBox";
@@ -35,9 +38,12 @@ import {
   Grid,
   GridItem,
 } from "@chakra-ui/react";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SbDrawer from "./SbDrawer";
 import { useSelector } from "react-redux";
+import PopupState, { bindMenu, bindTrigger } from "material-ui-popup-state";
+import InstOthCounter from "./InstOthCounter";
 const useStyles = makeStyles((theme) => ({
   builderContiner: {
     maxHeight: "calc(80vh - 100px)", // Adjust this as needed
@@ -47,6 +53,8 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "5px",
     marginTop: "5px",
     zIndex: 0,
+    backgroundColor: "#FDFFFC",
+    textAlign: "center",
   },
 }));
 
@@ -62,13 +70,13 @@ const Builder = () => {
 
   return (
     <Box className={classes.builderContiner}>
+      <SbDrawer />
       {!stretergyCreated ? (
-        <Box bgcolor={"#FDFFFC"} textAlign={"center"} fontSize={"100px"}>
+        <Box fontSize={"100px"}>
           <MKBox>
             <AnnouncementIcon />
           </MKBox>
           <Typography marginTop={-5}>No Trade's Added</Typography>
-          <SbDrawer />
         </Box>
       ) : (
         <Box bgcolor={"#FDFFFC"} fontSize={"100px"}>
@@ -136,24 +144,7 @@ const Builder = () => {
                 <MenuItem value={2}>28 Sept</MenuItem>
               </Select>
             </FormControl>
-            <Box
-              marginLeft="-25px"
-              height="40px"
-              fontSize={"12px"}
-              p={1}
-              display={"flex"}
-              borderRadius={3}
-              border={"solid grey 1px"}
-              alignItems={"center"}
-            >
-              <Box>
-                <Typography>-</Typography>
-              </Box>
-              <div style={{ padding: 1 }}>19300</div>
-              <Box>
-                <Typography>+</Typography>
-              </Box>
-            </Box>
+            <InstOthCounter />
             <Box
               height="40px"
               padding={1}
@@ -182,6 +173,48 @@ const Builder = () => {
               <MenuItem value={13}>750</MenuItem>
             </Select>
             <TextField style={{ width: "40px" }} />
+          </Box>
+          <Box display={"flex"} justifyContent={"space-between"} p={1}>
+            <Box display={"flex"} alignItems={"center"}>
+              <Typography fontSize={"small"} pr={2}>
+                Multiplayer
+              </Typography>
+              <Select style={{ height: "20px" }} defaultValue={1}>
+                <MenuItem value={1}>50</MenuItem>
+                <MenuItem value={2}>100</MenuItem>
+              </Select>
+            </Box>
+            <Box display={"flex"}>
+              <Box pr={2}>
+                <Typography fontSize={"small"}>
+                  Price <b>Pay 25.2</b>
+                </Typography>
+              </Box>
+              <Box>
+                <Typography fontSize={"small"}>
+                  Premium <b>Pay 1,260</b>
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+          <Box p={1} display={"flex"} justifyContent={"space-around"}>
+            <Button style={{ border: "solid lightblue 1px" }}>Add/Edit</Button>
+            <Button style={{ border: "solid lightblue 1px" }}>Add to Virtual</Button>
+            <Button style={{ border: "solid lightblue 1px" }}>Trade All</Button>
+            <PopupState variant="popover" popupId="demo-popup-menu">
+              {(popupState) => (
+                <>
+                  <Button {...bindTrigger(popupState)}>
+                    <MoreHorizIcon />
+                  </Button>
+                  <Menu {...bindMenu(popupState)}>
+                    <MenuItem>Save </MenuItem>
+                    <MenuItem>Save As</MenuItem>
+                    <MenuItem>Share </MenuItem>
+                  </Menu>
+                </>
+              )}
+            </PopupState>
           </Box>
         </Box>
       )}
