@@ -9,6 +9,7 @@ import {
   FIRST_MONTH,
   SECOND_MONTH,
   FIVE_MIN_DATA_SUC,
+  FONTSIZE_CHANGE,
 } from "./action";
 
 const intialState = {
@@ -22,6 +23,8 @@ const intialState = {
   nextMonth: true,
   fiveMinBool: false,
   fiveMinData: [],
+  fontSize: "small",
+  nearestStrikePrice: 0,
 };
 
 const modifyData = (data) => {
@@ -46,6 +49,20 @@ const modifyData = (data) => {
   });
   return modifieddData;
 };
+function findNearestStrikePrice(strikePrices, underlyingValue) {
+  let nearestStrikePrice = strikePrices[0]; // Initialize with the first value in the array
+  let minDifference = Math.abs(strikePrices[0] - underlyingValue); // Initialize with the absolute difference
+
+  for (let i = 1; i < strikePrices.length; i++) {
+    const difference = Math.abs(strikePrices[i] - underlyingValue);
+
+    if (difference < minDifference) {
+      minDifference = difference;
+      nearestStrikePrice = strikePrices[i];
+    }
+  }
+  return nearestStrikePrice;
+}
 
 const reducer = (state = intialState, { type, payload }) => {
   switch (type) {
@@ -62,10 +79,16 @@ const reducer = (state = intialState, { type, payload }) => {
       const strikePricesArry = payload.strikePrices;
       const ulValue = payload.underlyingValue;
       const data = payload.data;
-      // console.log(data);
-      modifyData(data);
+      console.log(payload);
+      const expiryDate = payload.expiryDates;
+      console.log(expiryDate);
+      const elem = modifyData(data).filter(
+        (el) => el.strikePrice == findNearestStrikePrice(strikePricesArry, ulValue)
+      );
+      console.log(elem);
+
       const septData = modifyData(data).filter((item) => item.expiryDate.includes("Sep"));
-      const augData = modifyData(data).filter((item) => item.expiryDate.includes("Aug"));
+      const augData = modifyData(data).filter((item) => item.expiryDate.includes("Oct"));
       return {
         ...state,
         isLoading: false,
@@ -74,6 +97,7 @@ const reducer = (state = intialState, { type, payload }) => {
         underlyingValue: ulValue,
         strikePrices: strikePricesArry,
         twoMonthData: [...augData, ...septData],
+        nearestStrikePrice: findNearestStrikePrice(strikePricesArry, ulValue),
       };
     }
 
@@ -99,7 +123,7 @@ const reducer = (state = intialState, { type, payload }) => {
     }
     case GET_TWO_MONTH_DATA: {
       const septData = state.data.filter((item) => item.expiryDate.includes("Sep"));
-      const augData = state.data.filter((item) => item.expiryDate.includes("Aug"));
+      const augData = state.data.filter((item) => item.expiryDate.includes("Oct"));
       return {
         ...state,
         twoMonthData: [...augData, ...septData],
@@ -120,7 +144,7 @@ const reducer = (state = intialState, { type, payload }) => {
       };
     }
     case SECOND_MONTH: {
-      const augData = state.data.filter((item) => item.expiryDate.includes("Aug"));
+      const augData = state.data.filter((item) => item.expiryDate.includes("Oct"));
       console.log(augData);
       return {
         ...state,
@@ -131,13 +155,19 @@ const reducer = (state = intialState, { type, payload }) => {
       const data = payload.data;
       modifyData(data);
       const septData = modifyData(data).filter((item) => item.expiryDate.includes("Sep"));
-      const augData = modifyData(data).filter((item) => item.expiryDate.includes("Aug"));
+      const augData = modifyData(data).filter((item) => item.expiryDate.includes("Oct"));
       console.log(septData);
       console.log(augData);
       return {
         ...state,
         fiveMinBool: !state.fiveMinBool,
         fiveMinData: [...augData, ...septData],
+      };
+    }
+    case FONTSIZE_CHANGE: {
+      return {
+        ...state,
+        fontSize: payload,
       };
     }
     default:

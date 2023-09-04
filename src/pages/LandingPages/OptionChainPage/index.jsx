@@ -20,17 +20,7 @@ import footerRoutes from "footer.routes";
 // import bgImage from "/"
 import bgImage from "assets/images/Banner.jpeg";
 
-import {
-  Box,
-  Button,
-  FormControl,
-  IconButton,
-  InputBase,
-  MenuItem,
-  Select,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { FormControl, IconButton, InputBase, MenuItem, Select, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { BarChartOutlined, OndemandVideo, Search, ShowChartOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
@@ -41,13 +31,13 @@ function AboutUs() {
   const navigate = useNavigate();
 
   var expiryDates = [
-    "31-Aug-2023",
-    "07-Sep-2023",
-    "14-Sep-2023",
-    "21-Sep-2023",
+    "06-Sep-2023",
+    "13-Sep-2023",
+    "20-Sep-2023",
     "28-Sep-2023",
-    "05-Oct-2023",
+    "04-Oct-2023",
     "26-Oct-2023",
+    "30-Nov-2023",
     "28-Dec-2023",
     "28-Mar-2024",
     "27-Jun-2024",
@@ -62,7 +52,7 @@ function AboutUs() {
 
   const store = useSelector((store) => store.reducer.data);
   const ulValue = useSelector((store) => store.reducer.underlyingValue);
-  console.log(ulValue);
+  const fontSize = useSelector((store) => store.reducer.fontSize);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -70,7 +60,7 @@ function AboutUs() {
     setData(store);
     setSelectedExpiryDate(expiryDates[0]);
     setUnderlayingPrice(ulValue);
-  }, [ulValue]);
+  }, [ulValue, fontSize]);
 
   useEffect(() => {
     //filteration by the exprydates

@@ -50,17 +50,17 @@ Coded by www.creative-tim.com
 // import Pagination from "layouts/sections/navigation/pagination";
 // import Inputs from "layouts/sections/input-areas/inputs";
 // import Forms from "layouts/sections/input-areas/forms";
-import Alerts from "layouts/sections/attention-catchers/alerts";
-import Modals from "layouts/sections/attention-catchers/modals";
-import TooltipsPopovers from "layouts/sections/attention-catchers/tooltips-popovers";
-import Avatars from "layouts/sections/elements/avatars";
-import Badges from "layouts/sections/elements/badges";
-import BreadcrumbsEl from "layouts/sections/elements/breadcrumbs";
-import Buttons from "layouts/sections/elements/buttons";
-import Dropdowns from "layouts/sections/elements/dropdowns";
-import ProgressBars from "layouts/sections/elements/progress-bars";
-import Toggles from "layouts/sections/elements/toggles";
-import Typography from "layouts/sections/elements/typography";
+// import Alerts from "layouts/sections/attention-catchers/alerts";
+// import Modals from "layouts/sections/attention-catchers/modals";
+// import TooltipsPopovers from "layouts/sections/attention-catchers/tooltips-popovers";
+// import Avatars from "layouts/sections/elements/avatars";
+// import Badges from "layouts/sections/elements/badges";
+// import BreadcrumbsEl from "layouts/sections/elements/breadcrumbs";
+// import Buttons from "layouts/sections/elements/buttons";
+// import Dropdowns from "layouts/sections/elements/dropdowns";
+// import ProgressBars from "layouts/sections/elements/progress-bars";
+// import Toggles from "layouts/sections/elements/toggles";
+// import Typography from "layouts/sections/elements/typography";
 import Signup from "pages/LandingPages/SignUp/Index";
 import OpenInterest from "pages/Presentation/OptionInterest/OpenInterest";
 import MSoi from "pages/Presentation/MultiStrikeOI/Index";
@@ -69,6 +69,7 @@ import AboutUs from "pages/LandingPages/OptionChainPage";
 import StretergyWizard from "pages/Presentation/StretergyWizard/StretergyWizard";
 import EasyOptions from "pages/Presentation/Easy Options/EasyOptions";
 import Watchlist from "pages/Presentation/Watchlist/Watchlist";
+import LiveOptionChart from "pages/Presentation/Live Option Chart/LiveOptionChart";
 
 const routes = [
   {
@@ -174,74 +175,79 @@ const routes = [
         // ],
       },
       {
-        name: "attention catchers",
-        description: "See all examples",
-        dropdown: true,
-        collapse: [
-          {
-            name: "alerts",
-            route: "/sections/attention-catchers/alerts",
-            component: <Alerts />,
-          },
-          {
-            name: "modals",
-            route: "/sections/attention-catchers/modals",
-            component: <Modals />,
-          },
-          {
-            name: "tooltips & popovers",
-            route: "/sections/attention-catchers/tooltips-popovers",
-            component: <TooltipsPopovers />,
-          },
-        ],
+        name: "Live Option Charts",
+        route: "/pages/landing-pages/option-trade/live-option-charts",
+        component: <LiveOptionChart />,
       },
-      {
-        name: "elements",
-        description: "See all 32 examples",
-        dropdown: true,
-        collapse: [
-          {
-            name: "avatars",
-            route: "/sections/elements/avatars",
-            component: <Avatars />,
-          },
-          {
-            name: "badges",
-            route: "/sections/elements/badges",
-            component: <Badges />,
-          },
-          {
-            name: "breadcrumbs",
-            route: "/sections/elements/breadcrumbs",
-            component: <BreadcrumbsEl />,
-          },
-          {
-            name: "buttons",
-            route: "/sections/elements/buttons",
-            component: <Buttons />,
-          },
-          {
-            name: "dropdowns",
-            route: "/sections/elements/dropdowns",
-            component: <Dropdowns />,
-          },
-          {
-            name: "progress bars",
-            route: "/sections/elements/progress-bars",
-            component: <ProgressBars />,
-          },
-          {
-            name: "toggles",
-            route: "/sections/elements/toggles",
-            component: <Toggles />,
-          },
-          {
-            name: "typography",
-            route: "/sections/elements/typography",
-            component: <Typography />,
-          },
-        ],
-      },
+      // {
+      //   name: "attention catchers",
+      //   description: "See all examples",
+      //   dropdown: true,
+      //   collapse: [
+      //     {
+      //       name: "alerts",
+      //       route: "/sections/attention-catchers/alerts",
+      //       component: <Alerts />,
+      //     },
+      //     {
+      //       name: "modals",
+      //       route: "/sections/attention-catchers/modals",
+      //       component: <Modals />,
+      //     },
+      //     {
+      //       name: "tooltips & popovers",
+      //       route: "/sections/attention-catchers/tooltips-popovers",
+      //       component: <TooltipsPopovers />,
+      //     },
+      //   ],
+      // },
+      // {
+      //   name: "elements",
+      //   description: "See all 32 examples",
+      //   dropdown: true,
+      //   collapse: [
+      //     {
+      //       name: "avatars",
+      //       route: "/sections/elements/avatars",
+      //       component: <Avatars />,
+      //     },
+      //     {
+      //       name: "badges",
+      //       route: "/sections/elements/badges",
+      //       component: <Badges />,
+      //     },
+      //     {
+      //       name: "breadcrumbs",
+      //       route: "/sections/elements/breadcrumbs",
+      //       component: <BreadcrumbsEl />,
+      //     },
+      //     {
+      //       name: "buttons",
+      //       route: "/sections/elements/buttons",
+      //       component: <Buttons />,
+      //     },
+      //     {
+      //       name: "dropdowns",
+      //       route: "/sections/elements/dropdowns",
+      //       component: <Dropdowns />,
+      //     },
+      //     {
+      //       name: "progress bars",
+      //       route: "/sections/elements/progress-bars",
+      //       component: <ProgressBars />,
+      //     },
+      //     {
+      //       name: "toggles",
+      //       route: "/sections/elements/toggles",
+      //       component: <Toggles />,
+      //     },
+      //     {
+      //       name: "typography",
+      //       route: "/sections/elements/typography",
+      //       component: <Typography />,
+      //     },
+      //   ],
+      // },
     ],
   },
   {

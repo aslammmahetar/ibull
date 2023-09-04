@@ -4,9 +4,8 @@ import MSfilters from "./MSfilters";
 import { Box, Card, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
-import { BarChart } from "@mui/icons-material";
-import OpenIntrestes from "../OptionInterest/section/OpenInterestsChart";
 import ChartFooter from "../OptionInterest/section/ChartFooter";
+import IntradayStockChart2 from "../Charts/IntradayStockChart2";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -47,10 +46,10 @@ const MSChartAndFilters = () => {
         >
           <Card sx={{ padding: "10px" }}>
             <MKBox style={{ padding: "5px" }}>
-              <Typography variant="h5">Open Interest - Aug & Sep Expiries</Typography>
+              <Typography variant="h5">Open Interest Sep - Oct Expiries</Typography>
             </MKBox>
             <hr />
-            <OpenIntrestes />
+            <IntradayStockChart2 />
             <hr />
             <ChartFooter />
           </Card>

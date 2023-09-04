@@ -19,12 +19,17 @@ import {
   Tabs,
   Typography,
 } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { fontSizeChange } from "Redux/action";
 
 export default function SwipeableTemporaryDrawer() {
   const lessThanButton = ["10", "20", "30", "40", "50"];
   const greterThanButton = ["10", "20", "30", "40", "50"];
   const itemData = [smallFontImage, mediumFontImage, largeFontImage];
-  const fontArray = ["Small", "Medium", "Large"];
+  const fontArray = ["small", "medium", "large"];
+  const store = useSelector((store) => store.reducer.fontSize);
+  console.log(store);
+  const dispatch = useDispatch();
 
   const [selectedLessThanButton, setSelectedLessThanButton] = React.useState(null);
   const handleLessThanButtonClick = (index) => {
@@ -161,10 +166,12 @@ export default function SwipeableTemporaryDrawer() {
                 }}
               >
                 <ImageListItem key={index}>
-                  <img src={item} srcSet={item} alt={"Imges"} loading="lazy" />
-                  <Box textAlign={"center"}>
-                    <Typography fontSize={"small"}>{fontArray[index]}</Typography>
-                  </Box>
+                  <div onClick={() => dispatch(fontSizeChange(fontArray[index]))}>
+                    <img src={item} srcSet={item} alt={"Imges"} loading="lazy" />
+                    <Box textAlign={"center"}>
+                      <Typography fontSize={"Small"}>{fontArray[index]}</Typography>
+                    </Box>
+                  </div>
                 </ImageListItem>
               </Box>
             ))}

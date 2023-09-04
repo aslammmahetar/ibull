@@ -1,31 +1,20 @@
-import { Box, ThemeProvider, Typography, createTheme } from "@mui/material";
+import { ThemeProvider } from "@emotion/react";
+import { Box, Typography, createTheme } from "@mui/material";
 import { getReq } from "Redux/action";
-import { stretergyCreating } from "Redux/sbAction";
 import { MaterialReactTable } from "material-react-table";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-const SBDrawerTable = () => {
-  var expiryDates = [
-    "06-Sep-2023",
-    "14-Sep-2023",
-    "21-Sep-2023",
-    "28-Sep-2023",
-    "26-Oct-2023",
-    "28-Dec-2023",
-    "28-Mar-2024",
-    "27-Jun-2024",
-  ];
+const MSDrawerTable = ({ setSelectedExpiryDate, expiryDates, selectedExpiryDate }) => {
   const [underlayingPrice, setUnderlayingPrice] = useState(0);
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  const [selectedExpiryDate, setSelectedExpiryDate] = useState("");
   const [callMax, setCallmaxOI] = useState(0);
   const [putMax, setPutmaxOI] = useState(0);
 
   const store = useSelector((store) => store.reducer.data);
+  console.log(store);
   const ulValue = useSelector((store) => store.reducer.underlyingValue);
-  const stretergyCreated = useSelector((store) => store.sbReducer.stretergyCreated);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getReq);
@@ -74,43 +63,16 @@ const SBDrawerTable = () => {
           <div
             style={{
               textAlign: "left",
-              marginRight: "60%",
               display: "flex",
               padding: 7,
               justifyContent: "space-around",
               alignItems: "center",
+              width: "100%",
               backgroundColor: rows.strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
             }}
           >
-            <div>
-              <p>{rows.combinedCEPE.CE_openInterest ? rows.combinedCEPE.CE_openInterest : 0}</p>
-            </div>
-            <div className="bAndC" style={{ marginLeft: 5, width: "20px" }}>
-              <button
-                style={{
-                  padding: 2,
-                  paddingLeft: 5,
-                  paddingRight: 5,
-                  border: "solid black 1px",
-                  backgroundColor: "whitesmoke",
-                  marginRight: 5,
-                }}
-                onClick={() => dispatch(stretergyCreating())}
-              >
-                B
-              </button>
-              <button
-                style={{
-                  padding: 2,
-                  paddingLeft: 5,
-                  paddingRight: 5,
-                  border: "solid black 1px",
-                  backgroundColor: "whitesmoke",
-                }}
-              >
-                S
-              </button>
-            </div>
+            <p>{rows.combinedCEPE.CE_openInterest ? rows.combinedCEPE.CE_openInterest : 0}</p>
+            <input type="checkbox" style={{ zIndex: 1, cursor: "pointer" }} />
           </div>
           <div
             style={{
@@ -129,14 +91,17 @@ const SBDrawerTable = () => {
           </div>
         </div>
       ),
+      size: 40,
     },
     {
       header: "Strike",
       accessorFn: (rows) => rows.strikePrice,
+      size: 40,
     },
     {
       id: "peio",
       header: <Typography>OI</Typography>,
+      size: 40,
       accessorFn: (rows) => (
         <div
           className="main"
@@ -169,44 +134,18 @@ const SBDrawerTable = () => {
             style={{
               // backgroundColor: rows.strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
               textAlign: "right",
-              marginRight: "20%",
-              width: "50%",
               // border: "solid black 1px",
               display: "flex",
+              width: "100%",
+              justifyContent: "space-between",
               alignItems: "center",
-              opacity: 0.5,
               padding: 2,
             }}
           >
-            <div className="bAndC" style={{ marginLeft: 5, width: "20px" }}>
-              <button
-                style={{
-                  padding: 2,
-                  paddingLeft: 5,
-                  paddingRight: 5,
-                  border: "solid black 1px",
-                  backgroundColor: "whitesmoke",
-                  marginRight: 5,
-                  zIndex: 999,
-                }}
-              >
-                B
-              </button>
-              <button
-                style={{
-                  padding: 2,
-                  paddingLeft: 5,
-                  paddingRight: 5,
-                  border: "solid black 1px",
-                  backgroundColor: "whitesmoke",
-                }}
-              >
-                S
-              </button>
-            </div>
-            <div style={{ marginLeft: "30%" }}>
-              <p>{rows.combinedCEPE.CE_openInterest ? rows.combinedCEPE.CE_openInterest : 0}</p>
-            </div>
+            <input type="checkbox" style={{ zIndex: 1, cursor: "pointer" }} />
+            <p style={{ zIndex: 1 }}>
+              {rows.combinedCEPE.CE_openInterest ? rows.combinedCEPE.CE_openInterest : 0}
+            </p>
           </div>
         </div>
       ),
@@ -259,4 +198,4 @@ const SBDrawerTable = () => {
   );
 };
 
-export default SBDrawerTable;
+export default MSDrawerTable;

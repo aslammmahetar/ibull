@@ -3,16 +3,13 @@ import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import React from "react";
 import routes from "routes";
 import bgImage from "assets/images/Banner.jpeg";
-import { Box, Card, Stack } from "@mui/material";
+import { Card, Stack } from "@mui/material";
 import ChartExample from "../StretergyBuilder/Sections/ChartExmple";
 import LiveRandomDataChart from "../StretergyBuilder/Sections/LiveRandomDataChart";
-import StockPriceChart from "../Charts/StockPriceChart";
 import StockComparisonChart from "../Charts/StockComparisonChart";
 import IntradayStockChart from "../Charts/IntradayStockChart";
 import IntradayStockChart2 from "../Charts/IntradayStockChart2";
-import ClimateDataChart from "../Charts/ClimateDataChart";
 import CumulativeSumChart from "../Charts/CumulativeSumChart";
-import CandlestickChart from "../Charts/CandlestickChart";
 
 const Watchlist = () => {
   return (
@@ -61,7 +58,7 @@ const Watchlist = () => {
           <LiveRandomDataChart />
           <br />
           <StockComparisonChart />
-          <StockPriceChart />
+          {/* <StockPriceChart /> */}
           <IntradayStockChart />
           <IntradayStockChart2 />
           <CumulativeSumChart />

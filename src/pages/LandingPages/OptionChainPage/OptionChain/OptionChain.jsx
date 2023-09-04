@@ -2,8 +2,12 @@ import { Box, ThemeProvider, createTheme, Typography } from "@mui/material";
 import "./table.css";
 import { MaterialReactTable } from "material-react-table";
 import SettingComp from "./SettingComp";
+import { useSelector } from "react-redux";
 
 const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
+  const fontSize = useSelector((store) => store.reducer.fontSize);
+  console.log(fontSize);
+
   const combinedColumns = [
     {
       header: (
@@ -28,7 +32,7 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
                 backgroundColor: row.strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
               }}
             >
-              {row.combinedCEPE.CE_bidprice || 0}
+              <Typography fontSize={fontSize}>{row.combinedCEPE.CE_bidprice || 0}</Typography>
             </div>
           ),
         },
@@ -41,7 +45,7 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
                 backgroundColor: row.strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
               }}
             >
-              {row.combinedCEPE.CE_askPrice || 0}
+              <Typography fontSize={fontSize}>{row.combinedCEPE.CE_askPrice || 0}</Typography>
             </div>
           ),
         },
@@ -65,7 +69,9 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
                   backgroundColor: rows.strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
                 }}
               >
-                {rows.combinedCEPE.CE_openInterest ? rows.combinedCEPE.CE_openInterest : 0}
+                <Typography fontSize={fontSize}>
+                  {rows.combinedCEPE.CE_openInterest ? rows.combinedCEPE.CE_openInterest : 0}
+                </Typography>
               </div>
               <div
                 style={{
@@ -91,7 +97,7 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
       columns: [
         {
           header: "Strike",
-          accessorFn: (rows) => rows.strikePrice,
+          accessorFn: (rows) => <Typography fontSize={fontSize}>{rows.strikePrice}</Typography>,
         },
       ],
     },
@@ -130,7 +136,9 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
                   marginRight: "20px",
                 }}
               >
-                {rows.combinedCEPE.PE_openInterest ? rows.combinedCEPE.PE_openInterest : 0}
+                <Typography fontSize={fontSize}>
+                  {rows.combinedCEPE.PE_openInterest ? rows.combinedCEPE.PE_openInterest : 0}
+                </Typography>
               </div>
             </div>
           ),
@@ -144,7 +152,7 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
                 backgroundColor: rows.strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
               }}
             >
-              {rows.combinedCEPE.PE_askPrice || 0}
+              <Typography fontSize={fontSize}>{rows.combinedCEPE.PE_askPrice || 0}</Typography>
             </div>
           ),
         },
@@ -157,7 +165,9 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
                 backgroundColor: rows.strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
               }}
             >
-              {rows.combinedCEPE.PE_bidprice || 0}
+              <Typography fontSize={fontSize}>
+                <Typography fontSize={fontSize}>{rows.combinedCEPE.PE_bidprice || 0}</Typography>
+              </Typography>
             </div>
           ),
         },

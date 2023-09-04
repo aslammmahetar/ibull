@@ -1,14 +1,12 @@
+import { Card } from "@mui/material";
 import MKBox from "components/MKBox";
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
-import React, { useState } from "react";
-import bgImage from "assets/images/Banner.jpeg";
+import React from "react";
 import routes from "routes";
-import StickyNavbar from "../OptionInterest/section/StickyNavbar";
-import { Card } from "@mui/material";
-import MSChartAndFilters from "./MSChartAndFilters";
-import Footer from "pages/LandingPages/Author/sections/Footer";
+import bgImage from "assets/images/Banner.jpeg";
+import EditBar from "./sections/EditBar";
 
-const MSoi = () => {
+const LiveOptionChart = () => {
   return (
     <>
       <DefaultNavbar
@@ -39,7 +37,7 @@ const MSoi = () => {
       <Card
         sx={{
           p: 2,
-          mx: { xs: 2, lg: 3 },
+          mx: { xs: 2, lg: 2 },
           mb: 4,
           mt: -10,
           backgroundColor: "#E2E8EB",
@@ -49,12 +47,10 @@ const MSoi = () => {
           zIndex: 2,
         }}
       >
-        <StickyNavbar />
-        <MSChartAndFilters />
+        <EditBar />
       </Card>
-      <Footer />
     </>
   );
 };
 
-export default MSoi;
+export default LiveOptionChart;

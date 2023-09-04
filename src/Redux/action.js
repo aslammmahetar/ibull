@@ -12,6 +12,7 @@ export const GET_TWO_MONTH_DATA = "GET_TWO_MONTH_DATA";
 export const EMPTY_DATA = "EMPTY_DATA";
 export const FIRST_MONTH = "FIRST_MONTH";
 export const SECOND_MONTH = "SECOND_MONTH";
+export const FONTSIZE_CHANGE = "FONTSIZE_CHANGE";
 
 export const getData = () => {
   return { type: GET_REQ };
@@ -76,4 +77,8 @@ export const get5MInData = (dispatch) => {
     .get("http://localhost:3000/records2")
     .then((res) => dispatch(getFiveMinDataSuc(res.data)))
     .then((err) => dispatch(getFiveMinDataFails));
+};
+
+export const fontSizeChange = (payload) => {
+  return { type: FONTSIZE_CHANGE, payload: payload };
 };
