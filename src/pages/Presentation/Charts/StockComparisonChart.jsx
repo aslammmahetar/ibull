@@ -12,7 +12,7 @@ const StockComparisonChart = () => {
     let seriesCounter = 0;
 
     const createChart = () => {
-      Highcharts.stockChart("container", {
+      Highcharts.stockChart("container1", {
         rangeSelector: {
           selected: 4,
         },

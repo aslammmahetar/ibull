@@ -17,6 +17,7 @@ export const FONTSIZE_CHANGE = "FONTSIZE_CHANGE";
 export const getData = () => {
   return { type: GET_REQ };
 };
+
 export const getReqSuc = (payload) => {
   return { type: GET_REQ_SUC, payload };
 };

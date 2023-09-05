@@ -1,10 +1,13 @@
-import { Card } from "@mui/material";
+import { Box, Card } from "@mui/material";
 import MKBox from "components/MKBox";
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import React from "react";
 import routes from "routes";
 import bgImage from "assets/images/Banner.jpeg";
-import EditBar from "./sections/EditBar";
+import MyChart from "./sections/MyChart";
+import CumulativeSumChart from "../Charts/CumulativeSumChart";
+import MSSTab from "./sections/EditBar";
+import OpenInterestChangeTab from "./sections/OpenInterestChangeTab";
 
 const LiveOptionChart = () => {
   return (
@@ -47,7 +50,22 @@ const LiveOptionChart = () => {
           zIndex: 2,
         }}
       >
-        <EditBar />
+        <Box display={"flex"} bgcolor={"whitesmoke"} justifyContent={"space-between"}>
+          <Box width={"25%"}>
+            <MSSTab />
+          </Box>
+          <Box width={"75%"}>
+            <MyChart />
+          </Box>
+        </Box>
+        <Box display={"flex"} mt={2} bgcolor={"whitesmoke"} justifyContent={"space-between"}>
+          <Box width={"25%"}>
+            <OpenInterestChangeTab />
+          </Box>
+          <Box width={"75%"}>
+            <CumulativeSumChart />
+          </Box>
+        </Box>
       </Card>
     </>
   );
