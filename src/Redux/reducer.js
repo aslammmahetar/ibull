@@ -83,7 +83,7 @@ const reducer = (state = intialState, { type, payload }) => {
       const expiryDate = payload.expiryDates;
       console.log(expiryDate);
       const elem = modifyData(data).filter(
-        (el) => el.strikePrice == findNearestStrikePrice(strikePricesArry, ulValue)
+        (el) => el.strikePrice === findNearestStrikePrice(strikePricesArry, ulValue)
       );
       console.log(elem);
 

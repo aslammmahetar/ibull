@@ -6,6 +6,12 @@ import BarChart from "./ChartsSection";
 import { Box, Card, Typography } from "@mui/material";
 import ChartFooter from "./ChartFooter";
 import OpenIntrestes from "./OpenInterestsChart";
+import OIChange2 from "./OIChange2";
+import GirlsNameChart from "pages/Presentation/Charts/GirlsNameChart";
+import MonthlyRainfallChart from "pages/Presentation/Charts/GirlsNameChart";
+import WeatherDataChart from "pages/Presentation/Charts/WetherDataChart";
+import DatePickerComp from "./DatePickerComp";
+import KarasjokWeatherChart from "pages/Presentation/Charts/KarasjokWeatherChart";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -50,9 +56,24 @@ const ChartAndFilter = () => {
               <Typography variant="h5">Open Interest - Aug & Sep Expiries</Typography>
             </MKBox>
             <hr />
-            <OpenIntrestes />
+            <MonthlyRainfallChart />
             <hr />
-            <ChartFooter />
+            <Box p={1} display={"flex"} alignItems={"center"}>
+              <Box>
+                <Typography fontSize={"small"}>Option Chain as on</Typography>
+              </Box>
+              <Box>
+                <DatePickerComp />
+              </Box>
+            </Box>
+          </Card>
+          <Card sx={{ padding: "10px", marginTop: "20px" }}>
+            <WeatherDataChart />
+            <hr />
+          </Card>
+          <Card sx={{ padding: "10px", marginTop: "20px" }}>
+            <KarasjokWeatherChart />
+            <hr />
           </Card>
         </Box>
       </MKBox>
