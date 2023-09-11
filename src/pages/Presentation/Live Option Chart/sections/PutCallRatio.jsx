@@ -2,42 +2,62 @@ import {
   Box,
   Button,
   Checkbox,
+  FormControl,
   FormControlLabel,
   FormGroup,
+  FormLabel,
   MenuItem,
   Paper,
+  Radio,
+  RadioGroup,
   Select,
   Typography,
 } from "@mui/material";
 import React from "react";
 import InfoIcon from "@mui/icons-material/Info";
 
-const OpenInterestChangeTab = ({ heading }) => {
+const PutCallRatio = () => {
   return (
     <Paper style={{ padding: 8, height: "100%" }}>
       <Box display={"flex"} alignItems={"center"}>
-        <Typography variant="h6">{heading} - Option</Typography>
+        <Typography variant="h6">Put-call Ratio</Typography>
         <InfoIcon />
       </Box>
+      <hr />
+      <Typography fontSize={"small"}>Current Value : 0.54</Typography>
       <hr />
       <Box display={"flex"} justifyContent={"space-around"}>
         <Box borderRight={"solid lightgrey 1px"} width={"50%"}>
           <Typography fontSize={"medium"} color={"gray"}>
-            Expired Included
+            Expiry Selection
           </Typography>
-          <FormGroup>
-            <FormControlLabel control={<Checkbox defaultChecked />} label="28 Sep" />
-            <FormControlLabel control={<Checkbox defaultChecked />} label="26 Oct" />
-          </FormGroup>
+          <FormControl>
+            <RadioGroup
+              aria-labelledby="demo-radio-buttons-group-label"
+              defaultValue="female"
+              name="radio-buttons-group"
+            >
+              <FormControlLabel value="auto" control={<Radio />} label="Automatic" />
+              <FormControlLabel value="manaul" control={<Radio />} label="Manual" />
+            </RadioGroup>
+          </FormControl>
         </Box>
         <Box>
           <Typography fontSize={"medium"} color={"gray"}>
-            Show Stock Price
+            Expiry Used
           </Typography>
           <FormGroup>
-            <FormControlLabel control={<Checkbox defaultChecked />} label="Reliance" />
+            <FormControlLabel control={<Checkbox defaultChecked />} label="28 Sept" />
+            <FormControlLabel control={<Checkbox />} label="26 Oct" />
           </FormGroup>
         </Box>
+      </Box>
+      <hr />
+      <Box display={"flex"} alignItems={"center"} justifyContent={"space-around"}>
+        <Typography fontSize={"small"}>Show Strike Price</Typography>
+        <FormGroup>
+          <FormControlLabel control={<Checkbox defaultChecked />} label="RELIANCE" />
+        </FormGroup>
       </Box>
       <hr />
       <Box margin={1} display={"flex"} justifyContent={"space-between"}>
@@ -60,4 +80,4 @@ const OpenInterestChangeTab = ({ heading }) => {
   );
 };
 
-export default OpenInterestChangeTab;
+export default PutCallRatio;

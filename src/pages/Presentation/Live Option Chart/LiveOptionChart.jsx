@@ -1,4 +1,4 @@
-import { Box, Card } from "@mui/material";
+import { Box, Card, Typography } from "@mui/material";
 import MKBox from "components/MKBox";
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import React from "react";
@@ -8,6 +8,15 @@ import MyChart from "./sections/MyChart";
 import CumulativeSumChart from "../Charts/CumulativeSumChart";
 import MSSTab from "./sections/EditBar";
 import OpenInterestChangeTab from "./sections/OpenInterestChangeTab";
+import ChartComponent from "../Charts/LinePlusColumns";
+import PutCallRatio from "./sections/PutCallRatio";
+import MaxPain from "./sections/MaxPain";
+import OptionIntFuture from "./sections/OptionIntFuture";
+import OptionIV from "./sections/OptionIV";
+import IVPercentile from "./sections/IVPercentile";
+import SolarEmploymentChart from "../Charts/SolarEmplomentchart";
+import ClickableDataPointsChart from "../Charts/ClickAbleDatPoints";
+import StockMarketChart from "../Charts/StockMarketChart";
 
 const LiveOptionChart = () => {
   return (
@@ -60,10 +69,66 @@ const LiveOptionChart = () => {
         </Box>
         <Box display={"flex"} mt={2} bgcolor={"whitesmoke"} justifyContent={"space-between"}>
           <Box width={"25%"}>
-            <OpenInterestChangeTab />
+            <OpenInterestChangeTab heading={"Option Intereset"} />
           </Box>
           <Box width={"75%"}>
             <CumulativeSumChart />
+          </Box>
+        </Box>
+        <Box display={"flex"} mt={2} bgcolor={"whitesmoke"} justifyContent={"space-between"}>
+          <Box width={"25%"}>
+            <OpenInterestChangeTab heading={"Option Intereset Change"} />
+          </Box>
+          <Box width={"75%"}>
+            <ChartComponent />
+          </Box>
+        </Box>
+        <Box display={"flex"} mt={2} bgcolor={"whitesmoke"} justifyContent={"space-between"}>
+          <Box width={"25%"}>
+            <PutCallRatio />
+          </Box>
+          <Box width={"75%"} display={"flex"} alignItems={"center"} justifyContent={"center"}>
+            <SolarEmploymentChart />
+          </Box>
+        </Box>
+        <Box display={"flex"} mt={2} bgcolor={"whitesmoke"} justifyContent={"space-between"}>
+          <Box width={"25%"}>
+            <MaxPain />
+          </Box>
+          <Box width={"75%"} display={"flex"} alignItems={"center"} justifyContent={"center"}>
+            <ClickableDataPointsChart />
+          </Box>
+        </Box>
+        <Box display={"flex"} mt={2} bgcolor={"whitesmoke"} justifyContent={"space-between"}>
+          <Box width={"25%"}>
+            <OptionIntFuture heading={"Open Interest"} />
+          </Box>
+          <Box width={"75%"} display={"flex"} alignItems={"center"} justifyContent={"center"}>
+            <StockMarketChart />
+          </Box>
+        </Box>
+        <Box display={"flex"} mt={2} bgcolor={"whitesmoke"} justifyContent={"space-between"}>
+          <Box width={"25%"}>
+            <OptionIntFuture heading={"Open Interest Change"} />
+          </Box>
+          <Box width={"75%"} display={"flex"} alignItems={"center"} justifyContent={"center"}>
+            <Typography variant="h2">Chart Section</Typography>
+          </Box>
+        </Box>
+        <Box display={"flex"} mt={2} bgcolor={"whitesmoke"} justifyContent={"space-between"}>
+          <Box width={"25%"}>
+            <OptionIV />
+          </Box>
+          <Box width={"75%"} display={"flex"} alignItems={"center"} justifyContent={"center"}>
+            <Typography variant="h2">Chart Section</Typography>
+          </Box>
+        </Box>
+        <Box display={"flex"} mt={2} bgcolor={"whitesmoke"} justifyContent={"space-between"}>
+          <Box width={"25%"}>
+            <IVPercentile />
+          </Box>
+          <Box width={"75%"} display={"flex"} alignItems={"center"} justifyContent={"center"}>
+            <Typography variant="h2">Chart Section</Typography>
           </Box>
         </Box>
       </Card>

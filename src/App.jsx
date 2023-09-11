@@ -29,8 +29,6 @@ import Presentation from "layouts/pages/presentation";
 // Material Kit 2 React routes
 import routes from "routes";
 import Router from "Router";
-import OpenInterest from "pages/Presentation/OptionInterest/OpenInterest";
-import axios from "axios";
 
 export default function App() {
   const { pathname } = useLocation();

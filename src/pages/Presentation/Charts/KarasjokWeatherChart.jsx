@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Highcharts from "highcharts";
+import MonthPicker from "../OptionInterest/section/MonthPicker";
 
 const KarasjokWeatherChart = () => {
   useEffect(() => {
@@ -9,23 +10,10 @@ const KarasjokWeatherChart = () => {
         renderTo: "container15", // This element's ID will be used for rendering the chart
       },
       title: {
-        text: "Karasjok weather, 2021",
+        text: "FUT OI vs Time - Sep & Oct Expiries",
         align: "left",
       },
-      subtitle: {
-        text: (
-          <span>
-            Source:{" "}
-            <a
-              href="https://www.yr.no/nb/historikk/graf/5-97251/Norge/Troms%20og%20Finnmark/Karasjok/Karasjok?q=2021"
-              target="_blank"
-            >
-              YR
-            </a>
-          </span>
-        ),
-        align: "left",
-      },
+
       xAxis: [
         {
           categories: [
@@ -115,6 +103,8 @@ const KarasjokWeatherChart = () => {
   return (
     <div>
       <div id="container15" />
+      <hr />
+      <MonthPicker />
     </div>
   );
 };

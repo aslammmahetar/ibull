@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import Highcharts from "highcharts/highstock";
 import "highcharts/css/highcharts.css";
+import { Paper } from "@mui/material";
 
 const CumulativeSumChart = () => {
   useEffect(() => {
@@ -49,7 +50,11 @@ const CumulativeSumChart = () => {
     };
   }, []);
 
-  return <div id="container5" />;
+  return (
+    <Paper>
+      <div id="container5" />
+    </Paper>
+  );
 };
 
 export default CumulativeSumChart;

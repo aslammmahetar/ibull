@@ -4,10 +4,7 @@ import { Filters } from "./Filters";
 import { makeStyles } from "@mui/styles";
 import BarChart from "./ChartsSection";
 import { Box, Card, Typography } from "@mui/material";
-import ChartFooter from "./ChartFooter";
-import OpenIntrestes from "./OpenInterestsChart";
-import OIChange2 from "./OIChange2";
-import GirlsNameChart from "pages/Presentation/Charts/GirlsNameChart";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import MonthlyRainfallChart from "pages/Presentation/Charts/GirlsNameChart";
 import WeatherDataChart from "pages/Presentation/Charts/WetherDataChart";
 import DatePickerComp from "./DatePickerComp";
@@ -58,12 +55,34 @@ const ChartAndFilter = () => {
             <hr />
             <MonthlyRainfallChart />
             <hr />
-            <Box p={1} display={"flex"} alignItems={"center"}>
-              <Box>
-                <Typography fontSize={"small"}>Option Chain as on</Typography>
+            <Box display={"flex"} justifyContent={"space-between"}>
+              <Box p={1} display={"flex"} alignItems={"center"} width={"50%"}>
+                <Box>
+                  <Typography fontSize={"small"}>Option Chain as on</Typography>
+                </Box>
+                <Box>
+                  <DatePickerComp />
+                </Box>
               </Box>
-              <Box>
-                <DatePickerComp />
+              <Box display={"flex"} width={"40%"} justifyContent={"space-around"}>
+                <Box>
+                  <Typography fontSize={"small"}>Total Calls</Typography>
+                  <Typography variant="h6">8.36L</Typography>
+                </Box>
+                <Box>
+                  <Typography fontSize={"small"}>Total Puts</Typography>
+                  <Typography variant="h6">4.5L</Typography>
+                </Box>
+                <Box>
+                  <Typography fontSize={"small"}>
+                    PCR <HelpOutlineIcon />
+                  </Typography>
+                  <Typography variant="h6">0.6</Typography>
+                </Box>
+                <Box>
+                  <Typography fontSize={"small"}>RELIANCE</Typography>
+                  <Typography variant="h6">2471</Typography>
+                </Box>
               </Box>
             </Box>
           </Card>

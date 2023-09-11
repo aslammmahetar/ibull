@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Highcharts from "highcharts";
+import MonthPicker from "../OptionInterest/section/MonthPicker";
 
 const WeatherDataChart = () => {
   useEffect(() => {
@@ -180,6 +181,8 @@ const WeatherDataChart = () => {
   return (
     <div>
       <div id="container14" />
+      <hr />
+      <MonthPicker />
     </div>
   );
 };
