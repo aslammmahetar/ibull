@@ -11,14 +11,48 @@ import {
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import React from "react";
 import LaunchIcon from "@mui/icons-material/Launch";
-import InfoIcon from "@mui/icons-material/Info";
 import AddIcon from "@mui/icons-material/Add";
+import KnowMoreDrawer from "./KnowMoreDrawer";
 const MSSTab = () => {
+  const MSDrawerContent = () => {
+    return (
+      <>
+        <Typography variant="h4">Multi Straddle-Strangle Chart</Typography>
+        <ul style={{ fontSize: "medium" }}>
+          <li>
+            This chart lets you add multiple straddles, strangles, or custom strategies and compare
+            the prices of all those strategies
+          </li>
+          <li>
+            You can add upto 6 strategies
+            <ul>
+              <li>Each strategy can contain a maximum of 6 options</li>
+            </ul>
+          </li>
+          <li>
+            Strategy price calculation
+            <ul>
+              <li>
+                Strategy prices shown in this chart are computed based on ‘Sell Positive, Buy
+                Negative’ convention
+              </li>
+              <li>
+                As an example: consider a strategy comprising of 1x 19300CE Sell at 123.2 and 2x
+                19400CE Buy at 65.4
+              </li>
+              <li>The price of this strategy will now be 123.2 - 2 x 65.4 = -7.6</li>
+            </ul>
+          </li>
+        </ul>
+      </>
+    );
+  };
+
   return (
     <Paper style={{ padding: 8 }}>
       <Box display={"flex"} alignItems={"center"}>
         <Typography variant="h6">Multi Straddle-Strangle</Typography>
-        <InfoIcon />
+        <KnowMoreDrawer content={MSDrawerContent} />
       </Box>
       <hr />
       <Box display={"flex"} justifyContent={"space-around"}>

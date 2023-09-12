@@ -10,14 +10,13 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import InfoIcon from "@mui/icons-material/Info";
-
-const OpenInterestChangeTab = ({ heading }) => {
+import KnowMoreDrawer from "./KnowMoreDrawer";
+const OpenInterestChangeTab = ({ heading, OpenInterestContent }) => {
   return (
     <Paper style={{ padding: 8, height: "100%" }}>
       <Box display={"flex"} alignItems={"center"}>
         <Typography variant="h6">{heading} - Option</Typography>
-        <InfoIcon />
+        <KnowMoreDrawer content={OpenInterestContent} />
       </Box>
       <hr />
       <Box display={"flex"} justifyContent={"space-around"}>
