@@ -11,8 +11,8 @@ import {
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import React from "react";
 import LaunchIcon from "@mui/icons-material/Launch";
-import AddIcon from "@mui/icons-material/Add";
 import KnowMoreDrawer from "./KnowMoreDrawer";
+import AddStretergyDrawer from "./AddStretergyDrawer";
 const MSSTab = () => {
   const MSDrawerContent = () => {
     return (
@@ -100,9 +100,7 @@ const MSSTab = () => {
             <MoreVertIcon />
           </Box>
           <Box>
-            <Button style={{ border: "solid blue 1px" }} fullWidth startIcon={<AddIcon />}>
-              Add Stretergy
-            </Button>
+            <AddStretergyDrawer />
           </Box>
           <Box>
             <Typography fontSize={"medium"}>See Call/Put price, OI, VWAP and More</Typography>
@@ -115,36 +113,3 @@ const MSSTab = () => {
 };
 
 export default MSSTab;
-{
-  /* <Box bgcolor={"#FDFFFC"} borderRadius={"5px"}>
-        <MKBox display={"flex"} style={{ padding: "5px" }} justifyContent="space-around">
-          <IconButton onClick={handleSearchIconClick}>
-            <Search />
-          </IconButton>
-          <div
-            style={{
-              top: "50px",
-              right: "10px",
-              // borderBottom: "1px solid black",
-              marginRight: "5px",
-            }}
-          >
-            <InputBase
-              placeholder="Type Stock Name :SBIN, RELIANCE etc."
-              value={"BANKNIFTY"}
-              style={{ width: "80%", fontSize: "small" }}
-            />
-          </div>
-          <Box display={"flex"} justifyContent={"space-evenly"}>
-            <Tooltip title="Open Chart">
-              <Button variant="outlined" size="small">
-                <TrendingUpOutlinedIcon color="info" />
-              </Button>
-            </Tooltip>
-            <Button variant="outlined" style={{ width: "5px", color: "blue", marginLeft: "4px" }}>
-              info
-            </Button>
-          </Box>
-        </MKBox>
-      </Box> */
-}

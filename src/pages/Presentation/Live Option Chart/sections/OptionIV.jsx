@@ -5,22 +5,40 @@ import {
   FormControl,
   FormControlLabel,
   FormGroup,
-  MenuItem,
   Paper,
   Radio,
   RadioGroup,
-  Select,
   Typography,
 } from "@mui/material";
 import React from "react";
-import InfoIcon from "@mui/icons-material/Info";
+import KnowMoreDrawer from "./KnowMoreDrawer";
+
+const OptionIVContent = () => {
+  return (
+    <>
+      <Typography variant="h4">Option IV Chart</Typography>
+      <ul style={{ fontSize: "medium" }}>
+        <li>This chart shows the implied volatility (IV) for selected option strikes</li>
+        <li>
+          A high IV indicates that the option premium is high, and a low IV indicates that the
+          option premium is low
+        </li>
+        <li>
+          In Automatic and Manual modes, the chart shows the IV for the at-the-money (ATM) strike at
+          any given point in time.
+        </li>
+        <li>You can add your own custom strikes to this chart and see their IVs</li>
+      </ul>
+    </>
+  );
+};
 
 const OptionIV = () => {
   return (
     <Paper style={{ padding: 8, height: "100%" }}>
       <Box display={"flex"} alignItems={"center"}>
         <Typography variant="h6">Option IV</Typography>
-        <InfoIcon />
+        <KnowMoreDrawer content={OptionIVContent} />
       </Box>
       <hr />
       <Typography fontSize={"small"}>Current Value : 0.54</Typography>

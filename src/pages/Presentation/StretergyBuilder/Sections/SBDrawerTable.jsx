@@ -7,11 +7,13 @@ import { useDispatch, useSelector } from "react-redux";
 
 const SBDrawerTable = () => {
   var expiryDates = [
-    "06-Sep-2023",
-    "14-Sep-2023",
-    "21-Sep-2023",
+    "13-Sep-2023",
+    "20-Sep-2023",
     "28-Sep-2023",
+    "04-Oct-2023",
+    "11-Oct-2023",
     "26-Oct-2023",
+    "30-Nov-2023",
     "28-Dec-2023",
     "28-Mar-2024",
     "27-Jun-2024",

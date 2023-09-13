@@ -72,6 +72,38 @@ const OpenInterestChanegContent = () => {
   );
 };
 
+const OpenInContent = () => {
+  return (
+    <>
+      <Typography variant="h4">Open Interest - Futures</Typography>
+      <ul style={{ fontSize: "medium" }}>
+        <li>This chart shows the open interest in futures contracts of a stock or index</li>
+        <li>
+          If multiple expiry dates are selected, we add the open interest of futures contracts of
+          selected expiry dates and show the sum
+        </li>
+      </ul>
+    </>
+  );
+};
+
+const OptionIntFutureContent = () => {
+  return (
+    <>
+      <Typography variant="h4">Futures - Open Interest Change Chart</Typography>
+      <ul style={{ fontSize: "medium" }}>
+        <li>
+          This chart shows the change in open interest of futures contracts in a time interval
+        </li>
+        <li>
+          For example, a Futures OI change of +10.1L at 2:15 PM, with 15-minute time interval
+          selected means that 10.1L futures OI was added from 2:15:01 to 2:29:59
+        </li>
+      </ul>
+    </>
+  );
+};
+
 const LiveOptionChart = () => {
   return (
     <>
@@ -161,7 +193,7 @@ const LiveOptionChart = () => {
         </Box>
         <Box display={"flex"} mt={2} bgcolor={"whitesmoke"} justifyContent={"space-between"}>
           <Box width={"25%"}>
-            <OptionIntFuture heading={"Open Interest"} />
+            <OptionIntFuture heading={"Open Interest"} OptionIntFutureContent={OpenInContent} />
           </Box>
           <Box width={"75%"} display={"flex"} alignItems={"center"} justifyContent={"center"}>
             <StockMarketChart />
@@ -169,7 +201,10 @@ const LiveOptionChart = () => {
         </Box>
         <Box display={"flex"} mt={2} bgcolor={"whitesmoke"} justifyContent={"space-between"}>
           <Box width={"25%"}>
-            <OptionIntFuture heading={"Open Interest Change"} />
+            <OptionIntFuture
+              heading={"Open Interest Change"}
+              OptionIntFutureContent={OptionIntFutureContent}
+            />
           </Box>
           <Box width={"75%"} display={"flex"} alignItems={"center"} justifyContent={"center"}>
             <Typography variant="h2">Chart Section</Typography>

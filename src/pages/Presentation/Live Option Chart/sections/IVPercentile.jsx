@@ -1,25 +1,45 @@
 import {
   Box,
-  Button,
   Checkbox,
   FormControl,
   FormControlLabel,
   FormGroup,
-  MenuItem,
   Paper,
   Radio,
   RadioGroup,
-  Select,
   Typography,
 } from "@mui/material";
 import React from "react";
-import InfoIcon from "@mui/icons-material/Info";
+import KnowMoreDrawer from "./KnowMoreDrawer";
+
+const IVPercentileContent = () => {
+  return (
+    <>
+      <Typography variant="h4">IV Percentile Chart</Typography>
+      <ul style={{ fontSize: "medium" }}>
+        <li>
+          This chart shows the Implied Volatility Percentile (IVP) for the ATM strike of a selected
+          expiry
+        </li>
+        <li>
+          A high IVP (more than 80) indicates a relatively high IV, and a low IVP (less than 20)
+          indicates a relatively low IV.
+        </li>
+        <li>
+          For single stocks, IVP works well for the current expiry. IVP is not reliable for next
+          month options.
+        </li>
+      </ul>
+    </>
+  );
+};
+
 const IVPercentile = () => {
   return (
     <Paper style={{ padding: 8, height: "100%" }}>
       <Box display={"flex"} alignItems={"center"}>
         <Typography variant="h6">IV Percentile</Typography>
-        <InfoIcon />
+        <KnowMoreDrawer content={IVPercentileContent} />
       </Box>
       <hr />
       <Typography fontSize={"small"}>Current Value : 0.54</Typography>

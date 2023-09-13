@@ -10,14 +10,32 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import InfoIcon from "@mui/icons-material/Info";
+import KnowMoreDrawer from "./KnowMoreDrawer";
+
+const MaxPaionContent = () => {
+  return (
+    <>
+      <Typography variant="h4">Max Pain Chart</Typography>
+      <ul style={{ fontSize: "medium" }}>
+        <li>
+          Max pain theory says that a stock or index will expire at a price where the option sellers
+          get the least loss. This price is called max pain price.
+        </li>
+        <li>
+          This theory is expected to work because option sellers are big players and are usually
+          right. Although it is widely used, there is no evidence that this is reliable
+        </li>
+      </ul>
+    </>
+  );
+};
 
 const MaxPain = () => {
   return (
     <Paper style={{ padding: 8, height: "100%" }}>
       <Box display={"flex"} alignItems={"center"}>
         <Typography variant="h6">Max Pain</Typography>
-        <InfoIcon />
+        <KnowMoreDrawer content={MaxPaionContent} />
       </Box>
       <hr />
       <Typography fontSize={"small"}>Current Value : 0.54</Typography>

@@ -1,26 +1,21 @@
 import {
   Box,
-  Button,
   Checkbox,
   FormControl,
   FormControlLabel,
   FormGroup,
-  MenuItem,
   Paper,
-  Radio,
-  RadioGroup,
-  Select,
   Typography,
 } from "@mui/material";
 import React from "react";
-import InfoIcon from "@mui/icons-material/Info";
+import KnowMoreDrawer from "./KnowMoreDrawer";
 
-const OptionIntFuture = ({ heading }) => {
+const OptionIntFuture = ({ heading, OptionIntFutureContent }) => {
   return (
     <Paper style={{ padding: 8, height: "100%" }}>
       <Box display={"flex"} alignItems={"center"}>
         <Typography variant="h6">{heading} - Futures</Typography>
-        <InfoIcon />
+        <KnowMoreDrawer content={OptionIntFutureContent} />
       </Box>
       <hr />
       <Typography fontSize={"small"}>Current Value : 0.54</Typography>

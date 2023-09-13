@@ -2,7 +2,7 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import InfoIcon from "@mui/icons-material/Info";
-import { Tooltip, Typography } from "@mui/material";
+import { Tooltip } from "@mui/material";
 
 const KnowMoreDrawer = ({ content }) => {
   const [state, setState] = React.useState({
