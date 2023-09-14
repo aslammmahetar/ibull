@@ -1,5 +1,4 @@
 import axios from "axios";
-
 export const GET_REQ = "GET_REQ";
 export const GET_REQ_SUC = "GET_REQ_SUC";
 export const GET_REQ_FAILS = "GET_REQ_FAILS";

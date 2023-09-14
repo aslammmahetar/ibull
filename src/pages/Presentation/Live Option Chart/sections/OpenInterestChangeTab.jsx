@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Checkbox,
   FormControlLabel,
   FormGroup,
@@ -11,6 +10,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import KnowMoreDrawer from "./KnowMoreDrawer";
+import CustomStrikeDrawer from "./CustomStrikeDrawer";
 const OpenInterestChangeTab = ({ heading, OpenInterestContent }) => {
   return (
     <Paper style={{ padding: 8, height: "100%" }}>
@@ -53,7 +53,7 @@ const OpenInterestChangeTab = ({ heading, OpenInterestContent }) => {
         <Typography fontSize={"medium"}>
           Strike Range <b>1360 - 3660</b>{" "}
         </Typography>
-        <Button fullWidth>Choose CDustom Strikes</Button>
+        <CustomStrikeDrawer />
       </Box>
     </Paper>
   );

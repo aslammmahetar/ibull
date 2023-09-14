@@ -109,18 +109,21 @@ const reducer = (state = intialState, { type, payload }) => {
         data: [],
       };
     }
+
     case CURRENT_MONTH_DATA: {
       return {
         ...state,
         currentMonth: !state.currentMonth,
       };
     }
+
     case NEXT_MONTH_DATA: {
       return {
         ...state,
         nextMonth: !state.nextMonth,
       };
     }
+
     case GET_TWO_MONTH_DATA: {
       const septData = state.data.filter((item) => item.expiryDate.includes("Sep"));
       const augData = state.data.filter((item) => item.expiryDate.includes("Oct"));
@@ -129,12 +132,14 @@ const reducer = (state = intialState, { type, payload }) => {
         twoMonthData: [...augData, ...septData],
       };
     }
+
     case EMPTY_DATA: {
       return {
         ...state,
         twoMonthData: [],
       };
     }
+
     case FIRST_MONTH: {
       const septData = state.data.filter((item) => item.expiryDate.includes("Sep"));
       console.log(septData);
@@ -143,6 +148,7 @@ const reducer = (state = intialState, { type, payload }) => {
         twoMonthData: septData,
       };
     }
+
     case SECOND_MONTH: {
       const augData = state.data.filter((item) => item.expiryDate.includes("Oct"));
       console.log(augData);
@@ -151,6 +157,7 @@ const reducer = (state = intialState, { type, payload }) => {
         twoMonthData: augData,
       };
     }
+
     case FIVE_MIN_DATA_SUC: {
       const data = payload.data;
       modifyData(data);
@@ -164,12 +171,14 @@ const reducer = (state = intialState, { type, payload }) => {
         fiveMinData: [...augData, ...septData],
       };
     }
+
     case FONTSIZE_CHANGE: {
       return {
         ...state,
         fontSize: payload,
       };
     }
+
     default:
       return state;
   }

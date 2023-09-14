@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Checkbox,
   FormControl,
   FormControlLabel,
@@ -12,6 +11,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import KnowMoreDrawer from "./KnowMoreDrawer";
+import CustomStrikeDrawer from "./CustomStrikeDrawer";
 
 const OptionIVContent = () => {
   return (
@@ -96,7 +96,7 @@ const OptionIV = () => {
         <Typography fontSize={"medium"}>
           Strike Range <b>1360 - 3660</b>{" "}
         </Typography>
-        <Button fullWidth>Choose CDustom Strikes</Button>
+        <CustomStrikeDrawer />
       </Box>
     </Paper>
   );

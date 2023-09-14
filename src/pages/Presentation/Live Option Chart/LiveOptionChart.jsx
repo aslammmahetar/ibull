@@ -1,8 +1,23 @@
-import { Box, Card, Typography } from "@mui/material";
+import {
+  AppBar,
+  Box,
+  Button,
+  Card,
+  FormControl,
+  IconButton,
+  InputBase,
+  InputLabel,
+  MenuItem,
+  Select,
+  Toolbar,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import MKBox from "components/MKBox";
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import routes from "routes";
+import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import bgImage from "assets/images/Banner.jpeg";
 import MyChart from "./sections/MyChart";
 import CumulativeSumChart from "../Charts/CumulativeSumChart";
@@ -17,6 +32,7 @@ import IVPercentile from "./sections/IVPercentile";
 import SolarEmploymentChart from "../Charts/SolarEmplomentchart";
 import ClickableDataPointsChart from "../Charts/ClickAbleDatPoints";
 import StockMarketChart from "../Charts/StockMarketChart";
+import { Search } from "@mui/icons-material";
 const OpenInterestContent = () => {
   return (
     <>
@@ -105,6 +121,54 @@ const OptionIntFutureContent = () => {
 };
 
 const LiveOptionChart = () => {
+  const [isSticky, setIsSticky] = useState(false);
+
+  // Set the scroll threshold based on your requirements
+  const scrollThreshold = 30;
+
+  // Add a scroll event listener to track the scrolling
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > scrollThreshold) {
+        setIsSticky(true);
+      } else {
+        setIsSticky(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    // Add an event listener to the window to check for scroll position
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      // Remove the event listener when the component unmounts
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+  const [_, setIsVisible] = useState(false);
+  const handleScroll = () => {
+    // Set isVisible to true if the user has scrolled down, false if at the top
+    if (window.scrollY > 100) {
+      setIsVisible(true);
+    } else {
+      setIsVisible(false);
+    }
+  };
+
+  const scrollToTop = () => {
+    // Scroll to the top of the page when the button is clicked
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // Add smooth scrolling animation
+    });
+  };
   return (
     <>
       <DefaultNavbar
@@ -145,7 +209,95 @@ const LiveOptionChart = () => {
           zIndex: 2,
         }}
       >
-        <Box display={"flex"} bgcolor={"whitesmoke"} justifyContent={"space-between"}>
+        <AppBar
+          position={isSticky ? "sticky" : "static"}
+          style={{ top: 69, bottom: 25, zIndex: 999 }}
+        >
+          <Card
+            sx={{
+              p: 0.5,
+            }}
+          >
+            <Box display={"flex"} justifyContent={"space-between"}>
+              <MKBox
+                display={"flex"}
+                style={{ padding: "5px", width: "25%" }}
+                justifyContent="space-around"
+              >
+                <IconButton>
+                  <Search />
+                </IconButton>
+                <div
+                  style={{
+                    top: "50px",
+                    right: "10px",
+                    marginRightmarginRightght: "5px",
+                  }}
+                >
+                  <InputBase
+                    placeholder="Type Stock Name :SBIN, RELIANCE etc."
+                    value={"RELIANCE"}
+                    style={{ width: "80%", fontSize: "small" }}
+                  />
+                </div>
+                <Box display={"flex"} justifyContent={"space-evenly"}>
+                  <Tooltip title="Open Chart">
+                    <Button variant="outlined" size="small">
+                      <TrendingUpOutlinedIcon color="info" />
+                    </Button>
+                  </Tooltip>
+                  <Button
+                    variant="outlined"
+                    style={{ width: "5px", color: "blue", marginLeft: "4px" }}
+                  >
+                    info
+                  </Button>
+                </Box>
+              </MKBox>
+              <Select
+                defaultValue={1}
+                style={{ paddingLeft: 10, paddingRight: 10, marginRight: 10 }}
+              >
+                <MenuItem value={1} onClick={scrollToTop}>
+                  Jump To{" "}
+                </MenuItem>
+                <MenuItem value={2}>
+                  <a href="#multi_straddle">Multi Straddle-Strangle</a>
+                </MenuItem>
+                <MenuItem value={3}>
+                  <a href="#open_interest">Open Intereset - Option</a>
+                </MenuItem>
+                <MenuItem value={4}>
+                  <a href="#open_Int_change">Option Intereset Change - Option</a>
+                </MenuItem>
+                <MenuItem value={5}>
+                  <a href="#put_call_ratio">Put Call Ratio</a>
+                </MenuItem>
+                <MenuItem value={6}>
+                  <a href="#max_pain">Max Pain</a>
+                </MenuItem>
+                <MenuItem value={7}>
+                  <a href="#open_int_future">Open Interest - Future</a>
+                </MenuItem>
+                <MenuItem value={8}>
+                  <a href="#open_int_change_future">Open Interest Change - Future</a>
+                </MenuItem>
+                <MenuItem value={9}>
+                  <a href="#option_iv">Option IV</a>
+                </MenuItem>
+                <MenuItem value={10}>
+                  <a href="#iv_percetile">IV Percentile</a>
+                </MenuItem>
+              </Select>
+            </Box>
+          </Card>
+        </AppBar>
+        <Box
+          display={"flex"}
+          bgcolor={"whitesmoke"}
+          id="multi_straddle"
+          justifyContent={"space-between"}
+        >
           <Box width={"25%"}>
             <MSSTab />
           </Box>
@@ -153,10 +305,16 @@ const LiveOptionChart = () => {
             <MyChart />
           </Box>
         </Box>
-        <Box display={"flex"} mt={2} bgcolor={"whitesmoke"} justifyContent={"space-between"}>
+        <Box
+          display={"flex"}
+          mt={2}
+          id="open_interest"
+          bgcolor={"whitesmoke"}
+          justifyContent={"space-between"}
+        >
           <Box width={"25%"}>
             <OpenInterestChangeTab
-              heading={"Option Intereset"}
+              heading={"Open Intereset"}
               OpenInterestContent={OpenInterestContent}
             />
           </Box>
@@ -164,18 +322,30 @@ const LiveOptionChart = () => {
             <CumulativeSumChart />
           </Box>
         </Box>
-        <Box display={"flex"} mt={2} bgcolor={"whitesmoke"} justifyContent={"space-between"}>
+        <Box
+          display={"flex"}
+          id="open_Int_change"
+          mt={2}
+          bgcolor={"whitesmoke"}
+          justifyContent={"space-between"}
+        >
           <Box width={"25%"}>
             <OpenInterestChangeTab
               OpenInterestContent={OpenInterestChanegContent}
-              heading={"Option Intereset Change"}
+              heading={"Open Intereset Change"}
             />
           </Box>
           <Box width={"75%"}>
             <ChartComponent />
           </Box>
         </Box>
-        <Box display={"flex"} mt={2} bgcolor={"whitesmoke"} justifyContent={"space-between"}>
+        <Box
+          display={"flex"}
+          id="put_call_ratio"
+          mt={2}
+          bgcolor={"whitesmoke"}
+          justifyContent={"space-between"}
+        >
           <Box width={"25%"}>
             <PutCallRatio />
           </Box>
@@ -183,7 +353,13 @@ const LiveOptionChart = () => {
             <SolarEmploymentChart />
           </Box>
         </Box>
-        <Box display={"flex"} mt={2} bgcolor={"whitesmoke"} justifyContent={"space-between"}>
+        <Box
+          display={"flex"}
+          id="max_pain"
+          mt={2}
+          bgcolor={"whitesmoke"}
+          justifyContent={"space-between"}
+        >
           <Box width={"25%"}>
             <MaxPain />
           </Box>
@@ -191,7 +367,13 @@ const LiveOptionChart = () => {
             <ClickableDataPointsChart />
           </Box>
         </Box>
-        <Box display={"flex"} mt={2} bgcolor={"whitesmoke"} justifyContent={"space-between"}>
+        <Box
+          display={"flex"}
+          id="open_int_future"
+          mt={2}
+          bgcolor={"whitesmoke"}
+          justifyContent={"space-between"}
+        >
           <Box width={"25%"}>
             <OptionIntFuture heading={"Open Interest"} OptionIntFutureContent={OpenInContent} />
           </Box>
@@ -199,7 +381,13 @@ const LiveOptionChart = () => {
             <StockMarketChart />
           </Box>
         </Box>
-        <Box display={"flex"} mt={2} bgcolor={"whitesmoke"} justifyContent={"space-between"}>
+        <Box
+          display={"flex"}
+          id="open_int_change_future"
+          mt={2}
+          bgcolor={"whitesmoke"}
+          justifyContent={"space-between"}
+        >
           <Box width={"25%"}>
             <OptionIntFuture
               heading={"Open Interest Change"}
@@ -210,7 +398,13 @@ const LiveOptionChart = () => {
             <Typography variant="h2">Chart Section</Typography>
           </Box>
         </Box>
-        <Box display={"flex"} mt={2} bgcolor={"whitesmoke"} justifyContent={"space-between"}>
+        <Box
+          display={"flex"}
+          id="option_iv"
+          mt={2}
+          bgcolor={"whitesmoke"}
+          justifyContent={"space-between"}
+        >
           <Box width={"25%"}>
             <OptionIV />
           </Box>
@@ -218,7 +412,13 @@ const LiveOptionChart = () => {
             <Typography variant="h2">Chart Section</Typography>
           </Box>
         </Box>
-        <Box display={"flex"} mt={2} bgcolor={"whitesmoke"} justifyContent={"space-between"}>
+        <Box
+          display={"flex"}
+          id="iv_percetile"
+          mt={2}
+          bgcolor={"whitesmoke"}
+          justifyContent={"space-between"}
+        >
           <Box width={"25%"}>
             <IVPercentile />
           </Box>

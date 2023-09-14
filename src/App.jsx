@@ -29,6 +29,7 @@ import Presentation from "layouts/pages/presentation";
 // Material Kit 2 React routes
 import routes from "routes";
 import Router from "Router";
+import axios from "axios";
 
 export default function App() {
   const { pathname } = useLocation();
@@ -57,6 +58,18 @@ export default function App() {
 
       return null;
     });
+  const getData = async () => {
+    try {
+      let req = await axios.get("http://192.168.1.4/api/NSE/GetAllNSEDataByExp");
+      console.log("res from here ", req);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getData();
+  });
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

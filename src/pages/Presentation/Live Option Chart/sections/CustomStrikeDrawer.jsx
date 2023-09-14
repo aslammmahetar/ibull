@@ -2,27 +2,19 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
-import AddIcon from "@mui/icons-material/Add";
-import {
-  Card,
-  FormControl,
-  FormControlLabel,
-  IconButton,
-  InputBase,
-  MenuItem,
-  Radio,
-  RadioGroup,
-  Select,
-  Tooltip,
-} from "@mui/material";
+import { Card, IconButton, InputBase, MenuItem, Select, Tooltip } from "@mui/material";
 import MKBox from "components/MKBox";
 import { Search } from "@mui/icons-material";
 import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import { Tab, TabIndicator, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 import MSDrawerTable from "pages/Presentation/MultiStrikeOI/MSDrawerTable";
 
-export default function AddStretergyDrawer() {
+export default function CustomStrikeDrawer() {
   const [open, setOpen] = React.useState(false);
+
+  const handleSearchIconClick = () => {
+    setOpen(!open);
+  };
   var expiryDates = [
     "13-Sep-2023",
     "20-Sep-2023",
@@ -39,11 +31,6 @@ export default function AddStretergyDrawer() {
   const handleExpiryDateChange = (event) => {
     setSelectedExpiryDate(event.target.value);
   };
-
-  const handleSearchIconClick = () => {
-    setOpen(!open);
-  };
-
   const [state, setState] = React.useState({
     top: false,
     left: false,
@@ -107,7 +94,7 @@ export default function AddStretergyDrawer() {
           <div
             style={{
               display: "flex",
-              justifyContent: "space-between",
+              justifyContent: "space-around",
               alignItems: "center",
               marginTop: 10,
             }}
@@ -170,18 +157,6 @@ export default function AddStretergyDrawer() {
                 </Tab>
               </TabList>
             </Tabs>
-            <FormControl>
-              <RadioGroup
-                aria-labelledby="demo-radio-buttons-group-label"
-                defaultValue="female"
-                name="radio-buttons-group"
-              >
-                <div style={{ display: "flex" }}>
-                  <FormControlLabel value="female" control={<Radio />} label="Static Strikes" />
-                  <FormControlLabel value="other" control={<Radio />} label="Dynamic Strikes" />
-                </div>
-              </RadioGroup>
-            </FormControl>
           </div>
           <hr style={{ marginTop: 10 }} />
           <TabPanels onClick={(e) => e.stopPropagation()}>
@@ -209,10 +184,6 @@ export default function AddStretergyDrawer() {
           </TabPanels>
         </Tabs>
       </div>
-      <Box onClick={(e) => e.stopPropagation()}>
-        <Button>Clear All</Button>
-        <Button>Add to Chart</Button>
-      </Box>
     </Box>
   );
 
@@ -220,13 +191,8 @@ export default function AddStretergyDrawer() {
     <div>
       {["right"].map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button
-            onClick={toggleDrawer(anchor, true)}
-            style={{ border: "solid blue 1px" }}
-            fullWidth
-            startIcon={<AddIcon />}
-          >
-            Add Stretergy
+          <Button onClick={toggleDrawer(anchor, true)} fullWidth>
+            Choose CDustom Strikes
           </Button>
           <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
             {list(anchor)}

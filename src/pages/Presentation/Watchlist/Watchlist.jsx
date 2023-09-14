@@ -10,6 +10,7 @@ import StockComparisonChart from "../Charts/StockComparisonChart";
 import IntradayStockChart from "../Charts/IntradayStockChart";
 import IntradayStockChart2 from "../Charts/IntradayStockChart2";
 import CumulativeSumChart from "../Charts/CumulativeSumChart";
+import StockChart from "../Charts/StockChartWithGUi";
 
 const Watchlist = () => {
   return (
@@ -54,14 +55,15 @@ const Watchlist = () => {
         }}
       >
         <Stack spacing={4}>
-          <ChartExample></ChartExample>
-          <LiveRandomDataChart />
-          <br />
-          <StockComparisonChart />
+          {/* <ChartExample></ChartExample> */}
+          {/* <LiveRandomDataChart /> */}
+          {/* <br /> */}
+          {/* <StockComparisonChart /> */}
           {/* <StockPriceChart /> */}
-          <IntradayStockChart />
-          <IntradayStockChart2 />
-          <CumulativeSumChart />
+          {/* <IntradayStockChart /> */}
+          {/* <IntradayStockChart2 /> */}
+          {/* <CumulativeSumChart /> */}
+          <StockChart />
         </Stack>
       </Card>
     </>
