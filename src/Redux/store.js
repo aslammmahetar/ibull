@@ -3,9 +3,13 @@ import thunk from "redux-thunk";
 import { combineReducers } from "redux";
 import reducer from "./reducer";
 import { sbReducer } from "./sbReducer";
+import { realReducer } from "./RealReducer";
+
 const rootReducer = combineReducers({
   reducer,
+  realReducer,
   sbReducer,
 });
+export const baseURL = "http://192.168.1.4";
 
 export const store = legacy_createStore(rootReducer, applyMiddleware(thunk));

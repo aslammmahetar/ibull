@@ -29,10 +29,10 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
           accessorFn: (row) => (
             <div
               style={{
-                backgroundColor: row.strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
+                backgroundColor: row.cE_strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
               }}
             >
-              <Typography fontSize={fontSize}>{row.combinedCEPE.CE_bidprice || 0}</Typography>
+              <Typography fontSize={fontSize}>{row.cE_bidprice || 0}</Typography>
             </div>
           ),
         },
@@ -42,10 +42,10 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
           accessorFn: (row) => (
             <div
               style={{
-                backgroundColor: row.strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
+                backgroundColor: row.cE_strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
               }}
             >
-              <Typography fontSize={fontSize}>{row.combinedCEPE.CE_askPrice || 0}</Typography>
+              <Typography fontSize={fontSize}>{row.cE_askPrice || 0}</Typography>
             </div>
           ),
         },
@@ -59,24 +59,24 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
                 display: "flex",
                 flexDirection: "row-reverse",
                 textAlign: "left",
-                backgroundColor: rows.strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
+                backgroundColor: rows.cE_strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
               }}
             >
               <div
                 style={{
                   textAlign: "left",
                   marginRight: "170px",
-                  backgroundColor: rows.strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
+                  backgroundColor: rows.cE_strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
                 }}
               >
                 <Typography fontSize={fontSize}>
-                  {rows.combinedCEPE.CE_openInterest ? rows.combinedCEPE.CE_openInterest : 0}
+                  {rows.cE_openInterest ? rows.cE_openInterest : 0}
                 </Typography>
               </div>
               <div
                 style={{
                   position: "absolute",
-                  width: `${(rows.combinedCEPE.CE_openInterest / CemaxOI) * 100}%`,
+                  width: `${(rows.cE_openInterest / CemaxOI) * 100}%`,
                   backgroundColor: "red",
                   color: "red",
                   borderTopLeftRadius: "10px",
@@ -97,7 +97,9 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
       columns: [
         {
           header: "Strike",
-          accessorFn: (rows) => <Typography fontSize={fontSize}>{rows.strikePrice}</Typography>,
+          accessorFn: (rows) => {
+            return <Typography fontSize={fontSize}>{rows.cE_strikePrice}</Typography>;
+          },
         },
       ],
     },
@@ -119,7 +121,7 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
                   position: "absolute",
                   top: 0,
                   left: 0,
-                  width: `${(rows.combinedCEPE.PE_openInterest / PeMaxOI) * 100}%`,
+                  width: `${(rows.pE_openInterest / PeMaxOI) * 100}%`,
                   backgroundColor: "lightgreen",
                   color: "lightgreen",
                   borderTopRightRadius: "10px",
@@ -131,13 +133,13 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
               </div>
               <div
                 style={{
-                  backgroundColor: rows.strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
+                  backgroundColor: rows.pE_strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
                   textAlign: "right",
                   marginRight: "20px",
                 }}
               >
                 <Typography fontSize={fontSize}>
-                  {rows.combinedCEPE.PE_openInterest ? rows.combinedCEPE.PE_openInterest : 0}
+                  {rows.pE_openInterest ? rows.pE_openInterest : 0}
                 </Typography>
               </div>
             </div>
@@ -149,10 +151,10 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
           accessorFn: (rows) => (
             <div
               style={{
-                backgroundColor: rows.strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
+                backgroundColor: rows.pE_strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
               }}
             >
-              <Typography fontSize={fontSize}>{rows.combinedCEPE.PE_askPrice || 0}</Typography>
+              <Typography fontSize={fontSize}>{rows.pE_askPrice || 0}</Typography>
             </div>
           ),
         },
@@ -162,11 +164,11 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
           accessorFn: (rows) => (
             <div
               style={{
-                backgroundColor: rows.strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
+                backgroundColor: rows.pE_strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
               }}
             >
               <Typography fontSize={fontSize}>
-                <Typography fontSize={fontSize}>{rows.combinedCEPE.PE_bidprice || 0}</Typography>
+                <Typography fontSize={fontSize}>{rows.pE_bidprice || 0}</Typography>
               </Typography>
             </div>
           ),

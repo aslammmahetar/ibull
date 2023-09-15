@@ -25,22 +25,23 @@ import { useEffect, useState } from "react";
 import { BarChartOutlined, OndemandVideo, Search, ShowChartOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getReq } from "Redux/action";
 import OptionChain from "./OptionChain/OptionChain";
+import { getReq } from "Redux/action";
+import { makingReqforNSE } from "Redux/RealActions";
 function AboutUs() {
   const navigate = useNavigate();
 
   var expiryDates = [
-    "13-Sep-2023",
     "20-Sep-2023",
     "28-Sep-2023",
     "04-Oct-2023",
     "11-Oct-2023",
+    "18-Oct-2023",
     "26-Oct-2023",
     "30-Nov-2023",
     "28-Dec-2023",
     "28-Mar-2024",
-    "27-Jun-2024"
+    "27-Jun-2024",
   ];
 
   const [underlayingPrice, setUnderlayingPrice] = useState(0);
@@ -49,48 +50,72 @@ function AboutUs() {
   const [selectedExpiryDate, setSelectedExpiryDate] = useState("");
   const [callMax, setCallmaxOI] = useState(0);
   const [putMax, setPutmaxOI] = useState(0);
-
-  const store = useSelector((store) => store.reducer.data);
   const ulValue = useSelector((store) => store.reducer.underlyingValue);
   const fontSize = useSelector((store) => store.reducer.fontSize);
+  const store = useSelector((store) => store.realReducer.data);
+  console.log(store);
+
+  // Create a new Date object, which will represent the current date and time
+  const currentDate = new Date();
+
+  // Get the current date and time components
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth() + 1; // Months are 0-indexed, so add 1
+  const day = currentDate.getDate();
+  const hours = currentDate.getHours();
+  const minutes = currentDate.getMinutes();
+  const seconds = "00";
+
+  // You can also get the day of the week (0 for Sunday, 1 for Monday, etc.)
+  const dayOfWeek = currentDate.getDay();
+
+  // You can format the date and time as a string in a desired format
+  const formattedDate = `${year}-${month}-${day}`;
+  const formattedTime = `${hours}:${minutes}:${seconds}`;
+
+  // Output the results
+  console.log("Current Date:");
+  console.log("Current Time and Date:", formattedDate, formattedTime);
+  console.log("Day of the Week:", dayOfWeek);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getReq);
-    setData(store);
+    // setData(store); // Set data from the store
     setSelectedExpiryDate(expiryDates[0]);
     setUnderlayingPrice(ulValue);
-  }, [ulValue, fontSize]);
-
+  }, [ulValue, data]);
   useEffect(() => {
-    //filteration by the exprydates
+    // Filter the data based on the selected expiry date
     const filtered2 =
-      store.length > 0 ? store.filter((item) => item.expiryDate === selectedExpiryDate) : [];
+      store.length > 0 ? store.filter((item) => item.cE_expiryDate === selectedExpiryDate) : [];
     console.log(filtered2);
     let CEmaxOI = -Infinity;
     let PEmaxOI = -Infinity;
 
-    //getting maximum values of openInterests
+    // Getting maximum values of openInterests
     for (let el of filtered2) {
-      if (CEmaxOI < el.combinedCEPE.CE_openInterest) {
-        CEmaxOI = el.combinedCEPE.CE_openInterest;
+      if (CEmaxOI < el.cE_openInterest) {
+        CEmaxOI = el.cE_openInterest;
       }
-      if (PEmaxOI < el.combinedCEPE.PE_openInterest) {
-        PEmaxOI = el.combinedCEPE.PE_openInterest;
+      if (PEmaxOI < el.pE_openInterest) {
+        PEmaxOI = el.pE_openInterest;
       }
     }
     setCallmaxOI(CEmaxOI);
     setPutmaxOI(PEmaxOI);
     setFilteredData(filtered2);
-    // console.log(filtered);
-  }, [data, selectedExpiryDate]);
+  }, [selectedExpiryDate, store]);
 
   //handling expirydates filter
   const handleExpiryDateChange = (event) => {
     setSelectedExpiryDate(event.target.value);
   };
 
-  //
+  useEffect(() => {
+    dispatch(getReq);
+    dispatch(makingReqforNSE); // Dispatch the function to fetch data
+  }, [fontSize, selectedExpiryDate, data]); // Make sure to include selectedExpiryDate
+
   const [open, setOpen] = useState(false);
   const handleSearchIconClick = () => {
     setOpen(!open);
@@ -180,6 +205,7 @@ function AboutUs() {
                     marginLeft: "10px",
                   }}
                   value={selectedExpiryDate}
+                  defaultValue={expiryDates}
                   onChange={handleExpiryDateChange}
                   label="Expiry Date"
                 >
