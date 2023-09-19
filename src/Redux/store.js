@@ -10,6 +10,5 @@ const rootReducer = combineReducers({
   realReducer,
   sbReducer,
 });
-export const baseURL = "http://192.168.1.4";
 
 export const store = legacy_createStore(rootReducer, applyMiddleware(thunk));

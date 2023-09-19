@@ -1,13 +1,10 @@
 import Card from "@mui/material/Card";
-import Switch from "@mui/material/Switch";
 import Grid from "@mui/material/Grid";
 import MuiLink from "@mui/material/Link";
 
 import PropTypes from "prop-types";
 
 // @mui icons
-import FacebookIcon from "@mui/icons-material/Facebook";
-import GitHubIcon from "@mui/icons-material/GitHub";
 import GoogleIcon from "@mui/icons-material/Google";
 
 // Material Kit 2 React components
@@ -18,8 +15,7 @@ import MKButton from "components/MKButton";
 // Images
 import React, { useState } from "react";
 import MKInput from "components/MKInput";
-import { Box, Button, Snackbar } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Box, Button, Snackbar, Typography } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 import { Logotag } from "../logotag/Logotag";
 
@@ -28,9 +24,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 const Signin = ({ handleToggle }) => {
-  const [rememberMe, setRememberMe] = useState(false);
-  const handleSetRememberMe = () => setRememberMe(!rememberMe);
-  const [inputVal, setVal] = useState("");
+  const [loginID, setLoginID] = useState("");
   const [inpPassword, setPassword] = useState("");
   const [alertt, setAlert] = useState("");
   const [variant, setVariant] = useState("");
@@ -42,15 +36,8 @@ const Signin = ({ handleToggle }) => {
   });
   const { vertical, horizontal, open } = state;
 
-  const credential = {
-    mobile: "7016008039",
-    password: "Novity@123",
-  };
-
-  const navigate = useNavigate();
-
   const handleLogin = (newState) => {
-    if (!inputVal) {
+    if (!loginID) {
       setVariant("error");
       setAlert("Please Enter Mobile Number");
       setState({ ...newState, open: true });
@@ -62,19 +49,44 @@ const Signin = ({ handleToggle }) => {
       setState({ ...newState, open: true });
       return;
     }
-    if (credential.mobile === inputVal && credential.password === inpPassword) {
-      // setError(!errorr);
-      setVariant("success");
-      setState({ ...newState, open: true });
-      setAlert("Logged in Successfull");
-      setTimeout(() => {
-        navigate("/pages/landing-pages/about-us");
-      }, 3000);
-    } else {
-      setVariant("error");
-      setState({ ...newState, open: true });
-      setAlert("Wrong credential");
-    }
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+      UserName: loginID,
+      Password: inpPassword,
+    });
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch("http://192.168.1.4/Account/Login", requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        console.log(result.status);
+        if (result.status === 1) {
+          setVariant("error");
+        } else {
+          setVariant("success");
+        }
+        setState({ ...newState, open: true });
+        setAlert(result.respmsg);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    // if (credential.mobile === loginID && credential.password === inpPassword) {
+
+    //   setTimeout(() => {
+    //     navigate("/pages/landing-pages/about-us");
+    //   }, 3000);
+    // } else {
+    // }
   };
 
   const handleClose = () => {
@@ -103,19 +115,9 @@ const Signin = ({ handleToggle }) => {
                   Sign in
                 </MKTypography>
                 <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
-                  <Grid item xs={2}>
+                  <Grid item xs={5}>
                     <MKTypography component={MuiLink} href="#" variant="body1" color="white">
-                      <FacebookIcon color="inherit" />
-                    </MKTypography>
-                  </Grid>
-                  <Grid item xs={2}>
-                    <MKTypography component={MuiLink} href="#" variant="body1" color="white">
-                      <GitHubIcon color="inherit" />
-                    </MKTypography>
-                  </Grid>
-                  <Grid item xs={2}>
-                    <MKTypography component={MuiLink} href="#" variant="body1" color="white">
-                      <GoogleIcon color="inherit" />
+                      iBull
                     </MKTypography>
                   </Grid>
                 </Grid>
@@ -125,10 +127,10 @@ const Signin = ({ handleToggle }) => {
                   <MKBox mb={2}>
                     <MKInput
                       type="text"
-                      label="Mobile Number"
+                      label="Login ID"
                       fullWidth
-                      value={inputVal}
-                      onChange={(e) => setVal(e.target.value)}
+                      value={loginID}
+                      onChange={(e) => setLoginID(e.target.value)}
                     />
                   </MKBox>
                   <MKBox mb={2}>
@@ -140,7 +142,7 @@ const Signin = ({ handleToggle }) => {
                       onChange={(e) => setPassword(e.target.value)}
                     />
                   </MKBox>
-                  <MKBox display="flex" alignItems="center" ml={-1}>
+                  {/* <MKBox display="flex" alignItems="center" ml={-1}>
                     <Switch checked={rememberMe} onChange={handleSetRememberMe} />
                     <MKTypography
                       variant="button"
@@ -151,7 +153,7 @@ const Signin = ({ handleToggle }) => {
                     >
                       &nbsp;&nbsp;Remember me
                     </MKTypography>
-                  </MKBox>
+                  </MKBox> */}
                   <MKBox mt={4} mb={1}>
                     <MKButton
                       variant="gradient"
@@ -161,6 +163,24 @@ const Signin = ({ handleToggle }) => {
                     >
                       sign in
                     </MKButton>
+                    <Typography textAlign={"center"} fontSize={"small"}>
+                      Or
+                    </Typography>
+                    <Button
+                      color="primary"
+                      fullWidth
+                      // onClick={handleGoogleLogin}
+                      startIcon={<GoogleIcon />}
+                      sx={{
+                        backgroundColor: "#fff",
+                        color: "#4285F4",
+                        "&:hover": {
+                          backgroundColor: "#f0f0f0",
+                        },
+                      }}
+                    >
+                      Sign Up with Google
+                    </Button>
                     <Box>
                       <Snackbar
                         zIndex={999}

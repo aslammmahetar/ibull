@@ -11,6 +11,10 @@ import IntradayStockChart from "../Charts/IntradayStockChart";
 import IntradayStockChart2 from "../Charts/IntradayStockChart2";
 import CumulativeSumChart from "../Charts/CumulativeSumChart";
 import StockChart from "../Charts/StockChartWithGUi";
+import ChartjsLineChart from "../Charts/ChartjsLineChart";
+import HighchartsLineChart from "../Charts/HighchartsLineChart";
+import MultiStrikeIVChart from "../Charts/MultiStrikeIVChart";
+import StaticXAxisChart from "../Charts/StaticXAxisChart";
 
 const Watchlist = () => {
   return (
@@ -55,15 +59,11 @@ const Watchlist = () => {
         }}
       >
         <Stack spacing={4}>
-          {/* <ChartExample></ChartExample> */}
-          {/* <LiveRandomDataChart /> */}
-          {/* <br /> */}
-          {/* <StockComparisonChart /> */}
-          {/* <StockPriceChart /> */}
-          {/* <IntradayStockChart /> */}
-          {/* <IntradayStockChart2 /> */}
-          {/* <CumulativeSumChart /> */}
           <StockChart />
+          <ChartjsLineChart />
+          <MultiStrikeIVChart />
+          <HighchartsLineChart />
+          <StaticXAxisChart />
         </Stack>
       </Card>
     </>

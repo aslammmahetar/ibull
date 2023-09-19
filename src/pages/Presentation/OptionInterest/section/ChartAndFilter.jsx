@@ -5,10 +5,12 @@ import { makeStyles } from "@mui/styles";
 import BarChart from "./ChartsSection";
 import { Box, Card, Typography } from "@mui/material";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
-import MonthlyRainfallChart from "pages/Presentation/Charts/GirlsNameChart";
 import WeatherDataChart from "pages/Presentation/Charts/WetherDataChart";
 import DatePickerComp from "./DatePickerComp";
 import KarasjokWeatherChart from "pages/Presentation/Charts/KarasjokWeatherChart";
+import OIChangeChart from "pages/Presentation/Charts/OIChangeChart";
+import OpenInterest from "../OpenInterest";
+import OpenInterestChart from "./OpenInterestsChart";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -19,9 +21,8 @@ const useStyles = makeStyles((theme) => ({
     top: 0,
   },
   chartContainer: {
-    maxHeight: "calc(100vh - 100px)", // Adjust this as needed
-    overflowY: "scroll",
-    width: "67%",
+    border: "solid black 1px",
+    width: "100%",
     position: "sticky",
   },
 }));
@@ -31,7 +32,7 @@ const ChartAndFilter = () => {
     <div className={classes.root}>
       <MKBox
         sx={{
-          flexDirection: { xs: "column", sm: "column", md: "column", lg: "row" },
+          flexDirection: { xs: "column", sm: "column", md: "column", lg: "column" },
         }}
         style={{
           width: "100%",
@@ -44,7 +45,7 @@ const ChartAndFilter = () => {
         <Box
           className={classes.chartContainer}
           sx={{
-            width: { xs: "100%", sm: "100%", md: "100%", lg: "67%" },
+            width: { xs: "100%", sm: "100%", md: "100%", lg: "100%" },
           }}
         >
           <BarChart />
@@ -53,7 +54,7 @@ const ChartAndFilter = () => {
               <Typography variant="h5">Open Interest - Aug & Sep Expiries</Typography>
             </MKBox>
             <hr />
-            <MonthlyRainfallChart />
+            <OpenInterestChart />
             <hr />
             <Box display={"flex"} justifyContent={"space-between"}>
               <Box p={1} display={"flex"} alignItems={"center"} width={"50%"}>

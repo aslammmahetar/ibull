@@ -1,9 +1,8 @@
 import { Card, Typography } from "@mui/material";
 import MKBox from "components/MKBox";
 import React from "react";
-import Timebuttons from "./Timebuttons";
 import ChartFooter from "./ChartFooter";
-import OICHange from "./OIChange";
+import OIChangeChart from "pages/Presentation/Charts/OIChangeChart";
 
 const BarChart = () => {
   return (
@@ -12,9 +11,8 @@ const BarChart = () => {
         <Typography variant="h5">OI Change - Aug & Sep Expiries</Typography>
       </MKBox>
       <hr />
-      <OICHange />
+      <OIChangeChart />
       <hr />
-      <Timebuttons />
       <ChartFooter />
     </Card>
   );

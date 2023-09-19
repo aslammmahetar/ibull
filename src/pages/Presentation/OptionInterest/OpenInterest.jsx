@@ -40,10 +40,9 @@ const OpenInterest = () => {
       ></MKBox>
       <Card
         sx={{
-          p: 2,
           mx: { xs: 2, lg: 3 },
           mb: 4,
-          mt: -10,
+          mt: -13,
           backgroundColor: "#E2E8EB",
           backdropFilter: "saturate(200%) blur(30px)",
           boxShadow: ({ boxShadows: { xxl } }) => xxl,
@@ -52,7 +51,7 @@ const OpenInterest = () => {
           zIndex: 2,
         }}
       >
-        <StickyNavbar />
+        {/* <StickyNavbar /> */}
         <ChartAndFilter />
       </Card>
       <Footer />

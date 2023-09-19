@@ -11,13 +11,6 @@ import { useMediaQuery } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import ChartAndFilter from "./ChartAndFilter";
 
-function a11yProps(index) {
-  return {
-    id: `full-width-tab-${index}`,
-    "aria-controls": `full-width-tabpanel-${index}`,
-  };
-}
-
 export default function FullWidthTabs() {
   const [value, setValue] = React.useState("1");
   const isSmallScreen = useMediaQuery("(max-width:600px)");

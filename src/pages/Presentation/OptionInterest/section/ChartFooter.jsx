@@ -31,8 +31,8 @@ const ChartFooter = () => {
           value={selectedOption}
           onChange={handleChange}
         >
-          <MenuItem value="option1">Option 1</MenuItem>
-          <MenuItem value="option2">Option 2</MenuItem>
+          <MenuItem value="option1">Intraday OI</MenuItem>
+          <MenuItem value="option2">Interday OI</MenuItem>
         </Select>
       </FormControl>
       <FormControlLabel

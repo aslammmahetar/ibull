@@ -1,6 +1,6 @@
-import { Button } from "@mui/material";
+import { Stack } from "@mui/material";
+import { makingReqforTimeIntData } from "Redux/RealActions";
 import { get5MInData } from "Redux/action";
-import MKBox from "components/MKBox";
 import MKButton from "components/MKButton";
 import React from "react";
 import { useDispatch } from "react-redux";
@@ -9,10 +9,10 @@ const Timebuttons = () => {
   const dispatch = useDispatch();
 
   return (
-    <MKBox>
+    <Stack spacing={2}>
       <MKButton
         onClick={() => {
-          dispatch(get5MInData);
+          dispatch(makingReqforTimeIntData);
         }}
         size="small"
         variant="outlined"
@@ -33,9 +33,6 @@ const Timebuttons = () => {
         Last 1hr
       </MKButton>
       <MKButton size="small" variant="outlined" style={{ color: "#16718D", marginLeft: "2px" }}>
-        Last 1hr
-      </MKButton>
-      <MKButton size="small" variant="outlined" style={{ color: "#16718D", marginLeft: "2px" }}>
         Last 2hr
       </MKButton>
       <MKButton size="small" variant="outlined" style={{ color: "#16718D", marginLeft: "2px" }}>
@@ -44,7 +41,7 @@ const Timebuttons = () => {
       <MKButton size="small" variant="outlined" style={{ color: "#16718D", marginLeft: "2px" }}>
         Full day
       </MKButton>
-    </MKBox>
+    </Stack>
   );
 };
 

@@ -98,16 +98,16 @@ const routes = [
           },
         ],
       },
-      {
-        name: "account",
-        collapse: [
-          {
-            name: "sign in",
-            route: "/pages/authentication/sign-in",
-            component: <Signup />,
-          },
-        ],
-      },
+      // {
+      //   name: "account",
+      //   collapse: [
+      //     {
+      //       name: "sign in",
+      //       route: "/pages/authentication/sign-in",
+      //       component: <Signup />,
+      //     },
+      //   ],
+      // },
     ],
   },
   {
@@ -133,7 +133,7 @@ const routes = [
         // ],
       },
       {
-        name: "Optioin Interest",
+        name: "Open Interest",
         route: "/pages/landing-pages/option-trade/openinterest",
         component: <OpenInterest />,
         dropdown: false,

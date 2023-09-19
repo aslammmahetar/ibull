@@ -19,7 +19,7 @@ import {
   Tabs,
   Typography,
 } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { fontSizeChange } from "Redux/action";
 
 export default function SwipeableTemporaryDrawer() {
@@ -27,8 +27,6 @@ export default function SwipeableTemporaryDrawer() {
   const greterThanButton = ["10", "20", "30", "40", "50"];
   const itemData = [smallFontImage, mediumFontImage, largeFontImage];
   const fontArray = ["small", "medium", "large"];
-  const store = useSelector((store) => store.reducer.fontSize);
-  console.log(store);
   const dispatch = useDispatch();
 
   const [selectedLessThanButton, setSelectedLessThanButton] = React.useState(null);

@@ -1,0 +1,4 @@
+NSEDataAPI = "http://192.168.1.4/NSE/GetAllNSEDataByExp?timeStamp=2023-09-15%2015:25:00&interval=-10"
+NSEExpiry = "http://192.168.1.4/NSE/GetExpiryDate"
+RegistationAPI = "http://192.168.1.4/NSE/Account/RegisterUser"
+LoginAPI = ""

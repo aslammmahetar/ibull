@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Highcharts from "highcharts";
 
-const MonthlyRainfallChart = () => {
+const OpenInterest = () => {
   useEffect(() => {
     const chartConfig = {
       chart: {
@@ -70,4 +70,4 @@ const MonthlyRainfallChart = () => {
   );
 };
 
-export default MonthlyRainfallChart;
+export default OpenInterest;

@@ -300,10 +300,6 @@ function AboutUs() {
           CemaxOI={callMax}
           PeMaxOI={putMax}
         />
-        {/* <Information />
-        <Team />
-        <Featuring />
-        <Newsletter /> */}
       </Card>
       <MKBox pt={6} px={1} mt={6}>
         <DefaultFooter content={footerRoutes} />
