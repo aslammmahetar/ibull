@@ -28,14 +28,18 @@ const Signin = ({ handleToggle }) => {
   const [inpPassword, setPassword] = useState("");
   const [alertt, setAlert] = useState("");
   const [variant, setVariant] = useState("");
-
   const [state, setState] = React.useState({
     open: false,
     vertical: "top",
     horizontal: "center",
   });
+
+  const handleClose = () => {
+    setState({ ...state, open: false });
+  };
   const { vertical, horizontal, open } = state;
 
+  ///
   const handleLogin = (newState) => {
     if (!loginID) {
       setVariant("error");
@@ -49,6 +53,8 @@ const Signin = ({ handleToggle }) => {
       setState({ ...newState, open: true });
       return;
     }
+
+    ///
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
@@ -64,7 +70,7 @@ const Signin = ({ handleToggle }) => {
       redirect: "follow",
     };
 
-    fetch("http://192.168.1.4/Account/Login", requestOptions)
+    fetch("http://192.168.1.5/Account/Login", requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
@@ -80,17 +86,6 @@ const Signin = ({ handleToggle }) => {
       .catch((error) => {
         console.log(error);
       });
-    // if (credential.mobile === loginID && credential.password === inpPassword) {
-
-    //   setTimeout(() => {
-    //     navigate("/pages/landing-pages/about-us");
-    //   }, 3000);
-    // } else {
-    // }
-  };
-
-  const handleClose = () => {
-    setState({ ...state, open: false });
   };
 
   return (
@@ -142,18 +137,6 @@ const Signin = ({ handleToggle }) => {
                       onChange={(e) => setPassword(e.target.value)}
                     />
                   </MKBox>
-                  {/* <MKBox display="flex" alignItems="center" ml={-1}>
-                    <Switch checked={rememberMe} onChange={handleSetRememberMe} />
-                    <MKTypography
-                      variant="button"
-                      fontWeight="regular"
-                      color="text"
-                      onClick={handleSetRememberMe}
-                      sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
-                    >
-                      &nbsp;&nbsp;Remember me
-                    </MKTypography>
-                  </MKBox> */}
                   <MKBox mt={4} mb={1}>
                     <MKButton
                       variant="gradient"

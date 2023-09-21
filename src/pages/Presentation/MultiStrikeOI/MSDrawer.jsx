@@ -17,7 +17,7 @@ import { Search } from "@mui/icons-material";
 import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import MSDrawerTable from "./MSDrawerTable";
 
-export default function TemporaryDrawer() {
+export default function MSDrawer() {
   var expiryDates = [
     "13-Sep-2023",
     "20-Sep-2023",
@@ -28,7 +28,7 @@ export default function TemporaryDrawer() {
     "30-Nov-2023",
     "28-Dec-2023",
     "28-Mar-2024",
-    "27-Jun-2024"
+    "27-Jun-2024",
   ];
   const [selectedExpiryDate, setSelectedExpiryDate] = React.useState("");
   const handleExpiryDateChange = (event) => {
@@ -154,12 +154,12 @@ export default function TemporaryDrawer() {
   );
 
   return (
-    <Card style={{ marginTop: 10, padding: 10 }}>
-      {["Add New"].map((anchor) => (
+    <Card style={{ padding: 10, width: "48%" }}>
+      {["right"].map((anchor) => (
         <Box key={anchor} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
           <Typography fontSize={"medium"}>Group 1</Typography>
           <Button onClick={toggleDrawer(anchor, true)} style={{ border: "solid black 1px" }}>
-            {anchor}
+            Add New
           </Button>
           <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
             {list(anchor)}

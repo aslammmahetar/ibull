@@ -28,7 +28,7 @@ export const getReqFails = () => {
 export const getReq = (dispatch) => {
   dispatch(getData);
   axios
-    .get("http://localhost:3000/records")
+    .get("http://localhost:3000/records2")
     .then((res) => dispatch(getReqSuc(res.data)))
     .then((err) => dispatch(getReqFails));
   // axios.get("http://localhost:3000/filtered").then((res) => console.log(res.data));

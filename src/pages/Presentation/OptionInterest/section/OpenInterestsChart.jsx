@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Bar } from "react-chartjs-2";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const OpenInterestChart = () => {
   const strikePrices = useSelector((store) => store.realReducer.strikePrices);
@@ -56,13 +56,3 @@ const OpenInterestChart = () => {
 };
 
 export default OpenInterestChart;
-// axios
-//   .get("http://localhost:3000/records")
-//   .then((response) => {
-//     console.log(response.data.strikePrices);
-//     // responce has one key called data that's why => response.data.data
-//     setOptionsData(response.data.data);
-//   })
-//   .catch((error) => {
-//     console.error("Error fetching options data:", error);
-//   });

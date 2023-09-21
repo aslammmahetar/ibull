@@ -8,8 +8,6 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import WeatherDataChart from "pages/Presentation/Charts/WetherDataChart";
 import DatePickerComp from "./DatePickerComp";
 import KarasjokWeatherChart from "pages/Presentation/Charts/KarasjokWeatherChart";
-import OIChangeChart from "pages/Presentation/Charts/OIChangeChart";
-import OpenInterest from "../OpenInterest";
 import OpenInterestChart from "./OpenInterestsChart";
 const useStyles = makeStyles((theme) => ({
   root: {

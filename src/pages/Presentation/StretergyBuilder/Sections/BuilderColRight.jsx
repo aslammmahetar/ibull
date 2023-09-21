@@ -12,7 +12,6 @@ const BuilderColRight = () => {
   return (
     <Box
       width={{ xs: "100%", sm: "100%", md: "100%", lg: "56%" }}
-      // border={"solid black 1px "}
     >
       <InstrumentInfo />
       {!stretergyCreated ? <EmptyChartBox /> : <ChartAndDeatils />}

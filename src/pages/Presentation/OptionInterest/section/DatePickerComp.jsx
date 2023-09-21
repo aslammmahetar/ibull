@@ -45,14 +45,3 @@ const DatePickerComp = () => {
   );
 };
 export default DatePickerComp;
-// const handleNextDate = () => {
-//     const nextDate = new Date(selectedDate);
-//     nextDate.setDate(selectedDate.getDate() + 1);
-//     setSelectedDate(nextDate);
-//   };
-
-//   const handlePreviousDate = () => {
-//     const previousDate = new Date(selectedDate);
-//     previousDate.setDate(selectedDate.getDate() - 1);
-//     setSelectedDate(previousDate);
-//   };

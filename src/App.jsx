@@ -29,6 +29,9 @@ import Presentation from "layouts/pages/presentation";
 // Material Kit 2 React routes
 import routes from "routes";
 import Router from "Router";
+import { useDispatch } from "react-redux";
+import { getExpiryDate } from "Redux/RealActions";
+import { getNIFTYExpiryDate } from "Redux/RealActions";
 export const baseURL = "http://192.168.1.4";
 export default function App() {
   const { pathname } = useLocation();
@@ -37,14 +40,13 @@ export default function App() {
   useEffect(() => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
-    console.log(process.env.API_URL);
   }, [pathname]);
 
-  // useEffect(() => {
-  //   axios
-  //     .get("https://www.nseindia.com/api/option-chain-indices?symbol=NIFTY")
-  //     .then((res) => console.log(res));
-  // }, []);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getNIFTYExpiryDate);
+  }, []);
 
   const getRoutes = (allRoutes) =>
     allRoutes.map((route) => {

@@ -4,7 +4,6 @@ import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import routes from "routes";
 import MKBox from "components/MKBox";
 import bgImage from "assets/images/Banner.jpeg";
-import StickyNavbar from "./section/StickyNavbar";
 import Footer from "pages/LandingPages/Author/sections/Footer";
 
 const OpenInterest = () => {
@@ -47,11 +46,9 @@ const OpenInterest = () => {
           backdropFilter: "saturate(200%) blur(30px)",
           boxShadow: ({ boxShadows: { xxl } }) => xxl,
           position: "sticky",
-          // top: isSticky ? "80px" : "auto",
           zIndex: 2,
         }}
       >
-        {/* <StickyNavbar /> */}
         <ChartAndFilter />
       </Card>
       <Footer />

@@ -21,17 +21,30 @@ import {
 } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { fontSizeChange } from "Redux/action";
+import { getLessThanATMData } from "Redux/RealActions";
 
 export default function SwipeableTemporaryDrawer() {
   const lessThanButton = ["10", "20", "30", "40", "50"];
   const greterThanButton = ["10", "20", "30", "40", "50"];
   const itemData = [smallFontImage, mediumFontImage, largeFontImage];
   const fontArray = ["small", "medium", "large"];
+
+  ///
   const dispatch = useDispatch();
 
+  ///
+  const [value, setValue] = React.useState("one");
+  const [radioValue, setRadioValue] = React.useState("");
+  const [selectFontSize, setSelectedFontSize] = React.useState(null);
+  const [state, setState] = React.useState({
+    right: false,
+  });
+
+  ///
   const [selectedLessThanButton, setSelectedLessThanButton] = React.useState(null);
-  const handleLessThanButtonClick = (index) => {
+  const handleLessThanButtonClick = (e, index) => {
     setSelectedLessThanButton(index);
+    dispatch(getLessThanATMData(Number(e.target.innerText)));
   };
 
   const [selectedGreaterThanButton, setSelectedGreaterThanButton] = React.useState(null);
@@ -39,33 +52,26 @@ export default function SwipeableTemporaryDrawer() {
     setSelectedGreaterThanButton(index);
   };
 
-  const [selectFontSize, setSelectedFontSize] = React.useState(null);
+  ///
   const handleFontSize = (index) => {
     setSelectedFontSize(index);
   };
-
-  const [value, setValue] = React.useState("one");
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const [radioValue, setRadioValue] = React.useState("");
   const handleRadio = (event) => {
     setRadioValue(event.target.value);
   };
 
-  const [state, setState] = React.useState({
-    right: false,
-  });
-
+  ///
   const toggleDrawer = (anchor, open) => (event) => {
     if (event && event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
       return;
     }
-
     setState({ ...state, [anchor]: open });
   };
 
+  ///
   const list = (anchor) => (
     <Box
       sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 450 }}
@@ -116,7 +122,7 @@ export default function SwipeableTemporaryDrawer() {
               <Button
                 size="small"
                 key={index}
-                onClick={() => handleLessThanButtonClick(index)}
+                onClick={(e) => handleLessThanButtonClick(e, index)}
                 style={{
                   border: "solid lightgrey 1px",
                   backgroundColor: selectedLessThanButton === index ? "blue" : "white",

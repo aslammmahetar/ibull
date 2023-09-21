@@ -8,7 +8,6 @@ import {
   FormControlLabel,
   FormGroup,
   Menu,
-  MenuItem,
   Radio,
   RadioGroup,
   Stack,
@@ -19,7 +18,6 @@ import React from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
 import ChartExample from "./ChartExmple";
-import ChartExample2 from "./LiveRandomDataChart";
 const ChartAndDeatils = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);

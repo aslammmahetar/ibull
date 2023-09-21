@@ -12,8 +12,6 @@ import DefaultFooter from "examples/Footers/DefaultFooter";
 
 // Routes
 import routes from "routes";
-import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
-
 import footerRoutes from "footer.routes";
 
 // Images
@@ -28,69 +26,67 @@ import { useDispatch, useSelector } from "react-redux";
 import OptionChain from "./OptionChain/OptionChain";
 import { getReq } from "Redux/action";
 import { makingReqforNSE } from "Redux/RealActions";
+import SettingComp from "./OptionChain/SettingComp";
 function AboutUs() {
+  // var expiryDates = [
+  //   "21-Sep-2023",
+  //   "28-Sep-2023",
+  //   "05-Oct-2023",
+  //   "12-Oct-2023",
+  //   "19-Oct-2023",
+  //   "26-Oct-2023",
+  //   "30-Nov-2023",
+  //   "28-Dec-2023",
+  //   "28-Mar-2024",
+  //   "27-Jun-2024",
+  //   "26-Dec-2024",
+  //   "26-Jun-2025",
+  //   "24-Dec-2025",
+  //   "25-Jun-2026",
+  //   "31-Dec-2026",
+  //   "24-Jun-2027",
+  //   "30-Dec-2027",
+  //   "29-Jun-2028",
+  // ];
+
+  //
   const navigate = useNavigate();
-
-  var expiryDates = [
-    "20-Sep-2023",
-    "28-Sep-2023",
-    "04-Oct-2023",
-    "11-Oct-2023",
-    "18-Oct-2023",
-    "26-Oct-2023",
-    "30-Nov-2023",
-    "28-Dec-2023",
-    "28-Mar-2024",
-    "27-Jun-2024",
-  ];
-
   const [underlayingPrice, setUnderlayingPrice] = useState(0);
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  const [selectedExpiryDate, setSelectedExpiryDate] = useState("");
   const [callMax, setCallmaxOI] = useState(0);
   const [putMax, setPutmaxOI] = useState(0);
-  const ulValue = useSelector((store) => store.reducer.underlyingValue);
+  const [closestElement, setClosestElement] = useState({});
+  const [open, setOpen] = useState(false);
+  const limitedData = useSelector((store) => store.realReducer.limitedData);
+  const [elementsAroundClosest, setelementsAroundClosest] = useState([]);
+  const lessThanATM = useSelector((store) => store.realReducer.lessThanATM);
+  console.log(lessThanATM);
+  //from redux
+  const ulValue = useSelector((store) => store.realReducer.ulValue);
   const fontSize = useSelector((store) => store.reducer.fontSize);
+  const expiryDates = useSelector((store) => store.realReducer.expiryDates);
+
+  const [selectedExpiryDate, setSelectedExpiryDate] = useState(expiryDates[0]?.expiryDates || "");
   const store = useSelector((store) => store.realReducer.data);
-  console.log(store);
 
-  // Create a new Date object, which will represent the current date and time
-  const currentDate = new Date();
-
-  // Get the current date and time components
-  const year = currentDate.getFullYear();
-  const month = currentDate.getMonth() + 1; // Months are 0-indexed, so add 1
-  const day = currentDate.getDate();
-  const hours = currentDate.getHours();
-  const minutes = currentDate.getMinutes();
-  const seconds = "00";
-
-  // You can also get the day of the week (0 for Sunday, 1 for Monday, etc.)
-  const dayOfWeek = currentDate.getDay();
-
-  // You can format the date and time as a string in a desired format
-  const formattedDate = `${year}-${month}-${day}`;
-  const formattedTime = `${hours}:${minutes}:${seconds}`;
-
-  // Output the results
-  console.log("Current Date:");
-  console.log("Current Time and Date:", formattedDate, formattedTime);
-  console.log("Day of the Week:", dayOfWeek);
-
+  //
   const dispatch = useDispatch();
+
+  //
   useEffect(() => {
     // setData(store); // Set data from the store
-    setSelectedExpiryDate(expiryDates[0]);
+    setSelectedExpiryDate(expiryDates[0] && expiryDates[0].expiryDates);
     setUnderlayingPrice(ulValue);
-  }, [ulValue, data]);
+  }, [ulValue]);
+
+  //
   useEffect(() => {
-    // Filter the data based on the selected expiry date
     const filtered2 =
       store.length > 0 ? store.filter((item) => item.cE_expiryDate === selectedExpiryDate) : [];
-    console.log(filtered2);
     let CEmaxOI = -Infinity;
     let PEmaxOI = -Infinity;
+    console.log(filtered2);
 
     // Getting maximum values of openInterests
     for (let el of filtered2) {
@@ -104,19 +100,51 @@ function AboutUs() {
     setCallmaxOI(CEmaxOI);
     setPutmaxOI(PEmaxOI);
     setFilteredData(filtered2);
-  }, [selectedExpiryDate, store]);
+  }, [selectedExpiryDate, store, closestElement, ulValue]);
 
-  //handling expirydates filter
-  const handleExpiryDateChange = (event) => {
-    setSelectedExpiryDate(event.target.value);
-  };
+  //
+  useEffect(() => {
+    const targetValue = ulValue; // The value to compare against (cE_underlyingValue)
+    let closestElement = null;
+
+    if (filteredData.length > 0) {
+      closestElement = filteredData.reduce((prev, curr) => {
+        const prevDiff = Math.abs(prev.cE_strikePrice - targetValue);
+        const currDiff = Math.abs(curr.cE_strikePrice - targetValue);
+        return prevDiff < currDiff ? prev : curr;
+      });
+      setClosestElement(closestElement);
+    }
+
+    if (closestElement) {
+      const index = filteredData.indexOf(closestElement);
+      const startIndex = Math.max(0, index - lessThanATM);
+      const endIndex = Math.min(filteredData.length - 1, index + 40);
+      const elementsAroundClosest = filteredData.slice(startIndex, endIndex + 1);
+
+      setelementsAroundClosest(elementsAroundClosest);
+      console.log(elementsAroundClosest);
+    } else {
+      console.log("No closest element found.");
+    }
+  }, [closestElement, lessThanATM]);
 
   useEffect(() => {
     dispatch(getReq);
-    dispatch(makingReqforNSE); // Dispatch the function to fetch data
-  }, [fontSize, selectedExpiryDate, data]); // Make sure to include selectedExpiryDate
+    dispatch(makingReqforNSE(0)); // Dispatch the function to fetch data
+    // Set selectedExpiryDate to the first expiry date when the component is mounted
+    if (expiryDates.length > 0) {
+      setSelectedExpiryDate(expiryDates[0].expiryDates);
+    }
+  }, [fontSize, expiryDates, data]);
+  //handling expirydates filter
+  const handleExpiryDateChange = (event) => {
+    console.log(event.target.value);
+    setSelectedExpiryDate(event.target.value.expiryDates);
+    console.log(selectedExpiryDate);
+  };
 
-  const [open, setOpen] = useState(false);
+  //
   const handleSearchIconClick = () => {
     setOpen(!open);
   };
@@ -185,7 +213,6 @@ function AboutUs() {
                   style={{
                     top: "50px",
                     right: "10px",
-                    // borderBottom: "1px solid black",
                     marginRight: "5px",
                   }}
                 >
@@ -199,21 +226,21 @@ function AboutUs() {
               <FormControl fullWidth>
                 <Select
                   style={{
+                    width: "100%",
                     padding: "5px",
                     paddingLeft: "10px",
                     paddingRight: "10px",
+                    color: "black",
                     marginLeft: "10px",
                   }}
-                  value={selectedExpiryDate}
-                  defaultValue={expiryDates}
+                  value={selectedExpiryDate} // Set the value to the selectedExpiryDate state
                   onChange={handleExpiryDateChange}
-                  label="Expiry Date"
                 >
-                  {/* Include the default option */}
-                  {/* <MenuItem value="10-Aug-2023">10-Aug-2023</MenuItem> */}
                   {expiryDates.map((item, ind) => (
-                    <MenuItem key={ind} value={item}>
-                      {item}
+                    <MenuItem key={ind} value={item} style={{ textAlign: "center" }}>
+                      <Typography fontSize={"small"} textAlign={"center"}>
+                        {item.expiryDates.slice(0, 10)}
+                      </Typography>
                     </MenuItem>
                   ))}
                 </Select>
@@ -299,7 +326,9 @@ function AboutUs() {
           combinedData={filteredData}
           CemaxOI={callMax}
           PeMaxOI={putMax}
+          closeToStrikePrice={closestElement}
         />
+        <SettingComp />
       </Card>
       <MKBox pt={6} px={1} mt={6}>
         <DefaultFooter content={footerRoutes} />
@@ -309,44 +338,3 @@ function AboutUs() {
 }
 
 export default AboutUs;
-// const ceData = rawData.data
-// ? rawData.data.map((item) => item.CE).filter((item) => item !== undefined)
-// : [];
-// setCEdata(ceData);
-// setCEFilteredData(ceData);
-// const peData = rawData.data
-// ? rawData.data.map((item) => item.PE).filter((item) => item !== undefined)
-// : [];
-//
-// const getData = async (url) => {
-//   try {
-//     const response = await axios.get(url);
-//     const rawData = response.data;
-//     const modifiedData = rawData.data.map((element) => {
-//       const combinedCEPE = {};
-
-//       for (const key in element.CE) {
-//         combinedCEPE[`CE_${key}`] = element.CE[key];
-//       }
-
-//       for (const key in element.PE) {
-//         combinedCEPE[`PE_${key}`] = element.PE[key];
-//       }
-
-//       // Remove original "CE" and "PE" objects
-//       const { CE, PE, ...rest } = element;
-
-//       return {
-//         ...rest,
-//         combinedCEPE,
-//       };
-//     });
-
-//     // setFilteredData(modifiedData);
-//     // console.log(modifiedData[0].combinedCEPE.CE_underlyingValue);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-// const filtered = data.filter((item) => item.expiryDate === selectedExpiryDate);
-// getData("http://localhost:3000/records");

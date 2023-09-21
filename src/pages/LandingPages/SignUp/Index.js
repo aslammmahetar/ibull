@@ -1,22 +1,4 @@
-/**
-=========================================================
-* Material Kit 2 React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-kit-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import React, { useState } from "react";
-
-// react-router-dom components
-// import { Link } from "react-router-dom";
 
 // @mui material components
 import Card from "@mui/material/Card";
@@ -36,18 +18,7 @@ import { Alert, Button, Container, Snackbar, TextField, Typography } from "@mui/
 import MKButton from "components/MKButton";
 import { baseURL } from "App";
 
-// Material Kit 2 React example components
-
-// Material Kit 2 React page layout routes
-
-// Images
-// import bgImage from "assets/images/bg-sign-in-basic.jpeg";
-
 function Signup({ handleToggle }) {
-  const [rememberMe, setRememberMe] = useState(false);
-
-  const handleSetRememberMe = () => setRememberMe(!rememberMe);
-
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [mobile, setMobile] = useState("");
@@ -60,9 +31,9 @@ function Signup({ handleToggle }) {
   const [address, setAddress] = useState("");
   const [statee, setStatee] = useState("");
 
+  //alert states
   const [variant, setVariant] = useState("");
   const [alertt, setAlert] = useState("");
-
   const [state, setState] = React.useState({
     open: false,
     vertical: "top",
@@ -120,19 +91,23 @@ function Signup({ handleToggle }) {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
+
         // Check if the response is not JSON (e.g., plain text or HTML)
         if (response.headers.get("content-type").indexOf("application/json") === -1) {
           // Handle non-JSON response here
           return response.text(); // Or response.blob(), response.arrayBuffer(), etc., depending on the response type
         }
+
         return response.json();
       })
+
+      // Handle the response data here
       .then((data) => {
-        // Handle the response data here
         console.log(data);
       })
+
+      // Handle errors here
       .catch((error) => {
-        // Handle errors here
         console.error("Got an error:", error);
       });
   };

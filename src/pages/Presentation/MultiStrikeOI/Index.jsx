@@ -1,14 +1,23 @@
 import MKBox from "components/MKBox";
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import bgImage from "assets/images/Banner.jpeg";
 import routes from "routes";
-import StickyNavbar from "../OptionInterest/section/StickyNavbar";
 import { Card } from "@mui/material";
 import MSChartAndFilters from "./MSChartAndFilters";
 import Footer from "pages/LandingPages/Author/sections/Footer";
+import { useDispatch, useSelector } from "react-redux";
+import { makingReqforNSE } from "Redux/RealActions";
 
 const MSoi = () => {
+  const dispatch = useDispatch();
+
+  const data = useSelector((store) => store.realReducer.strikePrices);
+
+  useEffect(() => {
+    dispatch(makingReqforNSE(10));
+  }, []);
+
   return (
     <>
       <DefaultNavbar
@@ -49,8 +58,7 @@ const MSoi = () => {
           zIndex: 2,
         }}
       >
-        <StickyNavbar />
-        <MSChartAndFilters />
+        <MSChartAndFilters data={data} />
       </Card>
       <Footer />
     </>

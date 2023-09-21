@@ -15,6 +15,9 @@ import ChartjsLineChart from "../Charts/ChartjsLineChart";
 import HighchartsLineChart from "../Charts/HighchartsLineChart";
 import MultiStrikeIVChart from "../Charts/MultiStrikeIVChart";
 import StaticXAxisChart from "../Charts/StaticXAxisChart";
+import LineChartComponent from "../Charts/LineChartComponent";
+import SolarEmploymentChart from "../Charts/SolarEmplomentchart";
+import TradingViewWidget from "../Charts/TradingViewWidget";
 
 const Watchlist = () => {
   return (
@@ -59,11 +62,13 @@ const Watchlist = () => {
         }}
       >
         <Stack spacing={4}>
-          <StockChart />
+          {/* <StockChart />
           <ChartjsLineChart />
           <MultiStrikeIVChart />
           <HighchartsLineChart />
           <StaticXAxisChart />
+          <SolarEmploymentChart /> */}
+          <TradingViewWidget />
         </Stack>
       </Card>
     </>

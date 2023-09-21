@@ -4,9 +4,8 @@ import { MaterialReactTable } from "material-react-table";
 import SettingComp from "./SettingComp";
 import { useSelector } from "react-redux";
 
-const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
+const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeToStrikePrice }) => {
   const fontSize = useSelector((store) => store.reducer.fontSize);
-  console.log(fontSize);
 
   const combinedColumns = [
     {
@@ -22,6 +21,7 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
         </div>
       ),
 
+      //
       columns: [
         {
           id: "cebidprice",
@@ -29,26 +29,38 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
           accessorFn: (row) => (
             <div
               style={{
-                backgroundColor: row.cE_strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
+                backgroundColor:
+                  row.cE_strikePrice !== closeToStrikePrice.cE_strikePrice
+                    ? row.cE_strikePrice < underlayingPrice
+                      ? "#fffee5"
+                      : "#f9f9f9"
+                    : "white",
               }}
             >
               <Typography fontSize={fontSize}>{row.cE_bidprice || 0}</Typography>
             </div>
           ),
         },
+        //
         {
           id: "ceaksprice",
           header: <Typography>Ask price</Typography>,
           accessorFn: (row) => (
             <div
               style={{
-                backgroundColor: row.cE_strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
+                backgroundColor:
+                  row.cE_strikePrice !== closeToStrikePrice.cE_strikePrice
+                    ? row.cE_strikePrice < underlayingPrice
+                      ? "#fffee5"
+                      : "#f9f9f9"
+                    : "white",
               }}
             >
               <Typography fontSize={fontSize}>{row.cE_askPrice || 0}</Typography>
             </div>
           ),
         },
+        //
         {
           id: "ceio",
           header: <Typography>OI</Typography>,
@@ -59,17 +71,36 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
                 display: "flex",
                 flexDirection: "row-reverse",
                 textAlign: "left",
-                backgroundColor: rows.cE_strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
+                backgroundColor:
+                  rows.cE_strikePrice !== closeToStrikePrice.cE_strikePrice
+                    ? rows.cE_strikePrice < underlayingPrice
+                      ? "#fffee5"
+                      : "#f9f9f9"
+                    : "white",
               }}
             >
               <div
                 style={{
                   textAlign: "left",
                   marginRight: "170px",
-                  backgroundColor: rows.cE_strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
+                  backgroundColor:
+                    rows.cE_strikePrice !== closeToStrikePrice.cE_strikePrice
+                      ? rows.cE_strikePrice < underlayingPrice
+                        ? "#fffee5"
+                        : "#f9f9f9"
+                      : "white",
                 }}
               >
-                <Typography fontSize={fontSize}>
+                <Typography
+                  fontSize={fontSize}
+                  bgcolor={
+                    rows.cE_strikePrice !== closeToStrikePrice.cE_strikePrice
+                      ? rows.cE_strikePrice < underlayingPrice
+                        ? "#fffee5"
+                        : "#f9f9f9"
+                      : "white"
+                  }
+                >
                   {rows.cE_openInterest ? rows.cE_openInterest : 0}
                 </Typography>
               </div>
@@ -91,6 +122,7 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
         },
       ],
     },
+    //
     {
       header: <Box color={"#ffffef"}>.</Box>,
       width: "50",
@@ -98,11 +130,21 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
         {
           header: "Strike",
           accessorFn: (rows) => {
-            return <Typography fontSize={fontSize}>{rows.cE_strikePrice}</Typography>;
+            return (
+              <div
+                style={{
+                  backgroundColor:
+                    rows.cE_strikePrice === closeToStrikePrice.cE_strikePrice ? "white" : "",
+                }}
+              >
+                <Typography fontSize={fontSize}>{rows.cE_strikePrice}</Typography>
+              </div>
+            );
           },
         },
       ],
     },
+    //
     {
       header: <div style={{ color: "#039855", fontSize: "medium" }}>Puts</div>,
       columns: [
@@ -145,6 +187,7 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
             </div>
           ),
         },
+        //
         {
           id: "peaskprice",
           header: <Typography>Ask price</Typography>,
@@ -176,6 +219,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
       ],
     },
   ];
+
+  ///
   const firstCol = combinedColumns[0];
   firstCol.headerCellProps = {
     sx: {
@@ -193,6 +238,7 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
     },
   });
 
+  ///
   return (
     <Box className={"table-container"}>
       <ThemeProvider theme={theme}>
@@ -206,7 +252,6 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
             },
           })}
           enableDensityToggle={false}
-          // positionGlobalFilter="right"
           enablePagination={false}
           initialState={{
             density: "compact",
@@ -217,14 +262,11 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI }) => {
           }}
         />
       </ThemeProvider>
-      <SettingComp />
     </Box>
   );
 };
 
 export default OptionChain;
-
-/* */
 
 // const data = [
 //   {
