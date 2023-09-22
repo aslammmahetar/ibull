@@ -1,8 +1,10 @@
+import moment from "moment";
 import {
   GET_NIFTY_EXPIRYDATES_SUCCESS,
   GET_REQ_NSE_DATA,
   GET_REQ_NSE_FAILS,
   GET_REQ_NSE_SUCCESS,
+  SHOW_GREATER_THAN_ATM_DATA,
   SHOW_LESS_THAN_ATM_DATA,
 } from "./RealActions";
 
@@ -16,16 +18,20 @@ const initialState = {
   ulValue: 0,
   expiryDates: [],
   limitedData: false,
-  lessThanATM: 0,
+  lessThanATM: 40,
+  greaterThanATM: 40,
+  septData: [],
 };
 
 export const realReducer = (state = initialState, { type, payload, count }) => {
   switch (type) {
     case GET_NIFTY_EXPIRYDATES_SUCCESS: {
-      console.log(payload);
+      const expiryDates = payload.map((el) => (el = moment(el.expiryDates).format("DD-MMM-YYYY")));
+      console.log(expiryDates);
+
       return {
         ...state,
-        expiryDates: payload,
+        expiryDates: expiryDates,
       };
     }
     case GET_REQ_NSE_DATA: {
@@ -36,21 +42,19 @@ export const realReducer = (state = initialState, { type, payload, count }) => {
     }
     case GET_REQ_NSE_SUCCESS: {
       console.log(payload, count);
-      // const septData = payload.filter((item) => item.cE_expiryDate.includes("Sep"));
-      // const octData = payload.filter((item) => item.cE_expiryDate.includes("Oct"));
-      // const twoMonthData = [...septData, ...octData];
-      // let twoMonthStrikePrice = [];
-      // for (let i = 0; i < twoMonthData.length; i++) {
-      //   twoMonthStrikePrice.push(twoMonthData[i].cE_strikePrice);
-      // }
       const ulValue = payload[0].cE_underlyingValue;
+      const septData = payload.filter((el) => el.cE_expiryDate.includes("Sep"));
+      const octData = payload.filter((el) => el.cE_expiryDate.includes("Oct"));
+
+      let twoMonthStrikePrice = payload.map((el) => el.cE_strikePrice);
+      console.log(twoMonthStrikePrice);
       console.log(ulValue);
       return {
         ...state,
         isLoading: false,
-        // strikePrices: twoMonthStrikePrice.slice(0, count),
+        strikePrices: twoMonthStrikePrice.slice(0, count),
         data: payload,
-        // twoMonthData: [...septData, ...octData].slice(0, count),
+        twoMonthData: [...septData, ...octData].slice(0, count),
         ulValue: ulValue,
       };
     }
@@ -66,6 +70,13 @@ export const realReducer = (state = initialState, { type, payload, count }) => {
         ...state,
         limitedData: true,
         lessThanATM: payload,
+      };
+    }
+    case SHOW_GREATER_THAN_ATM_DATA: {
+      return {
+        ...state,
+        limiitedData: true,
+        greaterThanATM: payload,
       };
     }
     default:

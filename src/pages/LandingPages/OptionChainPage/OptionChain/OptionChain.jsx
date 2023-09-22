@@ -1,11 +1,25 @@
 import { Box, ThemeProvider, createTheme, Typography } from "@mui/material";
 import "./table.css";
 import { MaterialReactTable } from "material-react-table";
-import SettingComp from "./SettingComp";
 import { useSelector } from "react-redux";
+import { useEffect, useRef } from "react";
 
 const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeToStrikePrice }) => {
   const fontSize = useSelector((store) => store.reducer.fontSize);
+
+  const tableContainerRef = useRef(null);
+
+  useEffect(() => {
+    if (tableContainerRef.current) {
+      const tableContainer = tableContainerRef.current;
+
+      // Calculate the desired scrollTop value to scroll to the center
+      const tableCenterY = tableContainer.scrollHeight / 2;
+
+      // Set the scrollTop property to scroll to the center
+      tableContainer.scrollTop = tableCenterY;
+    }
+  }, []);
 
   const combinedColumns = [
     {

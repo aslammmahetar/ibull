@@ -29,24 +29,16 @@ import Presentation from "layouts/pages/presentation";
 // Material Kit 2 React routes
 import routes from "routes";
 import Router from "Router";
-import { useDispatch } from "react-redux";
-import { getExpiryDate } from "Redux/RealActions";
-import { getNIFTYExpiryDate } from "Redux/RealActions";
+import { useSelector } from "react-redux";
 export const baseURL = "http://192.168.1.4";
 export default function App() {
   const { pathname } = useLocation();
-
+  console.log(process.env.REACT_APP_API_URL);
   // Setting page scroll to 0 when changing the route
   useEffect(() => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
   }, [pathname]);
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getNIFTYExpiryDate);
-  }, []);
 
   const getRoutes = (allRoutes) =>
     allRoutes.map((route) => {

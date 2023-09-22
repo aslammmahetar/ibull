@@ -6,6 +6,7 @@ import HighchartsReact from "highcharts-react-official";
 import { Box, Button, Checkbox, FormControlLabel, Typography } from "@mui/material";
 import StarHalfIcon from "@mui/icons-material/StarHalf";
 import MKBox from "components/MKBox";
+import { useSelector } from "react-redux";
 
 // Initialize modules
 HighchartsAccessibility(Highcharts);
@@ -19,6 +20,10 @@ const SolarEmploymentChart = ({ data }) => {
     "28 SEP 2360 PE": true,
     "28 SEP 2380 PE": true,
   });
+
+  const OIData = useSelector((store) => store.realReducer.data);
+  const OI = OIData.map((el) => el.cE_openInterest).slice(0, 15);
+  console.log(OI);
 
   const [selectAll, setSelectAll] = useState(true); // State for "Select All" checkbox
 
@@ -105,7 +110,7 @@ const SolarEmploymentChart = ({ data }) => {
       series: [
         {
           name: "28 SEP 2400 CE",
-          data: data,
+          data: OI,
           visible: displayLines["28 SEP 2400 CE"],
         },
         {

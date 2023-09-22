@@ -18,15 +18,15 @@ import footerRoutes from "footer.routes";
 // import bgImage from "/"
 import bgImage from "assets/images/Banner.jpeg";
 
-import { FormControl, IconButton, InputBase, MenuItem, Select, Typography } from "@mui/material";
+import { FormControl, IconButton, MenuItem, Select, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { BarChartOutlined, OndemandVideo, Search, ShowChartOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import OptionChain from "./OptionChain/OptionChain";
-import { getReq } from "Redux/action";
 import { makingReqforNSE } from "Redux/RealActions";
 import SettingComp from "./OptionChain/SettingComp";
+import { getNIFTYExpiryDate } from "Redux/RealActions";
 function AboutUs() {
   // var expiryDates = [
   //   "21-Sep-2023",
@@ -52,38 +52,56 @@ function AboutUs() {
   //
   const navigate = useNavigate();
   const [underlayingPrice, setUnderlayingPrice] = useState(0);
-  const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [callMax, setCallmaxOI] = useState(0);
   const [putMax, setPutmaxOI] = useState(0);
   const [closestElement, setClosestElement] = useState({});
-  const [open, setOpen] = useState(false);
-  const limitedData = useSelector((store) => store.realReducer.limitedData);
-  const [elementsAroundClosest, setelementsAroundClosest] = useState([]);
-  const lessThanATM = useSelector((store) => store.realReducer.lessThanATM);
-  console.log(lessThanATM);
+  const [symbol, setSymbol] = useState(1);
+
   //from redux
   const ulValue = useSelector((store) => store.realReducer.ulValue);
   const fontSize = useSelector((store) => store.reducer.fontSize);
   const expiryDates = useSelector((store) => store.realReducer.expiryDates);
+  const lessThanATM = useSelector((store) => store.realReducer.lessThanATM);
+  const greaterThanATM = useSelector((store) => store.realReducer.greaterThanATM);
 
-  const [selectedExpiryDate, setSelectedExpiryDate] = useState(expiryDates[0]?.expiryDates || "");
+  //expirydate special case
+  const [selectedExpiryDate, setSelectedExpiryDate] = useState(expiryDates[0]);
   const store = useSelector((store) => store.realReducer.data);
 
   //
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(getNIFTYExpiryDate(symbol));
+    dispatch(makingReqforNSE(0, symbol)); // Dispatch the function to fetch data
+    // Set selectedExpiryDate to the first expiry date when the component is mounted
+    if (expiryDates.length > 0) {
+      setSelectedExpiryDate(expiryDates[0]);
+    }
+  }, [fontSize, symbol]);
+
+  const handleStream = (val) => {
+    setSymbol(val);
+  };
+
   //
   useEffect(() => {
     // setData(store); // Set data from the store
-    setSelectedExpiryDate(expiryDates[0] && expiryDates[0].expiryDates);
+    setSelectedExpiryDate(expiryDates[0]);
     setUnderlayingPrice(ulValue);
   }, [ulValue]);
 
   //
   useEffect(() => {
     const filtered2 =
-      store.length > 0 ? store.filter((item) => item.cE_expiryDate === selectedExpiryDate) : [];
+      store.length > 0
+        ? store.filter((item) => {
+            // console.log(item.cE_expiryDate);
+            // console.log(selectedExpiryDate);
+            return item.cE_expiryDate === selectedExpiryDate;
+          })
+        : [];
     let CEmaxOI = -Infinity;
     let PEmaxOI = -Infinity;
     console.log(filtered2);
@@ -119,36 +137,22 @@ function AboutUs() {
     if (closestElement) {
       const index = filteredData.indexOf(closestElement);
       const startIndex = Math.max(0, index - lessThanATM);
-      const endIndex = Math.min(filteredData.length - 1, index + 40);
+      const endIndex = Math.min(filteredData.length - 1, index + greaterThanATM);
       const elementsAroundClosest = filteredData.slice(startIndex, endIndex + 1);
 
-      setelementsAroundClosest(elementsAroundClosest);
+      setFilteredData(elementsAroundClosest);
       console.log(elementsAroundClosest);
     } else {
       console.log("No closest element found.");
     }
-  }, [closestElement, lessThanATM]);
+  }, [closestElement, lessThanATM, greaterThanATM]);
 
-  useEffect(() => {
-    dispatch(getReq);
-    dispatch(makingReqforNSE(0)); // Dispatch the function to fetch data
-    // Set selectedExpiryDate to the first expiry date when the component is mounted
-    if (expiryDates.length > 0) {
-      setSelectedExpiryDate(expiryDates[0].expiryDates);
-    }
-  }, [fontSize, expiryDates, data]);
   //handling expirydates filter
   const handleExpiryDateChange = (event) => {
-    console.log(event.target.value);
-    setSelectedExpiryDate(event.target.value.expiryDates);
-    console.log(selectedExpiryDate);
+    setSelectedExpiryDate(event.target.value);
   };
 
   //
-  const handleSearchIconClick = () => {
-    setOpen(!open);
-  };
-
   return (
     <>
       <DefaultNavbar
@@ -164,7 +168,7 @@ function AboutUs() {
         dark
       />
       <MKBox
-        minHeight="75vh"
+        minHeight="25vh"
         width="100%"
         sx={{
           backgroundImage: ({ functions: { linearGradient, rgba }, palette: { gradients } }) =>
@@ -180,7 +184,7 @@ function AboutUs() {
         sx={{
           p: 2,
           mx: { xs: 2, lg: 3 },
-          mt: -25,
+          mt: -10,
           mb: 4,
           boxShadow: ({ boxShadows: { xxl } }) => xxl,
         }}
@@ -206,21 +210,27 @@ function AboutUs() {
           >
             <MKBox display={"flex"} alignItems={"center"} justifyContent={"center"}>
               <MKBox display={"flex"} style={{ padding: "5px" }} justifyContent="space-around">
-                <IconButton onClick={handleSearchIconClick}>
-                  <Search />
-                </IconButton>
                 <div
                   style={{
-                    top: "50px",
-                    right: "10px",
-                    marginRight: "5px",
+                    display: "flex",
                   }}
                 >
-                  <InputBase
-                    placeholder="Type Stock Name :SBIN, RELIANCE etc."
-                    style={{ width: "110%", fontSize: "small" }}
-                    value={"NIFTY FUT 19500 50 0.0%"}
-                  />
+                  <IconButton>
+                    <Search />
+                  </IconButton>
+                  <FormControl fullWidth>
+                    <Select
+                      style={{ height: "37px" }}
+                      defaultValue={1}
+                      onChange={(e) => handleStream(e.target.value)}
+                    >
+                      <MenuItem style={{ height: "100%" }} value={1}>
+                        NIFTY
+                      </MenuItem>
+                      <MenuItem value={2}>BANKNIFTY</MenuItem>
+                      <MenuItem value={3}>FIN NIFTY</MenuItem>
+                    </Select>
+                  </FormControl>
                 </div>
               </MKBox>
               <FormControl fullWidth>
@@ -235,14 +245,17 @@ function AboutUs() {
                   }}
                   value={selectedExpiryDate} // Set the value to the selectedExpiryDate state
                   onChange={handleExpiryDateChange}
+                  defaultValue={expiryDates[0]}
                 >
-                  {expiryDates.map((item, ind) => (
-                    <MenuItem key={ind} value={item} style={{ textAlign: "center" }}>
-                      <Typography fontSize={"small"} textAlign={"center"}>
-                        {item.expiryDates.slice(0, 10)}
-                      </Typography>
-                    </MenuItem>
-                  ))}
+                  {expiryDates.map((item, ind) => {
+                    return (
+                      <MenuItem key={ind} value={item} style={{ textAlign: "center" }}>
+                        <Typography fontSize={"small"} textAlign={"center"}>
+                          {item}
+                        </Typography>
+                      </MenuItem>
+                    );
+                  })}
                 </Select>
               </FormControl>
             </MKBox>

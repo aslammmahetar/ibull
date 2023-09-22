@@ -22,6 +22,7 @@ import {
 import { useDispatch } from "react-redux";
 import { fontSizeChange } from "Redux/action";
 import { getLessThanATMData } from "Redux/RealActions";
+import { getGreaterThanATMData } from "Redux/RealActions";
 
 export default function SwipeableTemporaryDrawer() {
   const lessThanButton = ["10", "20", "30", "40", "50"];
@@ -48,8 +49,9 @@ export default function SwipeableTemporaryDrawer() {
   };
 
   const [selectedGreaterThanButton, setSelectedGreaterThanButton] = React.useState(null);
-  const handleGreterThanButtonClick = (index) => {
+  const handleGreterThanButtonClick = (e, index) => {
     setSelectedGreaterThanButton(index);
+    dispatch(getGreaterThanATMData(Number(e.target.innerText)));
   };
 
   ///
@@ -144,7 +146,7 @@ export default function SwipeableTemporaryDrawer() {
               <Button
                 size="small"
                 key={index}
-                onClick={() => handleGreterThanButtonClick(index)}
+                onClick={(e) => handleGreterThanButtonClick(e, index)}
                 style={{
                   border: "solid lightgrey 1px",
                   backgroundColor: selectedGreaterThanButton === index ? "blue" : "white",
