@@ -18,6 +18,7 @@ import footerRoutes from "footer.routes";
 // import bgImage from "/"
 import bgImage from "assets/images/Banner.jpeg";
 
+import CampaignIcon from "@mui/icons-material/Campaign";
 import { FormControl, IconButton, MenuItem, Select, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { BarChartOutlined, OndemandVideo, Search, ShowChartOutlined } from "@mui/icons-material";
@@ -27,28 +28,8 @@ import OptionChain from "./OptionChain/OptionChain";
 import { makingReqforNSE } from "Redux/RealActions";
 import SettingComp from "./OptionChain/SettingComp";
 import { getNIFTYExpiryDate } from "Redux/RealActions";
+import { showTimeAlert } from "Redux/RealActions";
 function AboutUs() {
-  // var expiryDates = [
-  //   "21-Sep-2023",
-  //   "28-Sep-2023",
-  //   "05-Oct-2023",
-  //   "12-Oct-2023",
-  //   "19-Oct-2023",
-  //   "26-Oct-2023",
-  //   "30-Nov-2023",
-  //   "28-Dec-2023",
-  //   "28-Mar-2024",
-  //   "27-Jun-2024",
-  //   "26-Dec-2024",
-  //   "26-Jun-2025",
-  //   "24-Dec-2025",
-  //   "25-Jun-2026",
-  //   "31-Dec-2026",
-  //   "24-Jun-2027",
-  //   "30-Dec-2027",
-  //   "29-Jun-2028",
-  // ];
-
   //
   const navigate = useNavigate();
   const [underlayingPrice, setUnderlayingPrice] = useState(0);
@@ -57,6 +38,7 @@ function AboutUs() {
   const [putMax, setPutmaxOI] = useState(0);
   const [closestElement, setClosestElement] = useState({});
   const [symbol, setSymbol] = useState(1);
+  const [originalData, setOriginalData] = useState([]);
 
   //from redux
   const ulValue = useSelector((store) => store.realReducer.ulValue);
@@ -64,6 +46,7 @@ function AboutUs() {
   const expiryDates = useSelector((store) => store.realReducer.expiryDates);
   const lessThanATM = useSelector((store) => store.realReducer.lessThanATM);
   const greaterThanATM = useSelector((store) => store.realReducer.greaterThanATM);
+  const timeAlert = useSelector((store) => store.realReducer.timeAlert);
 
   //expirydate special case
   const [selectedExpiryDate, setSelectedExpiryDate] = useState(expiryDates[0]);
@@ -81,6 +64,51 @@ function AboutUs() {
     }
   }, [fontSize, symbol]);
 
+  useEffect(() => {
+    // Function to fetch data and update local storage
+    const fetchDataAndUpdateLocalStorage = () => {
+      dispatch(getNIFTYExpiryDate(symbol));
+      dispatch(makingReqforNSE(0, symbol));
+
+      // Store the current timestamp in local storage
+      localStorage.setItem("lastExecutionTime", Date.now());
+      console.log("Made a call after 15 minutes");
+    };
+
+    const now = new Date();
+    const currentHour = now.getHours();
+    const currentMinute = now.getMinutes();
+
+    // Check if it's between 9:30 AM (09:30) and 3:30 PM (15:30)
+    if (
+      (currentHour > 9 || (currentHour === 9 && currentMinute >= 30)) &&
+      (currentHour < 15 || (currentHour === 15 && currentMinute <= 30))
+    ) {
+      // Fetch data immediately when the component mounts
+      fetchDataAndUpdateLocalStorage();
+
+      // Check local storage for the last execution time
+      const lastExecutionTime = localStorage.getItem("lastExecutionTime");
+      const currentTime = Date.now();
+
+      // Calculate the time since the last execution
+      const timeSinceLastExecution = currentTime - (lastExecutionTime || 0);
+
+      // Set up an interval to fetch data every 15 minutes (900,000 milliseconds)
+      const interval = setInterval(() => {
+        fetchDataAndUpdateLocalStorage();
+        console.log("made call at", Date.now());
+      }, 900000 - timeSinceLastExecution); // Adjust the interval based on the time elapsed
+
+      // Clean up the interval when the component unmounts
+      return () => clearInterval(interval);
+    } else {
+      // Do not fetch data if it's outside of the specified time range
+      console.log("Data fetching paused outside of 9:30 AM to 3:30 PM");
+      return dispatch(showTimeAlert("Data updating paused outside of 9:30 AM to 3:30 PM"));
+    }
+  }, [symbol]);
+
   const handleStream = (val) => {
     setSymbol(val);
   };
@@ -97,14 +125,11 @@ function AboutUs() {
     const filtered2 =
       store.length > 0
         ? store.filter((item) => {
-            // console.log(item.cE_expiryDate);
-            // console.log(selectedExpiryDate);
             return item.cE_expiryDate === selectedExpiryDate;
           })
         : [];
     let CEmaxOI = -Infinity;
     let PEmaxOI = -Infinity;
-    console.log(filtered2);
 
     // Getting maximum values of openInterests
     for (let el of filtered2) {
@@ -118,15 +143,17 @@ function AboutUs() {
     setCallmaxOI(CEmaxOI);
     setPutmaxOI(PEmaxOI);
     setFilteredData(filtered2);
-  }, [selectedExpiryDate, store, closestElement, ulValue]);
+    setOriginalData(filtered2);
+  }, [selectedExpiryDate, store, closestElement]);
 
   //
   useEffect(() => {
-    const targetValue = ulValue; // The value to compare against (cE_underlyingValue)
+    const targetValue = ulValue;
     let closestElement = null;
 
-    if (filteredData.length > 0) {
-      closestElement = filteredData.reduce((prev, curr) => {
+    if (originalData.length > 0) {
+      // Use originalData here
+      closestElement = originalData.reduce((prev, curr) => {
         const prevDiff = Math.abs(prev.cE_strikePrice - targetValue);
         const currDiff = Math.abs(curr.cE_strikePrice - targetValue);
         return prevDiff < currDiff ? prev : curr;
@@ -135,17 +162,18 @@ function AboutUs() {
     }
 
     if (closestElement) {
-      const index = filteredData.indexOf(closestElement);
+      // Use originalData to reset filteredData
+      setFilteredData(originalData);
+      const index = originalData.indexOf(closestElement);
       const startIndex = Math.max(0, index - lessThanATM);
-      const endIndex = Math.min(filteredData.length - 1, index + greaterThanATM);
-      const elementsAroundClosest = filteredData.slice(startIndex, endIndex + 1);
+      const endIndex = Math.min(originalData.length - 1, index + greaterThanATM);
+      const elementsAroundClosest = originalData.slice(startIndex, endIndex + 1);
 
       setFilteredData(elementsAroundClosest);
-      console.log(elementsAroundClosest);
     } else {
       console.log("No closest element found.");
     }
-  }, [closestElement, lessThanATM, greaterThanATM]);
+  }, [closestElement, lessThanATM, greaterThanATM, ulValue]);
 
   //handling expirydates filter
   const handleExpiryDateChange = (event) => {
@@ -342,6 +370,17 @@ function AboutUs() {
           closeToStrikePrice={closestElement}
         />
         <SettingComp />
+        <Card
+          sx={{
+            p: 2,
+          }}
+        >
+          <Typography textAlign={"center"} color={"red"} style={{ opacity: 0.6 }} variant="h6">
+            <CampaignIcon />
+            {"     "}
+            {timeAlert}
+          </Typography>
+        </Card>
       </Card>
       <MKBox pt={6} px={1} mt={6}>
         <DefaultFooter content={footerRoutes} />

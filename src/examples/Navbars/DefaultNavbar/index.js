@@ -41,6 +41,8 @@ import DefaultNavbarMobile from "examples/Navbars/DefaultNavbar/DefaultNavbarMob
 
 // Material Kit 2 React base styles
 import breakpoints from "assets/theme/base/breakpoints";
+import { Box } from "@mui/material";
+import AccountMenu from "pages/Presentation/User Profile/AccountMenu";
 
 function DefaultNavbar({ brand, routes, transparent, light, action, sticky, relative, center }) {
   const [dropdown, setDropdown] = useState("");
@@ -127,27 +129,19 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
             return (
               <Grid key={gridKey} item xs={12 / columns} sx={{ position: "relative" }}>
                 {cols.map((col, index) => (
-                  <Fragment key={col.name}>
-                    <MKTypography
-                      display="block"
-                      variant="button"
-                      fontWeight="bold"
-                      textTransform="capitalize"
-                      py={1}
-                      px={0.5}
-                      mt={index !== 0 ? 2 : 0}
-                    >
-                      {col.name}
-                    </MKTypography>
+                  <Box display={"flex"} justifyContent={"space-around"} key={col.name}>
                     {col.collapse.map((item) => (
                       <MKTypography
+                        border="1px solid lightblue"
+                        textAlign="center"
                         key={item.name}
                         component={item.route ? Link : MuiLink}
                         to={item.route ? item.route : ""}
                         href={item.href ? item.href : (e) => e.preventDefault()}
                         target={item.href ? "_blank" : ""}
                         rel={item.href ? "noreferrer" : "noreferrer"}
-                        minWidth="11.25rem"
+                        width="11.25rem"
+                        ml={10}
                         display="block"
                         variant="button"
                         color="text"
@@ -159,7 +153,6 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
                           borderRadius: borderRadius.md,
                           cursor: "pointer",
                           transition: "all 300ms linear",
-
                           "&:hover": {
                             backgroundColor: grey[200],
                             color: dark.main,
@@ -169,7 +162,7 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
                         {item.name}
                       </MKTypography>
                     ))}
-                  </Fragment>
+                  </Box>
                 ))}
                 {key !== 0 && (
                   <Divider
@@ -209,10 +202,9 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
           <MKTypography
             key={item.name}
             {...(item.route ? routeComponent : linkComponent)}
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
+            textAlign="center"
             variant="button"
+            border="1px solid lightblue"
             textTransform="capitalize"
             minWidth={item.description ? "14rem" : "12rem"}
             color={item.description ? "dark" : "text"}
@@ -246,22 +238,8 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
               }
             }}
           >
-            {item.description ? (
-              <MKBox>
-                {item.name}
-                <MKTypography
-                  display="block"
-                  variant="button"
-                  color="text"
-                  fontWeight="regular"
-                  sx={{ transition: "all 300ms linear" }}
-                >
-                  {item.description}
-                </MKTypography>
-              </MKBox>
-            ) : (
-              item.name
-            )}
+            {item.name}
+
             {item.collapse && (
               <Icon
                 fontSize="small"
@@ -286,7 +264,7 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
       open={Boolean(dropdown)}
       placement="top-start"
       transition
-      style={{ zIndex: 10 }}
+      style={{ zIndex: 10, width: "100%" }}
       modifiers={[
         {
           name: "arrow",
@@ -307,18 +285,26 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
       {({ TransitionProps }) => (
         <Grow
           {...TransitionProps}
+          border="solid lightblue 1px"
           sx={{
             transformOrigin: "left top",
             background: ({ palette: { white } }) => white.main,
           }}
         >
-          <MKBox borderRadius="lg">
+          <MKBox borderRadius="lg" width="100%">
             <MKTypography variant="h1" color="white">
               <Icon ref={setArrowRef} sx={{ mt: -3 }}>
                 arrow_drop_up
               </Icon>
             </MKTypography>
-            <MKBox shadow="lg" borderRadius="lg" p={2} mt={2}>
+            <MKBox
+              shadow="lg"
+              display={"flex"}
+              justifyContent={"space-around"}
+              borderRadius="lg"
+              p={2}
+              mt={2}
+            >
               {renderRoutes}
             </MKBox>
           </MKBox>
@@ -451,75 +437,58 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
   return (
     <Container sx={sticky ? { position: "sticky", top: 0, zIndex: 10 } : null}>
       <MKBox
-        py={1}
-        px={{ xs: 4, sm: transparent ? 2 : 3, lg: transparent ? 0 : 2 }}
-        my={relative ? 0 : 2}
-        mx={relative ? 0 : 3}
-        width={relative ? "100%" : "calc(100% - 48px)"}
-        borderRadius="xl"
+        // border="solid red 1px"
+        // py={1}
+        // px={{ xs: 4, sm: transparent ? 2 : 3, lg: transparent ? 0 : 2 }}
+        // my={relative ? 0 : 2}
+        // mx={relative ? 0 : 3}
+        ml={-16.5}
+        width={!relative ? "118.7%" : "calc(100% - 48px)"}
+        // borderRadius="xl"
         shadow={transparent ? "none" : "md"}
         color={light ? "white" : "dark"}
         position={relative ? "relative" : "absolute"}
-        left={0}
+        // left={0}
         zIndex={3}
         sx={({ palette: { transparent: transparentColor, white }, functions: { rgba } }) => ({
           backgroundColor: transparent ? transparentColor.main : rgba(white.main, 0.8),
           backdropFilter: transparent ? "none" : `saturate(200%) blur(30px)`,
         })}
       >
-        <MKBox display="flex" justifyContent="space-between" alignItems="center">
+        <MKBox
+          mt={2}
+          mb={1}
+          // border={"solid black 1px"}
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+        >
           <MKBox
             component={Link}
             to="/"
             lineHeight={1}
             py={transparent ? 1.5 : 0.75}
-            pl={relative || transparent ? 0 : { xs: 0, lg: 1 }}
+            pl={relative || transparent ? 0 : { xs: 2, lg: 4 }}
           >
-            <MKTypography variant="button" fontWeight="bold" color={light ? "white" : "dark"}>
-              {brand}
+            <MKTypography
+              variant="h4"
+              fontWeight="bold"
+              fontFamily={`'Tourney', "cursive"`}
+              color={light ? "white" : "dark"}
+            >
+              iBull
             </MKTypography>
           </MKBox>
+
           <MKBox
+            // border={"solid black 1px"}
             color="inherit"
             display={{ xs: "none", lg: "flex" }}
             ml="auto"
             mr={center ? "auto" : 0}
           >
+            <AccountMenu />
             {renderNavbarItems}
-          </MKBox>
-          <MKBox ml={{ xs: "auto", lg: 0 }}>
-            {/* {action &&
-              (action.type === "internal" ? (
-                <MKButton
-                  component={Link}
-                  to={action.route}
-                  variant={
-                    action.color === "white" || action.color === "default"
-                      ? "contained"
-                      : "gradient"
-                  }
-                  color={action.color ? action.color : "info"}
-                  size="small"
-                >
-                  {action.label}
-                </MKButton>
-              ) : (
-                <MKButton
-                  component="a"
-                  href={action.route}
-                  target="_blank"
-                  rel="noreferrer"
-                  variant={
-                    action.color === "white" || action.color === "default"
-                      ? "contained"
-                      : "gradient"
-                  }
-                  color={action.color ? action.color : "info"}
-                  size="small"
-                >
-                  {action.label}
-                </MKButton>
-              ))} */}
           </MKBox>
           <MKBox
             display={{ xs: "inline-block", lg: "none" }}
@@ -550,7 +519,7 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
 
 // Setting default values for the props of DefaultNavbar
 DefaultNavbar.defaultProps = {
-  brand: "IBull",
+  brand: "iBull",
   transparent: false,
   light: false,
   action: false,

@@ -10,7 +10,6 @@ const DatePickerComp = () => {
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
-    console.log(date);
   };
 
   const handleNextDate = () => {

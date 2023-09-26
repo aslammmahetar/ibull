@@ -9,17 +9,18 @@ const Timebuttons = () => {
 
   return (
     <Stack spacing={2}>
-      <MKButton
+      {/* <MKButton
         onClick={() => {
           dispatch(makingReqforTimeIntData(-5));
         }}
+        disabled
         size="small"
         variant="outlined"
         style={{ color: "#16718D", marginLeft: "2px" }}
       >
         Last 5 Mins
-      </MKButton>
-      <MKButton
+      </MKButton> */}
+      {/* <MKButton
         onClick={() => {
           dispatch(makingReqforTimeIntData(-10));
         }}
@@ -28,7 +29,7 @@ const Timebuttons = () => {
         style={{ color: "#16718D", marginLeft: "2px" }}
       >
         Last 10 Mins
-      </MKButton>
+      </MKButton> */}
       <MKButton
         onClick={() => {
           dispatch(makingReqforTimeIntData(-15));
@@ -48,6 +49,16 @@ const Timebuttons = () => {
         style={{ color: "#16718D", marginLeft: "2px" }}
       >
         Last 30 Mins
+      </MKButton>
+      <MKButton
+        onClick={() => {
+          dispatch(makingReqforTimeIntData(-45));
+        }}
+        size="small"
+        variant="outlined"
+        style={{ color: "#16718D", marginLeft: "2px" }}
+      >
+        Last 45 Mins
       </MKButton>
       <MKButton
         onClick={() => {

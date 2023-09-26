@@ -169,7 +169,12 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
             <div
               style={{
                 position: "relative",
-                backgroundColor: rows.strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
+                backgroundColor:
+                  rows.pE_strikePrice !== closeToStrikePrice.pE_strikePrice
+                    ? rows.pE_strikePrice > underlayingPrice
+                      ? "#fffee5"
+                      : "#f9f9f9"
+                    : "white",
               }}
             >
               <div
@@ -189,9 +194,14 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
               </div>
               <div
                 style={{
-                  backgroundColor: rows.pE_strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
+                  backgroundColor:
+                    rows.pE_strikePrice !== closeToStrikePrice.pE_strikePrice
+                      ? rows.pE_strikePrice > underlayingPrice
+                        ? "#fffee5"
+                        : "#f9f9f9"
+                      : "white",
                   textAlign: "right",
-                  marginRight: "20px",
+                  // marginRight: "20px",
                 }}
               >
                 <Typography fontSize={fontSize}>
@@ -208,7 +218,12 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
           accessorFn: (rows) => (
             <div
               style={{
-                backgroundColor: rows.pE_strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
+                backgroundColor:
+                  rows.pE_strikePrice !== closeToStrikePrice.pE_strikePrice
+                    ? rows.pE_strikePrice > underlayingPrice
+                      ? "#fffee5"
+                      : "#f9f9f9"
+                    : "white",
               }}
             >
               <Typography fontSize={fontSize}>{rows.pE_askPrice || 0}</Typography>
@@ -221,7 +236,12 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
           accessorFn: (rows) => (
             <div
               style={{
-                backgroundColor: rows.pE_strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
+                backgroundColor:
+                  rows.pE_strikePrice !== closeToStrikePrice.pE_strikePrice
+                    ? rows.pE_strikePrice > underlayingPrice
+                      ? "#fffee5"
+                      : "#f9f9f9"
+                    : "white",
               }}
             >
               <Typography fontSize={fontSize}>

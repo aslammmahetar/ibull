@@ -1,6 +1,5 @@
 import { ThemeProvider } from "@emotion/react";
 import { Box, Typography, createTheme } from "@mui/material";
-import { getReq } from "Redux/action";
 import { MaterialReactTable } from "material-react-table";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,12 +11,9 @@ const MSDrawerTable = ({ setSelectedExpiryDate, expiryDates, selectedExpiryDate 
   const [callMax, setCallmaxOI] = useState(0);
   const [putMax, setPutmaxOI] = useState(0);
 
-  const store = useSelector((store) => store.reducer.data);
-  console.log(store);
-  const ulValue = useSelector((store) => store.reducer.underlyingValue);
-  const dispatch = useDispatch();
+  const store = useSelector((store) => store.realReducer.data);
+  const ulValue = useSelector((store) => store.realReducer.ulValue);
   useEffect(() => {
-    dispatch(getReq);
     setData(store);
     setSelectedExpiryDate(expiryDates[0]);
     setUnderlayingPrice(ulValue);
@@ -26,24 +22,22 @@ const MSDrawerTable = ({ setSelectedExpiryDate, expiryDates, selectedExpiryDate 
   useEffect(() => {
     //filteration by the exprydates
     const filtered2 =
-      store.length > 0 ? store.filter((item) => item.expiryDate === selectedExpiryDate) : [];
-    console.log(filtered2);
+      store.length > 0 ? store.filter((item) => item.cE_expiryDate === selectedExpiryDate) : [];
     let CEmaxOI = -Infinity;
     let PEmaxOI = -Infinity;
 
     //getting maximum values of openInterests
     for (let el of filtered2) {
-      if (CEmaxOI < el.combinedCEPE.CE_openInterest) {
-        CEmaxOI = el.combinedCEPE.CE_openInterest;
+      if (CEmaxOI < el.cE_openInterest) {
+        CEmaxOI = el.cE_openInterest;
       }
-      if (PEmaxOI < el.combinedCEPE.PE_openInterest) {
-        PEmaxOI = el.combinedCEPE.PE_openInterest;
+      if (PEmaxOI < el.pE_openInterest) {
+        PEmaxOI = el.pE_openInterest;
       }
     }
     setCallmaxOI(CEmaxOI);
     setPutmaxOI(PEmaxOI);
     setFilteredData(filtered2);
-    // console.log(filtered);
   }, [data, selectedExpiryDate]);
   const combinedColumns = [
     {
@@ -57,7 +51,7 @@ const MSDrawerTable = ({ setSelectedExpiryDate, expiryDates, selectedExpiryDate 
             display: "flex",
             flexDirection: "row-reverse",
             textAlign: "left",
-            backgroundColor: rows.strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
+            backgroundColor: rows.cE_strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
           }}
         >
           <div
@@ -68,16 +62,16 @@ const MSDrawerTable = ({ setSelectedExpiryDate, expiryDates, selectedExpiryDate 
               justifyContent: "space-around",
               alignItems: "center",
               width: "100%",
-              backgroundColor: rows.strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
+              backgroundColor: rows.cE_strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
             }}
           >
-            <p>{rows.combinedCEPE.CE_openInterest ? rows.combinedCEPE.CE_openInterest : 0}</p>
+            <p>{rows.cE_openInterest ? rows.cE_openInterest : 0}</p>
             <input type="checkbox" style={{ zIndex: 1, cursor: "pointer" }} />
           </div>
           <div
             style={{
               position: "absolute",
-              width: `${(rows.combinedCEPE.CE_openInterest / callMax) * 100}%`,
+              width: `${(rows.cE_openInterest / callMax) * 100}%`,
               backgroundColor: "red",
               color: "red",
               // margin: "auto",
@@ -95,7 +89,7 @@ const MSDrawerTable = ({ setSelectedExpiryDate, expiryDates, selectedExpiryDate 
     },
     {
       header: "Strike",
-      accessorFn: (rows) => rows.strikePrice,
+      accessorFn: (rows) => rows.cE_strikePrice,
       size: 40,
     },
     {
@@ -107,7 +101,7 @@ const MSDrawerTable = ({ setSelectedExpiryDate, expiryDates, selectedExpiryDate 
           className="main"
           style={{
             position: "relative",
-            backgroundColor: rows.strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
+            backgroundColor: rows.pE_strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
             padding: 7,
             display: "flex",
             flexDirection: "row-reverse",
@@ -118,7 +112,7 @@ const MSDrawerTable = ({ setSelectedExpiryDate, expiryDates, selectedExpiryDate 
               position: "absolute",
               top: 0,
               left: 0,
-              width: `${(rows.combinedCEPE.CE_openInterest / putMax) * 100}%`,
+              width: `${(rows.pE_openInterest / putMax) * 100}%`,
               backgroundColor: "lightgreen",
               color: "lightgreen",
               marginTop: 6,
@@ -143,9 +137,7 @@ const MSDrawerTable = ({ setSelectedExpiryDate, expiryDates, selectedExpiryDate 
             }}
           >
             <input type="checkbox" style={{ zIndex: 1, cursor: "pointer" }} />
-            <p style={{ zIndex: 1 }}>
-              {rows.combinedCEPE.CE_openInterest ? rows.combinedCEPE.CE_openInterest : 0}
-            </p>
+            <p style={{ zIndex: 1 }}>{rows.pE_openInterest ? rows.pE_openInterest : 0}</p>
           </div>
         </div>
       ),

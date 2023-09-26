@@ -23,7 +23,6 @@ const SolarEmploymentChart = ({ data }) => {
 
   const OIData = useSelector((store) => store.realReducer.data);
   const OI = OIData.map((el) => el.cE_openInterest).slice(0, 15);
-  console.log(OI);
 
   const [selectAll, setSelectAll] = useState(true); // State for "Select All" checkbox
 

@@ -13,7 +13,6 @@ import {
   IconButton,
   MenuItem,
   Select,
-  TextField,
   Tooltip,
   Typography,
 } from "@mui/material";
@@ -24,52 +23,35 @@ import React, { useEffect, useState } from "react";
 import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import MKButton from "components/MKButton";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleWithCurrentMonth } from "Redux/action";
-import { toggleWithNextMonth } from "Redux/action";
-import { getTwoMonthData } from "Redux/action";
-import { emptyData } from "Redux/action";
-import { firstMonth } from "Redux/action";
-import { secondMonth } from "Redux/action";
+
 import { makingReqforNSE } from "Redux/RealActions";
+import { showCurrentMonthData } from "Redux/RealActions";
+import { showNextMonthData } from "Redux/RealActions";
 
 export const Filters = () => {
   const strikesAboveAndBelowVal = [5, 10, 15, 20, 25, "All"];
 
-  const currentIsChecked = useSelector((state) => state.reducer.currentMonth);
-  const nextIscChecked = useSelector((store) => store.reducer.nextMonth);
+  const currentIsChecked = useSelector((state) => state.realReducer.currentMonth);
+  const nextIscChecked = useSelector((store) => store.realReducer.nextMonth);
   const dispatch = useDispatch();
-  const nextMonth = useSelector((store) => store.reducer.nextMonth);
-  const currentMonth = useSelector((store) => store.reducer.currentMonth);
-  const displayData = () => {
-    if (currentMonth && nextMonth) {
-      return dispatch(getTwoMonthData());
-    } else if (!currentMonth && nextMonth) {
-      return dispatch(firstMonth());
-    } else if (currentMonth && !nextMonth) {
-      return dispatch(secondMonth());
-    } else if (!currentMonth && !nextMonth) {
-      return dispatch(emptyData());
-    }
-  };
+
   const handleCurrentBoxChange = () => {
-    dispatch(toggleWithCurrentMonth());
-    displayData();
+    dispatch(showCurrentMonthData());
   };
   const handleNextBoxXChange = () => {
-    dispatch(toggleWithNextMonth());
-    displayData();
+    dispatch(showNextMonthData());
   };
 
-  useEffect(() => {
-    displayData();
-  }, [currentMonth, nextMonth]);
-
-  const [minStike, setMinStrike] = useState(0);
-  const [maxStrike, setMaxStrike] = useState(0);
-
   const [selectFontSize, setSelectedFontSize] = React.useState(null);
-  const handleColumns = (index) => {
-    setSelectedFontSize(index);
+
+  const [symbol, setSymbol] = useState(1);
+
+  useEffect(() => {
+    dispatch(makingReqforNSE(10, symbol)); // Dispatch the function to fetch data
+  }, [symbol]);
+
+  const handleSymbol = (val) => {
+    setSymbol(val);
   };
 
   return (
@@ -106,15 +88,15 @@ export const Filters = () => {
               <FormControl fullWidth>
                 <Select
                   style={{ height: "37px" }}
-                  // value={age}
-                  defaultValue={"NIFTY"}
-                  // onChange={handleChange}
+                  value={symbol}
+                  defaultValue={1}
+                  onChange={(e) => handleSymbol(e.target.value)}
                 >
-                  <MenuItem style={{ height: "100%" }} value={"NIFTY"}>
+                  <MenuItem style={{ height: "100%" }} value={1}>
                     NIFTY
                   </MenuItem>
-                  <MenuItem value={"BANKNIFTY"}>BANKNIFTY</MenuItem>
-                  <MenuItem value={"FIN NIFTY"}>FIN NIFTY</MenuItem>
+                  <MenuItem value={2}>BANKNIFTY</MenuItem>
+                  <MenuItem value={3}>FIN NIFTY</MenuItem>
                 </Select>
               </FormControl>
             </div>
@@ -208,7 +190,7 @@ export const Filters = () => {
           <Typography variant="h6">More Filters</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Box display={"flex"} justifyContent={"space-between"}>
+          <Box display={"flex"} justifyContent={"space-around"}>
             <Box>
               <Typography fontSize={"small"}>Expiries</Typography>
               <FormGroup>
@@ -226,36 +208,7 @@ export const Filters = () => {
                 </Box>
               </FormGroup>
             </Box>
-            <Box>
-              <Box display={"flex"} justifyContent={"space-between"}>
-                <Typography mt={"5px"} fontSize={"small"}>
-                  Strike Price
-                </Typography>
-              </Box>
-              <Box display={"flex"}>
-                <Box>
-                  <Typography fontSize={"small"} style={{ marginLeft: "3px" }}>
-                    Min
-                  </Typography>
-                  <TextField
-                    size="small"
-                    style={{ marginRight: "5px" }}
-                    value={minStike}
-                    onChange={(e) => setMinStrike(e.target.value)}
-                  />
-                </Box>
-                <Box>
-                  <Typography fontSize={"small"} style={{ marginLeft: "3px" }}>
-                    Max
-                  </Typography>
-                  <TextField
-                    size="small"
-                    value={maxStrike}
-                    onChange={(e) => setMaxStrike(e.target.value)}
-                  />
-                </Box>
-              </Box>
-            </Box>
+
             <Box>
               <Typography fontSize={"small"} mt={"14px"}>
                 Strikes Above and Below ATM(...)
@@ -280,7 +233,9 @@ export const Filters = () => {
             </Box>
           </Box>
           <Box width={"100%"} textAlign={"right"}>
-            <Button startIcon={<RestartAltIcon />}>Reset</Button>
+            <Button startIcon={<RestartAltIcon />} onClick={() => dispatch(makingReqforNSE(10))}>
+              Reset
+            </Button>
           </Box>
         </AccordionDetails>
       </Accordion>

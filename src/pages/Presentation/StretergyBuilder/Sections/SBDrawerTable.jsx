@@ -40,7 +40,6 @@ const SBDrawerTable = () => {
     //filteration by the exprydates
     const filtered2 =
       store.length > 0 ? store.filter((item) => item.expiryDate === selectedExpiryDate) : [];
-    console.log(filtered2);
     let CEmaxOI = -Infinity;
     let PEmaxOI = -Infinity;
 
@@ -56,7 +55,6 @@ const SBDrawerTable = () => {
     setCallmaxOI(CEmaxOI);
     setPutmaxOI(PEmaxOI);
     setFilteredData(filtered2);
-    // console.log(filtered);
   }, [data, selectedExpiryDate]);
   const combinedColumns = [
     {

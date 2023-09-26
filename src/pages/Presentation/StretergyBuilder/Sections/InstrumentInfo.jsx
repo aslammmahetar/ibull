@@ -6,7 +6,6 @@ import QuizIcon from "@mui/icons-material/Quiz";
 
 const InstrumentInfo = () => {
   const stretergyCreated = useSelector((store) => store.sbReducer.stretergyCreated);
-  console.log(stretergyCreated);
   return (
     <MKBox style={{ backgroundColor: "#FDFFFC", padding: 5, borderRadius: 5, height: "150px" }}>
       {!stretergyCreated ? (

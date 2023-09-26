@@ -73,8 +73,6 @@ const Signin = ({ handleToggle }) => {
     fetch("http://192.168.1.5/Account/Login", requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
-        console.log(result.status);
         if (result.status === 1) {
           setVariant("error");
         } else {
@@ -106,16 +104,12 @@ const Signin = ({ handleToggle }) => {
                 mt={-3}
                 textAlign="center"
               >
+                <Box fontFamily={`'Tourney', "cursive"`} color={"whitesmoke"} fontSize={"25px"}>
+                  iBull
+                </Box>
                 <MKTypography variant="h4" fontWeight="medium" color="white" mt={1}>
                   Sign in
                 </MKTypography>
-                <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
-                  <Grid item xs={5}>
-                    <MKTypography component={MuiLink} href="#" variant="body1" color="white">
-                      iBull
-                    </MKTypography>
-                  </Grid>
-                </Grid>
               </MKBox>
               <MKBox pt={4} pb={3} px={3}>
                 <MKBox component="form" role="form">

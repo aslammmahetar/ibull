@@ -4,8 +4,11 @@ import {
   GET_REQ_NSE_DATA,
   GET_REQ_NSE_FAILS,
   GET_REQ_NSE_SUCCESS,
+  SHOW_CURRENT_MONTH_DATA,
   SHOW_GREATER_THAN_ATM_DATA,
   SHOW_LESS_THAN_ATM_DATA,
+  SHOW_NEXT_MONTH_DATA,
+  SHOW_TIME_ALERT,
 } from "./RealActions";
 
 const initialState = {
@@ -21,13 +24,15 @@ const initialState = {
   lessThanATM: 40,
   greaterThanATM: 40,
   septData: [],
+  currentMonth: true,
+  nextMonth: true,
+  timeAlert: "",
 };
 
 export const realReducer = (state = initialState, { type, payload, count }) => {
   switch (type) {
     case GET_NIFTY_EXPIRYDATES_SUCCESS: {
       const expiryDates = payload.map((el) => (el = moment(el.expiryDates).format("DD-MMM-YYYY")));
-      console.log(expiryDates);
 
       return {
         ...state,
@@ -41,20 +46,17 @@ export const realReducer = (state = initialState, { type, payload, count }) => {
       };
     }
     case GET_REQ_NSE_SUCCESS: {
-      console.log(payload, count);
       const ulValue = payload[0].cE_underlyingValue;
       const septData = payload.filter((el) => el.cE_expiryDate.includes("Sep"));
       const octData = payload.filter((el) => el.cE_expiryDate.includes("Oct"));
 
       let twoMonthStrikePrice = payload.map((el) => el.cE_strikePrice);
-      console.log(twoMonthStrikePrice);
-      console.log(ulValue);
       return {
         ...state,
         isLoading: false,
         strikePrices: twoMonthStrikePrice.slice(0, count),
         data: payload,
-        twoMonthData: [...septData, ...octData].slice(0, count),
+        twoMonthData: [...septData, ...octData],
         ulValue: ulValue,
       };
     }
@@ -77,6 +79,24 @@ export const realReducer = (state = initialState, { type, payload, count }) => {
         ...state,
         limiitedData: true,
         greaterThanATM: payload,
+      };
+    }
+    case SHOW_CURRENT_MONTH_DATA: {
+      return {
+        ...state,
+        currentMonth: !state.currentMonth,
+      };
+    }
+    case SHOW_NEXT_MONTH_DATA: {
+      return {
+        ...state,
+        nextMonth: !state.nextMonth,
+      };
+    }
+    case SHOW_TIME_ALERT: {
+      return {
+        ...state,
+        timeAlert: payload,
       };
     }
     default:

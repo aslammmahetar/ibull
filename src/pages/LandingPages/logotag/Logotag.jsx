@@ -13,7 +13,7 @@ export const Logotag = () => {
         <span
           style={{
             color: "black",
-            fontFamily: `'Dancing Script', 'cursive'`,
+            fontFamily: `'Tourney', "cursive"`,
           }}
         >
           iBull

@@ -22,6 +22,11 @@ export const GET_REQ_STREAM_WISE = "GET_REQ_STREAM_WISE";
 export const GET_REQ_STREAM_WISE_SUCCESS = "GET_REQ_STREAM_WISE_SUCCESS";
 export const GET_REQ_STREAM_WISE_FAILURE = "GET_REQ_STREAM_WISE_FAILURE";
 
+export const SHOW_CURRENT_MONTH_DATA = "SHOW_CURRENT_MONTH_DATA";
+export const SHOW_NEXT_MONTH_DATA = "SHOW_NEXT_MONTH_DATA";
+
+export const SHOW_TIME_ALERT = "SHOW_TIME_ALERT";
+
 const getNseData = () => {
   return { type: GET_REQ_NSE_DATA };
 };
@@ -39,7 +44,7 @@ export const makingReqforNSE =
   (dispatch) => {
     dispatch(getNseData()); // Dispatch the action function
     axios
-      .get(`http://192.168.1.9/NSE/GetAllNSEDataByExp?interval=0&symbol=${symbol}`)
+      .get(`http://192.168.1.3/NSE/GetAllNSEDataByExp?interval=0&symbol=${symbol}`)
       .then((res) => {
         console.log(res.data);
         dispatch(getNseSuccess(res.data, count));
@@ -62,7 +67,7 @@ export const getDataWithIntFails = () => {
 export const makingReqforTimeIntData = (interval) => (dispatch) => {
   dispatch(getDataWithInt());
   axios
-    .get(`http://192.168.1.9/NSE/GetAllNSEDataByExp?interval=${interval}`)
+    .get(`http://192.168.1.3/NSE/GetAllNSEDataByExp?interval=${interval}`)
     .then((res) => {
       console.log(res);
     })
@@ -75,9 +80,8 @@ export const getExpiryDateSuc = (payload) => {
 
 export const getNIFTYExpiryDate = (symbol) => (dispatch) => {
   axios
-    .get(`http://192.168.1.9/NSE/GetAllExpiries?symbol=${symbol}`)
+    .get(`http://192.168.1.3/NSE/GetAllExpiries?symbol=${symbol}`)
     .then((res) => {
-      console.log(res);
       dispatch(getExpiryDateSuc(res.data));
     })
     .catch((err) => console.log(err));
@@ -91,10 +95,14 @@ export const getGreaterThanATMData = (payload) => {
   return { type: SHOW_GREATER_THAN_ATM_DATA, payload };
 };
 
-export const getDataSteamWise = () => {
-  return;
+export const showCurrentMonthData = () => {
+  return { type: SHOW_CURRENT_MONTH_DATA };
 };
 
-export const getDataStreamWiseSuc = () => {};
+export const showNextMonthData = () => {
+  return { type: SHOW_NEXT_MONTH_DATA };
+};
 
-export const getDataStreamWiseFails = () => {};
+export const showTimeAlert = (payload) => {
+  return { type: SHOW_TIME_ALERT, payload };
+};

@@ -1,22 +1,60 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import { useDispatch, useSelector } from "react-redux";
 import { makingReqforNSE } from "Redux/RealActions";
 import Timebuttons from "../OptionInterest/section/Timebuttons";
 
 const OICHange = () => {
+  const currentDate = new Date();
+
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Ogu",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  const currentMonth = currentDate.getMonth();
+
   const dispatch = useDispatch();
   const strikePrices = useSelector((store) => store.realReducer.strikePrices);
   const twoMonthdata = useSelector((store) => store.realReducer.twoMonthData);
-  console.log(twoMonthdata);
-
+  const currentIsChecked = useSelector((store) => store.realReducer.currentMonth);
+  const nextMonth = useSelector((store) => store.realReducer.nextMonth);
+  const currentMonthData = twoMonthdata.filter((el) =>
+    el.cE_expiryDate.includes(months[currentMonth])
+  );
+  const nextMonthData = twoMonthdata.filter((el) =>
+    el.cE_expiryDate.includes(months[currentMonth + 1])
+  );
   useEffect(() => {
     dispatch(makingReqforNSE(10));
   }, []);
 
+  const displayData = () => {
+    if (currentIsChecked && nextMonth) {
+      return twoMonthdata.slice(0, strikePrices.length);
+    }
+    if (currentIsChecked && !nextMonth) {
+      return currentMonthData.slice(0, strikePrices.length);
+    }
+    if (!currentIsChecked && nextMonth) {
+      return nextMonthData.slice(0, strikePrices.length);
+    }
+    return [];
+  };
+
   const ceDataset = {
     label: "PE Data",
-    data: twoMonthdata.map((dataPoint) => dataPoint.pE_pchangeinOpenInterest),
+    data: displayData().map((dataPoint) => dataPoint.pE_changeinOpenInterest),
     fill: false,
     backgroundColor: "#B2BD4C",
     borderColor: "#B2BD4C",
@@ -26,7 +64,7 @@ const OICHange = () => {
 
   const peDataset = {
     label: "CE Data",
-    data: twoMonthdata.map((dataPoint) => dataPoint.cE_pchangeinOpenInterest),
+    data: displayData().map((dataPoint) => dataPoint.cE_changeinOpenInterest),
     fill: false,
     backgroundColor: "#FF4747",
     borderColor: "#FF4747",
@@ -40,6 +78,10 @@ const OICHange = () => {
   };
 
   const options = {
+    animation: {
+      duration: 2000, // Animation duration in milliseconds
+      easing: "easeOutBounce", // Easing function
+    },
     scales: {
       x: {
         title: {
@@ -71,13 +113,3 @@ const OICHange = () => {
 };
 
 export default OICHange;
-// axios
-//   .get("http://localhost:3000/records")
-//   .then((response) => {
-//     console.log(response.data.strikePrices);
-//     // responce has one key called data that's why => response.data.data
-//     setOptionsData(response.data.data);
-//   })
-//   .catch((error) => {
-//     console.error("Error fetching options data:", error);
-//   });

@@ -61,7 +61,6 @@ Coded by www.creative-tim.com
 // import ProgressBars from "layouts/sections/elements/progress-bars";
 // import Toggles from "layouts/sections/elements/toggles";
 // import Typography from "layouts/sections/elements/typography";
-import Signup from "pages/LandingPages/SignUp/Index";
 import OpenInterest from "pages/Presentation/OptionInterest/OpenInterest";
 import MSoi from "pages/Presentation/MultiStrikeOI/Index";
 import StretergyBuilder from "pages/Presentation/StretergyBuilder/Index";

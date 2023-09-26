@@ -9,6 +9,7 @@ import WeatherDataChart from "pages/Presentation/Charts/WetherDataChart";
 import DatePickerComp from "./DatePickerComp";
 import KarasjokWeatherChart from "pages/Presentation/Charts/KarasjokWeatherChart";
 import OpenInterestChart from "./OpenInterestsChart";
+import { useSelector } from "react-redux";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -25,6 +26,40 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const ChartAndFilter = () => {
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Ogu",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const currentDate = new Date();
+  const currentMonthname = currentDate.getMonth();
+
+  const currentMonth = useSelector((store) => store.realReducer.currentMonth);
+  const nextMonth = useSelector((store) => store.realReducer.nextMonth);
+
+  const displayMonth = () => {
+    if (currentMonth && nextMonth) {
+      return `${months[currentMonthname]} & ${
+        !months[currentMonthname + 1] ? "Jan" : months[currentMonthname + 1]
+      }`;
+    }
+    if (currentMonth && !nextMonth) {
+      return `${!months[currentMonthname + 1] ? "Jan" : months[currentMonthname]}`;
+    }
+    if (!currentMonth && nextMonth) {
+      return `${!months[currentMonthname + 1] ? "Jan" : months[currentMonthname + 1]}`;
+    }
+    return "Nothing";
+  };
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -49,21 +84,20 @@ const ChartAndFilter = () => {
           <BarChart />
           <Card sx={{ padding: "10px", marginTop: "20px" }}>
             <MKBox style={{ padding: "5px" }}>
-              <Typography variant="h5">Open Interest - Aug & Sep Expiries</Typography>
+              <Typography variant="h5">Open Interest - {displayMonth()} Expiries</Typography>
             </MKBox>
             <hr />
-            <OpenInterestChart />
-            <hr />
-            <Box display={"flex"} justifyContent={"space-between"}>
-              <Box p={1} display={"flex"} alignItems={"center"} width={"50%"}>
-                <Box>
-                  <Typography fontSize={"small"}>Option Chain as on</Typography>
-                </Box>
-                <Box>
-                  <DatePickerComp />
-                </Box>
+            <Box display={"flex"}>
+              <Box width={"81%"}>
+                <OpenInterestChart />
               </Box>
-              <Box display={"flex"} width={"40%"} justifyContent={"space-around"}>
+              <Box
+                width={"29%"}
+                display={"flex"}
+                flexDirection={"column"}
+                justifyContent={"space-evenly"}
+                alignItems={"center"}
+              >
                 <Box>
                   <Typography fontSize={"small"}>Total Calls</Typography>
                   <Typography variant="h6">8.36L</Typography>
@@ -81,6 +115,17 @@ const ChartAndFilter = () => {
                 <Box>
                   <Typography fontSize={"small"}>RELIANCE</Typography>
                   <Typography variant="h6">2471</Typography>
+                </Box>
+              </Box>
+            </Box>
+            <hr />
+            <Box display={"flex"} justifyContent={"space-between"}>
+              <Box p={1} display={"flex"} alignItems={"center"} width={"50%"}>
+                <Box>
+                  <Typography fontSize={"small"}>Option Chain as on</Typography>
+                </Box>
+                <Box>
+                  <DatePickerComp />
                 </Box>
               </Box>
             </Box>

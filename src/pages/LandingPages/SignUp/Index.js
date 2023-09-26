@@ -14,7 +14,7 @@ import GoogleIcon from "@mui/icons-material/Google";
 import MKBox from "components/MKBox";
 import MKTypography from "components/MKTypography";
 import MKInput from "components/MKInput";
-import { Alert, Button, Container, Snackbar, TextField, Typography } from "@mui/material";
+import { Alert, Box, Button, Container, Snackbar, TextField, Typography } from "@mui/material";
 import MKButton from "components/MKButton";
 import { baseURL } from "App";
 
@@ -65,7 +65,6 @@ function Signup({ handleToggle }) {
       return;
     }
     const url = `${baseURL}/Account/RegisterUser`;
-    console.log(url);
     const data = {
       firstName: firstName,
       lastName: lastName,
@@ -138,10 +137,13 @@ function Signup({ handleToggle }) {
                     mb={1}
                     textAlign="center"
                   >
+                    <Box fontFamily={`'Tourney', "cursive"`} color={"whitesmoke"} fontSize={"25px"}>
+                      iBull
+                    </Box>
                     <MKTypography variant="h4" fontWeight="medium" color="white" mt={1}>
                       Sign Up
                     </MKTypography>
-                    <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
+                    {/* <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
                       <Grid item xs={2}>
                         <MKTypography component={MuiLink} href="#" variant="body1" color="white">
                           <FacebookIcon color="inherit" />
@@ -157,7 +159,7 @@ function Signup({ handleToggle }) {
                           <GoogleIcon color="inherit" />
                         </MKTypography>
                       </Grid>
-                    </Grid>
+                    </Grid> */}
                   </MKBox>
                   <MKBox pt={4} pb={3} px={3}>
                     <MKBox

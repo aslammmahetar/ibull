@@ -16,20 +16,29 @@ import MKBox from "components/MKBox";
 import { Search } from "@mui/icons-material";
 import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import MSDrawerTable from "./MSDrawerTable";
+import { useDispatch, useSelector } from "react-redux";
+import { getNIFTYExpiryDate } from "Redux/RealActions";
 
 export default function MSDrawer() {
-  var expiryDates = [
-    "13-Sep-2023",
-    "20-Sep-2023",
-    "28-Sep-2023",
-    "04-Oct-2023",
-    "11-Oct-2023",
-    "26-Oct-2023",
-    "30-Nov-2023",
-    "28-Dec-2023",
-    "28-Mar-2024",
-    "27-Jun-2024",
-  ];
+  // var expiryDates = [
+  //   "13-Sep-2023",
+  //   "20-Sep-2023",
+  //   "28-Sep-2023",
+  //   "04-Oct-2023",
+  //   "11-Oct-2023",
+  //   "26-Oct-2023",
+  //   "30-Nov-2023",
+  //   "28-Dec-2023",
+  //   "28-Mar-2024",
+  //   "27-Jun-2024",
+  // ];
+
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(getNIFTYExpiryDate(1));
+  }, []);
+  const expiryDates = useSelector((store) => store.realReducer.expiryDates);
   const [selectedExpiryDate, setSelectedExpiryDate] = React.useState("");
   const handleExpiryDateChange = (event) => {
     setSelectedExpiryDate(event.target.value);
@@ -104,11 +113,19 @@ export default function MSDrawer() {
               marginRight: "5px",
             }}
           >
-            <InputBase
-              value={"NIFTY FUT 0.25%"}
-              placeholder="Type Stock Name :SBIN, RELIANCE etc."
-              style={{ width: "80%", fontSize: "small" }}
-            />
+            <FormControl fullWidth>
+              <Select
+                style={{ height: "37px" }}
+                defaultValue={1}
+                // onChange={(e) => handleStream(e.target.value)}
+              >
+                <MenuItem style={{ height: "100%" }} value={1}>
+                  NIFTY
+                </MenuItem>
+                <MenuItem value={2}>BANKNIFTY</MenuItem>
+                <MenuItem value={3}>FIN NIFTY</MenuItem>
+              </Select>
+            </FormControl>{" "}
           </div>
           <Box display={"flex"} justifyContent={"space-evenly"}>
             <Tooltip title="Open Chart">
