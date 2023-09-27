@@ -1,14 +1,12 @@
 import { Box, ThemeProvider, Typography, createTheme } from "@mui/material";
-import { getReq } from "Redux/action";
-import { stretergyCreating } from "Redux/sbAction";
+import { makingReqforNSE } from "Redux/RealActions";
+import { getNIFTYExpiryDate } from "Redux/RealActions";
 import { MaterialReactTable } from "material-react-table";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const SBDrawerTable = () => {
   var expiryDates = [
-    "13-Sep-2023",
-    "20-Sep-2023",
     "28-Sep-2023",
     "04-Oct-2023",
     "11-Oct-2023",
@@ -25,12 +23,14 @@ const SBDrawerTable = () => {
   const [callMax, setCallmaxOI] = useState(0);
   const [putMax, setPutmaxOI] = useState(0);
 
-  const store = useSelector((store) => store.reducer.data);
-  const ulValue = useSelector((store) => store.reducer.underlyingValue);
+  const store = useSelector((store) => store.realReducer.data);
+  console.log(store);
+  const ulValue = useSelector((store) => store.realReducer.ulValue);
   const stretergyCreated = useSelector((store) => store.sbReducer.stretergyCreated);
+
   const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(getReq);
     setData(store);
     setSelectedExpiryDate(expiryDates[0]);
     setUnderlayingPrice(ulValue);
@@ -39,17 +39,17 @@ const SBDrawerTable = () => {
   useEffect(() => {
     //filteration by the exprydates
     const filtered2 =
-      store.length > 0 ? store.filter((item) => item.expiryDate === selectedExpiryDate) : [];
+      store.length > 0 ? store.filter((item) => item.cE_expiryDate === selectedExpiryDate) : [];
     let CEmaxOI = -Infinity;
     let PEmaxOI = -Infinity;
 
     //getting maximum values of openInterests
     for (let el of filtered2) {
-      if (CEmaxOI < el.combinedCEPE.CE_openInterest) {
-        CEmaxOI = el.combinedCEPE.CE_openInterest;
+      if (CEmaxOI < el.cE_openInterest) {
+        CEmaxOI = el.cE_openInterest;
       }
-      if (PEmaxOI < el.combinedCEPE.PE_openInterest) {
-        PEmaxOI = el.combinedCEPE.PE_openInterest;
+      if (PEmaxOI < el.pE_openInterest) {
+        PEmaxOI = el.pE_openInterest;
       }
     }
     setCallmaxOI(CEmaxOI);
@@ -68,7 +68,7 @@ const SBDrawerTable = () => {
             display: "flex",
             flexDirection: "row-reverse",
             textAlign: "left",
-            backgroundColor: rows.strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
+            backgroundColor: rows.cE_strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
           }}
         >
           <div
@@ -79,11 +79,11 @@ const SBDrawerTable = () => {
               padding: 7,
               justifyContent: "space-around",
               alignItems: "center",
-              backgroundColor: rows.strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
+              backgroundColor: rows.cE_strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
             }}
           >
             <div>
-              <p>{rows.combinedCEPE.CE_openInterest ? rows.combinedCEPE.CE_openInterest : 0}</p>
+              <p>{rows.cE_openInterest ? rows.cE_openInterest : 0}</p>
             </div>
             <div className="bAndC" style={{ marginLeft: 5, width: "20px" }}>
               <button
@@ -95,7 +95,7 @@ const SBDrawerTable = () => {
                   backgroundColor: "whitesmoke",
                   marginRight: 5,
                 }}
-                onClick={() => dispatch(stretergyCreating())}
+                // onClick={() => dispatch(stretergyCreating())}
               >
                 B
               </button>
@@ -115,7 +115,7 @@ const SBDrawerTable = () => {
           <div
             style={{
               position: "absolute",
-              width: `${(rows.combinedCEPE.CE_openInterest / callMax) * 100}%`,
+              width: `${(rows.cE_openInterest / callMax) * 100}%`,
               backgroundColor: "red",
               color: "red",
               // margin: "auto",
@@ -132,7 +132,7 @@ const SBDrawerTable = () => {
     },
     {
       header: "Strike",
-      accessorFn: (rows) => rows.strikePrice,
+      accessorFn: (rows) => rows.cE_strikePrice,
     },
     {
       id: "peio",
@@ -142,7 +142,7 @@ const SBDrawerTable = () => {
           className="main"
           style={{
             position: "relative",
-            backgroundColor: rows.strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
+            backgroundColor: rows.pE_strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
             padding: 7,
             display: "flex",
             flexDirection: "row-reverse",
@@ -153,7 +153,7 @@ const SBDrawerTable = () => {
               position: "absolute",
               top: 0,
               left: 0,
-              width: `${(rows.combinedCEPE.CE_openInterest / putMax) * 100}%`,
+              width: `${(rows.pE_openInterest / putMax) * 100}%`,
               backgroundColor: "lightgreen",
               color: "lightgreen",
               marginTop: 6,
@@ -205,7 +205,7 @@ const SBDrawerTable = () => {
               </button>
             </div>
             <div style={{ marginLeft: "30%" }}>
-              <p>{rows.combinedCEPE.CE_openInterest ? rows.combinedCEPE.CE_openInterest : 0}</p>
+              <p>{rows.pE_openInterest ? rows.pE_openInterest : 0}</p>
             </div>
           </div>
         </div>

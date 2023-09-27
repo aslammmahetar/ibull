@@ -41,8 +41,9 @@ import DefaultNavbarMobile from "examples/Navbars/DefaultNavbar/DefaultNavbarMob
 
 // Material Kit 2 React base styles
 import breakpoints from "assets/theme/base/breakpoints";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import AccountMenu from "pages/Presentation/User Profile/AccountMenu";
+import axios from "axios";
 
 function DefaultNavbar({ brand, routes, transparent, light, action, sticky, relative, center }) {
   const [dropdown, setDropdown] = useState("");
@@ -84,7 +85,7 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
 
   const renderNavbarItems = routes.map(({ name, icon, href, route, collapse }) => (
     <DefaultNavbarDropdown
-      // key={name}
+      key={name}
       name={name}
       icon={icon}
       href={href}
@@ -487,6 +488,42 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
             ml="auto"
             mr={center ? "auto" : 0}
           >
+            <Button
+              onClick={async () => {
+                try {
+                  let req = await axios.post("http://192.168.1.7/NSE/GetNSEData?symbol=1");
+                  console.log(req.data);
+                } catch (error) {
+                  console.log(error);
+                }
+              }}
+            >
+              NIFTY
+            </Button>
+            <Button
+              onClick={async () => {
+                try {
+                  let req = await axios.post("http://192.168.1.7/NSE/GetNSEData?symbol=2");
+                  console.log(req.data);
+                } catch (error) {
+                  console.log(error);
+                }
+              }}
+            >
+              BANKNIFTY
+            </Button>
+            <Button
+              onClick={async () => {
+                try {
+                  let req = await axios.post("http://192.168.1.7/NSE/GetNSEData?symbol=3");
+                  console.log(req.data);
+                } catch (error) {
+                  console.log(error);
+                }
+              }}
+            >
+              FINNIFTY
+            </Button>
             <AccountMenu />
             {renderNavbarItems}
           </MKBox>

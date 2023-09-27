@@ -42,6 +42,7 @@ function AboutUs() {
 
   //from redux
   const ulValue = useSelector((store) => store.realReducer.ulValue);
+  console.log(ulValue);
   const fontSize = useSelector((store) => store.reducer.fontSize);
   const expiryDates = useSelector((store) => store.realReducer.expiryDates);
   const lessThanATM = useSelector((store) => store.realReducer.lessThanATM);
@@ -51,17 +52,19 @@ function AboutUs() {
   //expirydate special case
   const [selectedExpiryDate, setSelectedExpiryDate] = useState(expiryDates[0]);
   const store = useSelector((store) => store.realReducer.data);
+  console.log(store);
 
   //
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getNIFTYExpiryDate(symbol));
-    dispatch(makingReqforNSE(0, symbol)); // Dispatch the function to fetch data
-    // Set selectedExpiryDate to the first expiry date when the component is mounted
+    dispatch(makingReqforNSE(0, symbol));
+
     if (expiryDates.length > 0) {
       setSelectedExpiryDate(expiryDates[0]);
     }
+    // Set selectedExpiryDate to the first expiry date when the component is mounted
   }, [fontSize, symbol]);
 
   useEffect(() => {
@@ -72,7 +75,7 @@ function AboutUs() {
 
       // Store the current timestamp in local storage
       localStorage.setItem("lastExecutionTime", Date.now());
-      console.log("Made a call after 15 minutes");
+      console.log("Made a call by default");
     };
 
     const now = new Date();

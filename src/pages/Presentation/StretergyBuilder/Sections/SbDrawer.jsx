@@ -6,24 +6,48 @@ import {
   DrawerOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import { Box, Button, IconButton, InputBase, Tooltip } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormControl,
+  IconButton,
+  InputBase,
+  MenuItem,
+  Select,
+  Tooltip,
+} from "@mui/material";
 import MKButton from "components/MKButton";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import MKBox from "components/MKBox";
 import { Search } from "@mui/icons-material";
 import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import SBDrawerTable from "./SBDrawerTable";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getNIFTYExpiryDate } from "Redux/RealActions";
+import { makingReqforNSE } from "Redux/RealActions";
 
 const SbDrawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [open, setOpen] = useState(false);
+  const [symbol, setSymbol] = useState(1);
   const stretergyCreated = useSelector((store) => store.sbReducer.stretergyCreated);
 
   const handleSearchIconClick = () => {
     setOpen(!open);
   };
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getNIFTYExpiryDate(symbol));
+    dispatch(makingReqforNSE(0, symbol));
+  }, [symbol]);
+
+  const handleStream = (val) => {
+    setSymbol(val);
+  };
+
   return (
     <>
       <MKButton
@@ -39,7 +63,7 @@ const SbDrawer = () => {
           <DrawerContent
             style={{
               backgroundColor: "white",
-              zIndex: 2,
+              zIndex: 999,
               width: "50%",
               height: "500px",
               margin: "auto",
@@ -53,22 +77,22 @@ const SbDrawer = () => {
                   width="50%"
                   justifyContent="space-around"
                 >
-                  <IconButton onClick={handleSearchIconClick}>
+                  <IconButton>
                     <Search />
                   </IconButton>
-                  <div
-                    style={{
-                      top: "50px",
-                      right: "10px",
-                      // borderBottom: "1px solid black",
-                      marginRight: "5px",
-                    }}
-                  >
-                    <InputBase
-                      placeholder="Type Stock Name :SBIN, RELIANCE etc."
-                      style={{ width: "80%", fontSize: "small" }}
-                    />
-                  </div>
+                  <FormControl fullWidth>
+                    <Select
+                      style={{ height: "37px" }}
+                      defaultValue={1}
+                      onChange={(e) => handleStream(e.target.value)}
+                    >
+                      <MenuItem style={{ height: "100%" }} value={1}>
+                        NIFTY
+                      </MenuItem>
+                      <MenuItem value={2}>BANKNIFTY</MenuItem>
+                      <MenuItem value={3}>FIN NIFTY</MenuItem>
+                    </Select>
+                  </FormControl>
                   <Box display={"flex"} justifyContent={"space-evenly"}>
                     <Tooltip title="Open Chart">
                       <Button variant="outlined" size="small">

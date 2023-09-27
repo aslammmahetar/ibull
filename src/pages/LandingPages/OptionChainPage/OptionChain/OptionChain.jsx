@@ -290,7 +290,9 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
           initialState={{
             density: "compact",
           }}
+          enableColumnFilters={false}
           enableStickyHeader
+          enableGlobalFilter={false}
           muiTableHeadCellProps={{
             align: "center",
           }}

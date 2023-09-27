@@ -165,7 +165,7 @@ const LiveOptionChart = () => {
   const scrollToTop = () => {
     // Scroll to the top of the page when the button is clicked
     window.scrollTo({
-      top: 0,
+      top: 10,
       behavior: "smooth", // Add smooth scrolling animation
     });
   };
@@ -215,32 +215,77 @@ const LiveOptionChart = () => {
         >
           <Card
             sx={{
-              p: 0.5,
+              p: 1,
             }}
           >
-            <Box display={"flex"} justifyContent={"space-between"}>
+            <Box>
               <MKBox
-                display={"flex"}
-                style={{ padding: "5px", width: "25%" }}
-                justifyContent="space-around"
+                style={{
+                  padding: "5px",
+                  // width: "70%",
+                  display: "flex",
+                  justifyContent: "space-around",
+                  alignItems: "center",
+                }}
               >
                 <IconButton>
                   <Search />
                 </IconButton>
-                <div
-                  style={{
-                    top: "50px",
-                    right: "10px",
-                    marginRightmarginRightght: "5px",
-                  }}
-                >
-                  <InputBase
-                    placeholder="Type Stock Name :SBIN, RELIANCE etc."
-                    value={"RELIANCE"}
-                    style={{ width: "80%", fontSize: "small" }}
-                  />
-                </div>
-                <Box display={"flex"} justifyContent={"space-evenly"}>
+                <FormControl style={{ width: "40%" }}>
+                  <Select
+                    style={{ height: "37px" }}
+                    defaultValue={1}
+                    // onChange={(e) => handleStream(e.target.value)}
+                  >
+                    <MenuItem style={{ height: "100%" }} value={1}>
+                      NIFTY
+                    </MenuItem>
+                    <MenuItem value={2}>BANKNIFTY</MenuItem>
+                    <MenuItem value={3}>FIN NIFTY</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControl style={{ width: "40%" }}>
+                  <Select
+                    fullWidth
+                    defaultValue={1}
+                    style={{
+                      height: "37px",
+                      paddingLeft: 10,
+                    }}
+                  >
+                    <MenuItem value={1} onClick={scrollToTop}>
+                      Jump To{" "}
+                    </MenuItem>
+                    <MenuItem value={2}>
+                      <a href="#multi_straddle">Multi Straddle-Strangle</a>
+                    </MenuItem>
+                    <MenuItem value={3}>
+                      <a href="#open_interest">Open Intereset - Option</a>
+                    </MenuItem>
+                    <MenuItem value={4}>
+                      <a href="#open_Int_change">Option Intereset Change - Option</a>
+                    </MenuItem>
+                    <MenuItem value={5}>
+                      <a href="#put_call_ratio">Put Call Ratio</a>
+                    </MenuItem>
+                    <MenuItem value={6}>
+                      <a href="#max_pain">Max Pain</a>
+                    </MenuItem>
+                    <MenuItem value={7}>
+                      <a href="#open_int_future">Open Interest - Future</a>
+                    </MenuItem>
+                    <MenuItem value={8}>
+                      <a href="#open_int_change_future">Open Interest Change - Future</a>
+                    </MenuItem>
+                    <MenuItem value={9}>
+                      <a href="#option_iv">Option IV</a>
+                    </MenuItem>
+                    <MenuItem value={10}>
+                      <a href="#iv_percetile">IV Percentile</a>
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+                <Box display={"flex"}>
                   <Tooltip title="Open Chart">
                     <Button variant="outlined" size="small">
                       <TrendingUpOutlinedIcon color="info" />
@@ -254,102 +299,67 @@ const LiveOptionChart = () => {
                   </Button>
                 </Box>
               </MKBox>
-              <Select
-                defaultValue={1}
-                style={{ paddingLeft: 10, paddingRight: 10, marginRight: 10 }}
-              >
-                <MenuItem value={1} onClick={scrollToTop}>
-                  Jump To{" "}
-                </MenuItem>
-                <MenuItem value={2}>
-                  <a href="#multi_straddle">Multi Straddle-Strangle</a>
-                </MenuItem>
-                <MenuItem value={3}>
-                  <a href="#open_interest">Open Intereset - Option</a>
-                </MenuItem>
-                <MenuItem value={4}>
-                  <a href="#open_Int_change">Option Intereset Change - Option</a>
-                </MenuItem>
-                <MenuItem value={5}>
-                  <a href="#put_call_ratio">Put Call Ratio</a>
-                </MenuItem>
-                <MenuItem value={6}>
-                  <a href="#max_pain">Max Pain</a>
-                </MenuItem>
-                <MenuItem value={7}>
-                  <a href="#open_int_future">Open Interest - Future</a>
-                </MenuItem>
-                <MenuItem value={8}>
-                  <a href="#open_int_change_future">Open Interest Change - Future</a>
-                </MenuItem>
-                <MenuItem value={9}>
-                  <a href="#option_iv">Option IV</a>
-                </MenuItem>
-                <MenuItem value={10}>
-                  <a href="#iv_percetile">IV Percentile</a>
-                </MenuItem>
-              </Select>
             </Box>
           </Card>
         </AppBar>
         <Box
-          display={"flex"}
+          // display={"flex"}
           bgcolor={"whitesmoke"}
           id="multi_straddle"
           justifyContent={"space-between"}
         >
-          <Box width={"25%"}>
+          <Box width={"100%"}>
             <MSSTab />
           </Box>
-          <Box width={"75%"}>
+          <Box width={"100%"}>
             <MyChart />
           </Box>
         </Box>
         <Box
-          display={"flex"}
+          // display={"flex"}
           mt={2}
           id="open_interest"
           bgcolor={"whitesmoke"}
           justifyContent={"space-between"}
         >
-          <Box width={"25%"}>
+          <Box width={"100%"}>
             <OpenInterestChangeTab
               heading={"Open Intereset"}
               OpenInterestContent={OpenInterestContent}
             />
           </Box>
-          <Box width={"75%"}>
+          <Box width={"100%"}>
             <CumulativeSumChart />
           </Box>
         </Box>
         <Box
-          display={"flex"}
+          // display={"flex"}
           id="open_Int_change"
           mt={2}
           bgcolor={"whitesmoke"}
           justifyContent={"space-between"}
         >
-          <Box width={"25%"}>
+          <Box width={"100%"}>
             <OpenInterestChangeTab
               OpenInterestContent={OpenInterestChanegContent}
               heading={"Open Intereset Change"}
             />
           </Box>
-          <Box width={"75%"}>
+          <Box width={"100%"}>
             <ChartComponent />
           </Box>
         </Box>
         <Box
-          display={"flex"}
+          // display={"flex"}
           id="put_call_ratio"
           mt={2}
           bgcolor={"whitesmoke"}
           justifyContent={"space-between"}
         >
-          <Box width={"25%"}>
+          <Box width={"100%"}>
             <PutCallRatio />
           </Box>
-          <Box width={"75%"} display={"flex"} alignItems={"center"} justifyContent={"center"}>
+          <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"center"}>
             <SolarEmploymentChart />
           </Box>
         </Box>
