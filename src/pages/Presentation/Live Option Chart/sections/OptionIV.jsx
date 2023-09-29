@@ -13,7 +13,7 @@ import React from "react";
 import KnowMoreDrawer from "./KnowMoreDrawer";
 import CustomStrikeDrawer from "./CustomStrikeDrawer";
 
-const OptionIVContent = () => {
+export const OptionIVContent = () => {
   return (
     <>
       <Typography variant="h4">Option IV Chart</Typography>
@@ -36,10 +36,6 @@ const OptionIVContent = () => {
 const OptionIV = () => {
   return (
     <Paper style={{ padding: 8, height: "100%" }}>
-      <Box display={"flex"} alignItems={"center"}>
-        <Typography variant="h6">Option IV</Typography>
-        <KnowMoreDrawer content={OptionIVContent} />
-      </Box>
       <hr />
       <Typography fontSize={"small"}>Current Value : 0.54</Typography>
       <hr />

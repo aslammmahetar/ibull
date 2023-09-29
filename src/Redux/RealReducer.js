@@ -29,6 +29,10 @@ const initialState = {
   timeAlert: "",
 };
 
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Ogu", "Sep", "Oct", "Nov", "Dec"];
+const currentDate = new Date();
+const currentMonthname = currentDate.getMonth();
+
 export const realReducer = (state = initialState, { type, payload, count }) => {
   switch (type) {
     case GET_NIFTY_EXPIRYDATES_SUCCESS: {
@@ -46,9 +50,14 @@ export const realReducer = (state = initialState, { type, payload, count }) => {
       };
     }
     case GET_REQ_NSE_SUCCESS: {
-      const ulValue = payload[0].cE_underlyingValue;
-      const septData = payload.filter((el) => el.cE_expiryDate.includes("Sep"));
-      const octData = payload.filter((el) => el.cE_expiryDate.includes("Oct"));
+      console.log(payload);
+      const ulValue = payload[0].pE_underlyingValue;
+      const octData = payload.filter((el) =>
+        el.cE_expiryDate.includes(months[currentMonthname] && months[currentMonthname + 1])
+      );
+      const novData = payload.filter((el) =>
+        el.cE_expiryDate.includes(months[currentMonthname + 1] && months[currentMonthname + 2])
+      );
 
       let twoMonthStrikePrice = payload.map((el) => el.cE_strikePrice);
       return {
@@ -56,7 +65,7 @@ export const realReducer = (state = initialState, { type, payload, count }) => {
         isLoading: false,
         strikePrices: twoMonthStrikePrice.slice(0, count),
         data: payload,
-        twoMonthData: [...septData, ...octData],
+        twoMonthData: [...octData, ...novData],
         ulValue: ulValue,
       };
     }

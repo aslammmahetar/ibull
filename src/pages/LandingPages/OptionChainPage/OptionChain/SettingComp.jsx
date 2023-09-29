@@ -1,18 +1,23 @@
 import React from "react";
-import "./table.css"; // Import your CSS file for styling
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Box, Button } from "@mui/material";
-
-import SettingDrawer from "./SettingDrawer";
+import SettingDrawer from "./SettingDrawer"; // Import your SettingDrawer component here
 
 const SettingComp = () => {
   return (
-    <Box display={"flex"} justifyContent={"space-between"} bgcolor={"whitesmoke"}>
-      <Box display={"flex"}>
-        <Box className="left-div">
+    <Box
+      display={"flex"}
+      justifyContent={"space-between"}
+      flexDirection={{ xs: "column", md: "row" }} // Adjust the layout for different screen sizes
+      bgcolor={"whitesmoke"}
+      padding={{ xs: 2, md: 4 }} // Adjust padding for different screen sizes
+    >
+      <Box display={"flex"} marginBottom={{ xs: 2, md: 0 }}>
+        <Box className="left-div" marginRight={{ xs: 2, md: 3 }}>
           <Button endIcon={<ExpandMoreIcon />}>LTP View</Button>
         </Box>
-        <Box className="left-div">
+        <Box className="left-div" marginRight={{ xs: 2, md: 3 }}>
           <Button endIcon={<ExpandMoreIcon />}>GREEK view</Button>
         </Box>
         <Box className="left-div">

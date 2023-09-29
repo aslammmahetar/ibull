@@ -1,4 +1,7 @@
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   AppBar,
   Box,
   Button,
@@ -21,18 +24,19 @@ import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import bgImage from "assets/images/Banner.jpeg";
 import MyChart from "./sections/MyChart";
 import CumulativeSumChart from "../Charts/CumulativeSumChart";
-import MSSTab from "./sections/EditBar";
+import MSSTab, { MSDrawerContent } from "./sections/EditBar";
 import OpenInterestChangeTab from "./sections/OpenInterestChangeTab";
 import ChartComponent from "../Charts/LinePlusColumns";
-import PutCallRatio from "./sections/PutCallRatio";
-import MaxPain from "./sections/MaxPain";
+import PutCallRatio, { PutCallRatioContent } from "./sections/PutCallRatio";
+import MaxPain, { MaxPaionContent } from "./sections/MaxPain";
 import OptionIntFuture from "./sections/OptionIntFuture";
-import OptionIV from "./sections/OptionIV";
-import IVPercentile from "./sections/IVPercentile";
+import OptionIV, { OptionIVContent } from "./sections/OptionIV";
+import IVPercentile, { IVPercentileContent } from "./sections/IVPercentile";
 import SolarEmploymentChart from "../Charts/SolarEmplomentchart";
-import ClickableDataPointsChart from "../Charts/ClickAbleDatPoints";
 import StockMarketChart from "../Charts/StockMarketChart";
 import { Search } from "@mui/icons-material";
+import KnowMoreDrawer from "./sections/KnowMoreDrawer";
+import CandleStick from "../Charts/CandleStick";
 const OpenInterestContent = () => {
   return (
     <>
@@ -211,7 +215,7 @@ const LiveOptionChart = () => {
       >
         <AppBar
           position={isSticky ? "sticky" : "static"}
-          style={{ top: 69, bottom: 25, zIndex: 999 }}
+          style={{ top: 69, bottom: 100, zIndex: 999 }}
         >
           <Card
             sx={{
@@ -304,12 +308,21 @@ const LiveOptionChart = () => {
         </AppBar>
         <Box
           // display={"flex"}
+          mt={1}
           bgcolor={"whitesmoke"}
           id="multi_straddle"
           justifyContent={"space-between"}
         >
           <Box width={"100%"}>
-            <MSSTab />
+            <Accordion>
+              <AccordionSummary>
+                <Typography variant="h6">Multi Straddle-Strangle Chart</Typography>
+                <KnowMoreDrawer content={MSDrawerContent} />
+              </AccordionSummary>
+              <AccordionDetails>
+                <MSSTab />
+              </AccordionDetails>
+            </Accordion>
           </Box>
           <Box width={"100%"}>
             <MyChart />
@@ -323,10 +336,15 @@ const LiveOptionChart = () => {
           justifyContent={"space-between"}
         >
           <Box width={"100%"}>
-            <OpenInterestChangeTab
-              heading={"Open Intereset"}
-              OpenInterestContent={OpenInterestContent}
-            />
+            <Accordion>
+              <AccordionSummary>
+                <Typography variant="h6">Open Intereset - Option</Typography>
+                <KnowMoreDrawer content={OpenInterestContent} />
+              </AccordionSummary>
+              <AccordionDetails>
+                <OpenInterestChangeTab />
+              </AccordionDetails>
+            </Accordion>
           </Box>
           <Box width={"100%"}>
             <CumulativeSumChart />
@@ -340,10 +358,15 @@ const LiveOptionChart = () => {
           justifyContent={"space-between"}
         >
           <Box width={"100%"}>
-            <OpenInterestChangeTab
-              OpenInterestContent={OpenInterestChanegContent}
-              heading={"Open Intereset Change"}
-            />
+            <Accordion>
+              <AccordionSummary>
+                <Typography variant="h6">Open Intereset Change - Option</Typography>
+                <KnowMoreDrawer content={OpenInterestChanegContent} />
+              </AccordionSummary>
+              <AccordionDetails>
+                <OpenInterestChangeTab />
+              </AccordionDetails>
+            </Accordion>
           </Box>
           <Box width={"100%"}>
             <ChartComponent />
@@ -357,82 +380,146 @@ const LiveOptionChart = () => {
           justifyContent={"space-between"}
         >
           <Box width={"100%"}>
-            <PutCallRatio />
+            <Accordion>
+              <AccordionSummary>
+                <Box display={"flex"} alignItems={"center"}>
+                  <Typography variant="h6">Put-call Ratio</Typography>
+                  <KnowMoreDrawer content={PutCallRatioContent} />
+                </Box>
+              </AccordionSummary>
+              <AccordionDetails>
+                <PutCallRatio />
+              </AccordionDetails>
+            </Accordion>
           </Box>
-          <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"center"}>
-            <SolarEmploymentChart />
+          <Box width={"100%"}>
+            <CandleStick />
           </Box>
         </Box>
         <Box
-          display={"flex"}
+          // display={"flex"}
           id="max_pain"
           mt={2}
           bgcolor={"whitesmoke"}
           justifyContent={"space-between"}
         >
-          <Box width={"25%"}>
-            <MaxPain />
+          <Box width={"100%"}>
+            <Accordion>
+              <AccordionSummary>
+                <Box display={"flex"} alignItems={"center"}>
+                  <Typography variant="h6">Max Pain</Typography>
+                  <KnowMoreDrawer content={MaxPaionContent} />
+                </Box>
+              </AccordionSummary>
+              <AccordionDetails>
+                <MaxPain />
+              </AccordionDetails>
+            </Accordion>
           </Box>
-          <Box width={"75%"} display={"flex"} alignItems={"center"} justifyContent={"center"}>
-            <ClickableDataPointsChart />
+          <Box width={"100%"} textAlign={"center"}>
+            <Typography>Chart Section</Typography>
           </Box>
         </Box>
         <Box
-          display={"flex"}
+          // display={"flex"}
           id="open_int_future"
           mt={2}
           bgcolor={"whitesmoke"}
           justifyContent={"space-between"}
         >
-          <Box width={"25%"}>
-            <OptionIntFuture heading={"Open Interest"} OptionIntFutureContent={OpenInContent} />
+          <Box width={"100%"}>
+            <Accordion>
+              <AccordionSummary>
+                <Box display={"flex"} alignItems={"center"}>
+                  <Typography variant="h6">Open Interest - Futures</Typography>
+                  <KnowMoreDrawer content={OptionIntFutureContent} />
+                </Box>
+              </AccordionSummary>
+              <AccordionDetails>
+                <OptionIntFuture />
+              </AccordionDetails>
+            </Accordion>
           </Box>
-          <Box width={"75%"} display={"flex"} alignItems={"center"} justifyContent={"center"}>
+          <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"center"}>
             <StockMarketChart />
           </Box>
         </Box>
         <Box
-          display={"flex"}
+          // display={"flex"}
           id="open_int_change_future"
           mt={2}
           bgcolor={"whitesmoke"}
           justifyContent={"space-between"}
         >
-          <Box width={"25%"}>
-            <OptionIntFuture
-              heading={"Open Interest Change"}
-              OptionIntFutureContent={OptionIntFutureContent}
-            />
+          <Box width={"100%"}>
+            <Accordion>
+              <AccordionSummary>
+                <Box display={"flex"} alignItems={"center"}>
+                  <Typography variant="h6">Open Interest Change - Futures</Typography>
+                  <KnowMoreDrawer content={OptionIntFutureContent} />
+                </Box>
+              </AccordionSummary>
+              <AccordionDetails>
+                <OptionIntFuture />
+              </AccordionDetails>
+            </Accordion>
           </Box>
-          <Box width={"75%"} display={"flex"} alignItems={"center"} justifyContent={"center"}>
-            <Typography variant="h2">Chart Section</Typography>
+          <Box
+            width={"100%"}
+            // display={"flex"}
+            alignItems={"center"}
+            justifyContent={"center"}
+          >
+            <Typography variant="h2" textAlign={"center"}>
+              Chart Section
+            </Typography>
           </Box>
         </Box>
         <Box
-          display={"flex"}
+          // display={"flex"}
           id="option_iv"
           mt={2}
           bgcolor={"whitesmoke"}
           justifyContent={"space-between"}
         >
-          <Box width={"25%"}>
-            <OptionIV />
+          <Box width={"100%"}>
+            <Accordion>
+              <AccordionSummary>
+                <Box display={"flex"} alignItems={"center"}>
+                  <Typography variant="h6">Option IV</Typography>
+                  <KnowMoreDrawer content={OptionIVContent} />
+                </Box>
+              </AccordionSummary>
+              <AccordionDetails>
+                <OptionIV />
+              </AccordionDetails>
+            </Accordion>
           </Box>
-          <Box width={"75%"} display={"flex"} alignItems={"center"} justifyContent={"center"}>
+          <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"center"}>
             <Typography variant="h2">Chart Section</Typography>
           </Box>
         </Box>
         <Box
-          display={"flex"}
+          // display={"flex"}
           id="iv_percetile"
           mt={2}
           bgcolor={"whitesmoke"}
           justifyContent={"space-between"}
         >
-          <Box width={"25%"}>
-            <IVPercentile />
+          <Box width={"100%"}>
+            <Accordion>
+              <AccordionSummary>
+                <Box display={"flex"} alignItems={"center"}>
+                  <Typography variant="h6">IV Percentile</Typography>
+                  <KnowMoreDrawer content={IVPercentileContent} />
+                </Box>
+              </AccordionSummary>
+              <AccordionDetails>
+                <IVPercentile />
+              </AccordionDetails>
+            </Accordion>
           </Box>
-          <Box width={"75%"} display={"flex"} alignItems={"center"} justifyContent={"center"}>
+          <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"center"}>
             <Typography variant="h2">Chart Section</Typography>
           </Box>
         </Box>

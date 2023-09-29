@@ -438,19 +438,13 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
   return (
     <Container sx={sticky ? { position: "sticky", top: 0, zIndex: 10 } : null}>
       <MKBox
-        // border="solid red 1px"
-        // py={1}
-        // px={{ xs: 4, sm: transparent ? 2 : 3, lg: transparent ? 0 : 2 }}
-        // my={relative ? 0 : 2}
-        // mx={relative ? 0 : 3}
-        ml={-16.5}
-        width={!relative ? "118.7%" : "calc(100% - 48px)"}
-        // borderRadius="xl"
+        // border="1px solid red"
+        mx={{ xs: 0, lg: relative ? 0 : 3 }}
+        ml={{ xs: -2, lg: -16.5, md: -11.4 }}
+        width={{ xs: "100%", md: "119.5%", lg: !relative ? "118.7%" : "calc(100% - 48px)" }}
         shadow={transparent ? "none" : "md"}
         color={light ? "white" : "dark"}
         position={relative ? "relative" : "absolute"}
-        // left={0}
-        zIndex={3}
         sx={({ palette: { transparent: transparentColor, white }, functions: { rgba } }) => ({
           backgroundColor: transparent ? transparentColor.main : rgba(white.main, 0.8),
           backdropFilter: transparent ? "none" : `saturate(200%) blur(30px)`,
@@ -491,7 +485,7 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
             <Button
               onClick={async () => {
                 try {
-                  let req = await axios.post("http://192.168.1.7/NSE/GetNSEData?symbol=1");
+                  let req = await axios.post("http://192.168.1.2/NSE/GetNSEData?symbol=1");
                   console.log(req.data);
                 } catch (error) {
                   console.log(error);
@@ -503,7 +497,7 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
             <Button
               onClick={async () => {
                 try {
-                  let req = await axios.post("http://192.168.1.7/NSE/GetNSEData?symbol=2");
+                  let req = await axios.post("http://192.168.1.2/NSE/GetNSEData?symbol=2");
                   console.log(req.data);
                 } catch (error) {
                   console.log(error);
@@ -515,7 +509,7 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
             <Button
               onClick={async () => {
                 try {
-                  let req = await axios.post("http://192.168.1.7/NSE/GetNSEData?symbol=3");
+                  let req = await axios.post("http://192.168.1.2/NSE/GetNSEData?symbol=3");
                   console.log(req.data);
                 } catch (error) {
                   console.log(error);

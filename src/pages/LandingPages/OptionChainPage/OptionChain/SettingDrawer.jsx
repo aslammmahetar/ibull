@@ -76,7 +76,7 @@ export default function SwipeableTemporaryDrawer() {
   ///
   const list = (anchor) => (
     <Box
-      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 450 }}
+      sx={{ width: 414 }}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}

@@ -80,5 +80,6 @@ export const get5MInData = (dispatch) => {
 };
 
 export const fontSizeChange = (payload) => {
+  console.log(payload);
   return { type: FONTSIZE_CHANGE, payload: payload };
 };

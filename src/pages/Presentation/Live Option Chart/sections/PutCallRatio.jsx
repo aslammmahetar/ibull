@@ -15,7 +15,7 @@ import React from "react";
 import KnowMoreDrawer from "./KnowMoreDrawer";
 import CustomStrikeDrawer from "./CustomStrikeDrawer";
 
-const PutCallRatioContent = () => {
+export const PutCallRatioContent = () => {
   return (
     <>
       <Typography variant="h4">Put-Call Ratio Chart</Typography>
@@ -63,10 +63,6 @@ const PutCallRatioContent = () => {
 const PutCallRatio = () => {
   return (
     <Paper style={{ padding: 8, height: "100%" }}>
-      <Box display={"flex"} alignItems={"center"}>
-        <Typography variant="h6">Put-call Ratio</Typography>
-        <KnowMoreDrawer content={PutCallRatioContent} />
-      </Box>
       <hr />
       <Typography fontSize={"small"}>Current Value : 0.54</Typography>
       <hr />

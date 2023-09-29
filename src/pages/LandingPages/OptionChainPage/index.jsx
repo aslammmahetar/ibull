@@ -110,7 +110,7 @@ function AboutUs() {
       console.log("Data fetching paused outside of 9:30 AM to 3:30 PM");
       return dispatch(showTimeAlert("Data updating paused outside of 9:30 AM to 3:30 PM"));
     }
-  }, [symbol]);
+  }, [symbol, fontSize]);
 
   const handleStream = (val) => {
     setSymbol(val);

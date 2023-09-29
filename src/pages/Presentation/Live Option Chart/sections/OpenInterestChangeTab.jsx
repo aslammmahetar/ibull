@@ -11,13 +11,10 @@ import {
 import React from "react";
 import KnowMoreDrawer from "./KnowMoreDrawer";
 import CustomStrikeDrawer from "./CustomStrikeDrawer";
-const OpenInterestChangeTab = ({ heading, OpenInterestContent }) => {
+const OpenInterestChangeTab = () => {
   return (
     <Paper style={{ padding: 8, height: "100%" }}>
-      <Box display={"flex"} alignItems={"center"}>
-        <Typography variant="h6">{heading} - Option</Typography>
-        <KnowMoreDrawer content={OpenInterestContent} />
-      </Box>
+      <Box display={"flex"} alignItems={"center"}></Box>
       <hr />
       <Box display={"flex"} justifyContent={"space-around"}>
         <Box borderRight={"solid lightgrey 1px"} width={"50%"}>

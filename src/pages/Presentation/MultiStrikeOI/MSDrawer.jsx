@@ -66,7 +66,7 @@ export default function MSDrawer() {
 
   const list = (anchor) => (
     <Box
-      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 450, p: 1 }}
+      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 414, p: 1 }}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}

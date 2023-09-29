@@ -12,7 +12,7 @@ import {
 import React from "react";
 import KnowMoreDrawer from "./KnowMoreDrawer";
 
-const IVPercentileContent = () => {
+export const IVPercentileContent = () => {
   return (
     <>
       <Typography variant="h4">IV Percentile Chart</Typography>
@@ -37,10 +37,6 @@ const IVPercentileContent = () => {
 const IVPercentile = () => {
   return (
     <Paper style={{ padding: 8, height: "100%" }}>
-      <Box display={"flex"} alignItems={"center"}>
-        <Typography variant="h6">IV Percentile</Typography>
-        <KnowMoreDrawer content={IVPercentileContent} />
-      </Box>
       <hr />
       <Typography fontSize={"small"}>Current Value : 0.54</Typography>
       <hr />

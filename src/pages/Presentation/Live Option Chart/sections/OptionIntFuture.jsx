@@ -8,15 +8,10 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import KnowMoreDrawer from "./KnowMoreDrawer";
 
-const OptionIntFuture = ({ heading, OptionIntFutureContent }) => {
+const OptionIntFuture = () => {
   return (
     <Paper style={{ padding: 8, height: "100%" }}>
-      <Box display={"flex"} alignItems={"center"}>
-        <Typography variant="h6">{heading} - Futures</Typography>
-        <KnowMoreDrawer content={OptionIntFutureContent} />
-      </Box>
       <hr />
       <Typography fontSize={"small"}>Current Value : 0.54</Typography>
       <hr />

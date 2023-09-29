@@ -22,12 +22,12 @@ import MSDrawer from "./MSDrawer";
 const MSfilters = () => {
   return (
     <MKBox width={"100%"} display={{ lg: "block" }}>
-      <Box display={"flex"} justifyContent={"space-between"}>
+      <Box display={{ xs: "block", md: "block", lg: "flex" }} justifyContent={"space-between"}>
         <Card
           sx={{
             display: "flex",
             justifyContent: "center",
-            width: "48%",
+            width: { xs: "100%", md: "100%", lg: "48%" },
           }}
         >
           <MKBox

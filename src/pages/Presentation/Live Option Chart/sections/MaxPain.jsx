@@ -12,7 +12,7 @@ import {
 import React from "react";
 import KnowMoreDrawer from "./KnowMoreDrawer";
 
-const MaxPaionContent = () => {
+export const MaxPaionContent = () => {
   return (
     <>
       <Typography variant="h4">Max Pain Chart</Typography>
@@ -33,10 +33,6 @@ const MaxPaionContent = () => {
 const MaxPain = () => {
   return (
     <Paper style={{ padding: 8, height: "100%" }}>
-      <Box display={"flex"} alignItems={"center"}>
-        <Typography variant="h6">Max Pain</Typography>
-        <KnowMoreDrawer content={MaxPaionContent} />
-      </Box>
       <hr />
       <Typography fontSize={"small"}>Current Value : 0.54</Typography>
       <hr />
