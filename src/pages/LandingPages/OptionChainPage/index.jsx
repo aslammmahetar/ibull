@@ -28,7 +28,6 @@ import OptionChain from "./OptionChain/OptionChain";
 import { makingReqforNSE } from "Redux/RealActions";
 import SettingComp from "./OptionChain/SettingComp";
 import { getNIFTYExpiryDate } from "Redux/RealActions";
-import { showTimeAlert } from "Redux/RealActions";
 function AboutUs() {
   //
   const navigate = useNavigate();
@@ -48,69 +47,104 @@ function AboutUs() {
   const lessThanATM = useSelector((store) => store.realReducer.lessThanATM);
   const greaterThanATM = useSelector((store) => store.realReducer.greaterThanATM);
   const timeAlert = useSelector((store) => store.realReducer.timeAlert);
+  const nearestThursday = useSelector((store) => store.realReducer.nearestThurday);
+  console.log(nearestThursday);
+
+  // Get today's date
+  const today = new Date();
+
+  // Find the current day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+  const currentDayOfWeek = today.getDay();
+
+  // Calculate the number of days until the next Thursday
+  const daysUntilNextThursday = (11 - currentDayOfWeek) % 7;
+
+  // Calculate the date of the next Thursday by adding the number of days
+  const nextThursday = new Date(today);
+  nextThursday.setDate(today.getDate() + daysUntilNextThursday);
+
+  // Create an array of month names
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  // Format the date as "dd-mmm-yyyy"
+  const formattedDate = `${nextThursday.getDate()}-${
+    monthNames[nextThursday.getMonth()]
+  }-${nextThursday.getFullYear()}`;
+
+  console.log(formattedDate);
 
   //expirydate special case
-  const [selectedExpiryDate, setSelectedExpiryDate] = useState(expiryDates[0]);
+  const [selectedExpiryDate, setSelectedExpiryDate] = useState(
+    expiryDates.length > 0 ? expiryDates[0] : formattedDate
+  );
   const store = useSelector((store) => store.realReducer.data);
   console.log(store);
 
   //
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(getNIFTYExpiryDate(symbol));
     dispatch(makingReqforNSE(0, symbol));
-
-    if (expiryDates.length > 0) {
-      setSelectedExpiryDate(expiryDates[0]);
-    }
-    // Set selectedExpiryDate to the first expiry date when the component is mounted
-  }, [fontSize, symbol]);
-
-  useEffect(() => {
-    // Function to fetch data and update local storage
-    const fetchDataAndUpdateLocalStorage = () => {
-      dispatch(getNIFTYExpiryDate(symbol));
-      dispatch(makingReqforNSE(0, symbol));
-
-      // Store the current timestamp in local storage
-      localStorage.setItem("lastExecutionTime", Date.now());
-      console.log("Made a call by default");
-    };
-
-    const now = new Date();
-    const currentHour = now.getHours();
-    const currentMinute = now.getMinutes();
-
-    // Check if it's between 9:30 AM (09:30) and 3:30 PM (15:30)
-    if (
-      (currentHour > 9 || (currentHour === 9 && currentMinute >= 30)) &&
-      (currentHour < 15 || (currentHour === 15 && currentMinute <= 30))
-    ) {
-      // Fetch data immediately when the component mounts
-      fetchDataAndUpdateLocalStorage();
-
-      // Check local storage for the last execution time
-      const lastExecutionTime = localStorage.getItem("lastExecutionTime");
-      const currentTime = Date.now();
-
-      // Calculate the time since the last execution
-      const timeSinceLastExecution = currentTime - (lastExecutionTime || 0);
-
-      // Set up an interval to fetch data every 15 minutes (900,000 milliseconds)
-      const interval = setInterval(() => {
-        fetchDataAndUpdateLocalStorage();
-        console.log("made call at", Date.now());
-      }, 900000 - timeSinceLastExecution); // Adjust the interval based on the time elapsed
-
-      // Clean up the interval when the component unmounts
-      return () => clearInterval(interval);
-    } else {
-      // Do not fetch data if it's outside of the specified time range
-      console.log("Data fetching paused outside of 9:30 AM to 3:30 PM");
-      return dispatch(showTimeAlert("Data updating paused outside of 9:30 AM to 3:30 PM"));
-    }
   }, [symbol, fontSize]);
+
+  // useEffect(() => {
+  //   // Function to fetch data and update local storage
+  //   const fetchDataAndUpdateLocalStorage = () => {
+  //     if (expiryDates.length > 0) {
+  //       setSelectedExpiryDate(expiryDates[0]);
+  //     }
+
+  //     // Store the current timestamp in local storage
+  //     localStorage.setItem("lastExecutionTime", Date.now());
+  //     console.log("Made a call by default");
+  //   };
+
+  //   const now = new Date();
+  //   const currentHour = now.getHours();
+  //   const currentMinute = now.getMinutes();
+
+  //   // Check if it's between 9:30 AM (09:30) and 3:30 PM (15:30)
+  //   if (
+  //     (currentHour > 9 || (currentHour === 9 && currentMinute >= 30)) &&
+  //     (currentHour < 15 || (currentHour === 15 && currentMinute <= 30))
+  //   ) {
+  //     // Fetch data immediately when the component mounts
+  //     fetchDataAndUpdateLocalStorage();
+
+  //     // Check local storage for the last execution time
+  //     const lastExecutionTime = localStorage.getItem("lastExecutionTime");
+  //     const currentTime = Date.now();
+
+  //     // Calculate the time since the last execution
+  //     const timeSinceLastExecution = currentTime - (lastExecutionTime || 0);
+
+  //     // Set up an interval to fetch data every 15 minutes (900,000 milliseconds)
+  //     const interval = setInterval(() => {
+  //       fetchDataAndUpdateLocalStorage();
+  //       console.log("made call at", Date.now());
+  //     }, 900000 - timeSinceLastExecution); // Adjust the interval based on the time elapsed
+
+  //     // Clean up the interval when the component unmounts
+  //     return () => clearInterval(interval);
+  //   } else {
+  //     // Do not fetch data if it's outside of the specified time range
+  //     console.log("Data fetching paused outside of 9:30 AM to 3:30 PM");
+  //     return dispatch(showTimeAlert("Data updating paused outside of 9:30 AM to 3:30 PM"));
+  //   }
+  // }, [symbol]);
 
   const handleStream = (val) => {
     setSymbol(val);

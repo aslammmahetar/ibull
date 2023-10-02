@@ -11,7 +11,42 @@ import {
   SHOW_TIME_ALERT,
 } from "./RealActions";
 
+// Get today's date
+const today = new Date();
+
+// Find the current day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+const currentDayOfWeek = today.getDay();
+
+// Calculate the number of days until the next Thursday
+const daysUntilNextThursday = (11 - currentDayOfWeek) % 7;
+
+// Calculate the date of the next Thursday by adding the number of days
+const nextThursday = new Date(today);
+nextThursday.setDate(today.getDate() + daysUntilNextThursday);
+
+// Create an array of month names
+const monthNames = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
+// Format the date as "dd-mmm-yyyy"
+const nearestThurday = `${nextThursday.getDate()}-${
+  monthNames[nextThursday.getMonth()]
+}-${nextThursday.getFullYear()}`;
+
 const initialState = {
+  nearestThurday: nearestThurday,
   isLoading: false,
   data: [],
   strikePrices: [],

@@ -485,7 +485,9 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
             <Button
               onClick={async () => {
                 try {
-                  let req = await axios.post("http://192.168.1.2/NSE/GetNSEData?symbol=1");
+                  let req = await axios.post(
+                    "http://192.168.1.5/NSE/GetNSEData?interval=-15&symbol=1"
+                  );
                   console.log(req.data);
                 } catch (error) {
                   console.log(error);
@@ -497,7 +499,9 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
             <Button
               onClick={async () => {
                 try {
-                  let req = await axios.post("http://192.168.1.2/NSE/GetNSEData?symbol=2");
+                  let req = await axios.post(
+                    "http://192.168.1.5/NSE/GetNSEData?interval=-15&symbol=2"
+                  );
                   console.log(req.data);
                 } catch (error) {
                   console.log(error);
@@ -509,7 +513,9 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
             <Button
               onClick={async () => {
                 try {
-                  let req = await axios.post("http://192.168.1.2/NSE/GetNSEData?symbol=3");
+                  let req = await axios.post(
+                    "http://192.168.1.5/NSE/GetNSEData?interval=-15&symbol=3"
+                  );
                   console.log(req.data);
                 } catch (error) {
                   console.log(error);
@@ -527,6 +533,7 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
             py={1.5}
             pl={1.5}
             color={transparent ? "white" : "inherit"}
+            z
             sx={{ cursor: "pointer" }}
             onClick={openMobileNavbar}
           >

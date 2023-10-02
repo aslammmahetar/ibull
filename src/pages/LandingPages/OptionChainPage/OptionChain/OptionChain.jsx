@@ -2,12 +2,12 @@ import { Box, ThemeProvider, createTheme, Typography } from "@mui/material";
 import "./table.css";
 import { MaterialReactTable } from "material-react-table";
 import { useSelector } from "react-redux";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeToStrikePrice }) => {
   const fontSize = useSelector((store) => store.reducer.fontSize);
-
   const tableContainerRef = useRef(null);
+  console.log(combinedData);
 
   useEffect(() => {
     if (tableContainerRef.current) {
@@ -38,46 +38,76 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
       //
       columns: [
         {
-          id: "cebidprice",
-          header: <Typography>Bid Price</Typography>,
-          accessorFn: (row) => (
-            <div
-              style={{
-                backgroundColor:
-                  row.cE_strikePrice !== closeToStrikePrice.cE_strikePrice
-                    ? row.cE_strikePrice < underlayingPrice
-                      ? "#fffee5"
-                      : "#f9f9f9"
-                    : "white",
-              }}
-            >
-              <Typography fontSize={fontSize}>{row.cE_bidprice || 0}</Typography>
-            </div>
-          ),
+          id: "ceGamma",
+          header: <Typography>Gamma</Typography>,
         },
-        //
         {
-          id: "ceaksprice",
-          header: <Typography>Ask price</Typography>,
-          accessorFn: (row) => (
-            <div
-              style={{
-                backgroundColor:
-                  row.cE_strikePrice !== closeToStrikePrice.cE_strikePrice
-                    ? row.cE_strikePrice < underlayingPrice
-                      ? "#fffee5"
-                      : "#f9f9f9"
-                    : "white",
-              }}
-            >
-              <Typography fontSize={fontSize}>{row.cE_askPrice || 0}</Typography>
-            </div>
-          ),
+          id: "ceVegga",
+          header: <Typography>Vega</Typography>,
         },
-        //
+        {
+          id: "ceTheta",
+          header: <Typography>Theta</Typography>,
+        },
+        {
+          id: "ceDelta",
+          header: <Typography>Delta</Typography>,
+        },
+        {
+          id: "cePCR",
+          header: <Typography>PCR</Typography>,
+        },
+        {
+          id: "cePOP",
+          header: <Typography>POP</Typography>,
+        },
+        {
+          id: "ceVolume",
+          header: <Typography>Volume</Typography>,
+          accessorFn: (row) => {
+            return (
+              <div
+                style={{
+                  backgroundColor:
+                    row.cE_strikePrice !== closeToStrikePrice.cE_strikePrice
+                      ? row.cE_strikePrice < underlayingPrice
+                        ? "#fffee5"
+                        : "#f9f9f9"
+                      : "white",
+                }}
+              >
+                <Typography fontSize={fontSize}>{row.cE_totalTradedVolume || 0}</Typography>
+              </div>
+            );
+          },
+        },
+        {
+          id: "ceOichange",
+          header: <Typography>OI change</Typography>,
+          accessorFn: (row) => {
+            return (
+              <div
+                style={{
+                  backgroundColor:
+                    row.cE_strikePrice !== closeToStrikePrice.cE_strikePrice
+                      ? row.cE_strikePrice < underlayingPrice
+                        ? "#fffee5"
+                        : "#f9f9f9"
+                      : "white",
+                }}
+              >
+                <Typography fontSize={fontSize}>{row.cE_changeinOpenInterest || 0}</Typography>
+              </div>
+            );
+          },
+        },
+        {
+          id: "ceOichangepercent",
+          header: <Typography>OI Change %</Typography>,
+        },
         {
           id: "ceio",
-          header: <Typography>OI</Typography>,
+          header: <Typography>OI-Lakh</Typography>,
           accessorFn: (rows) => (
             <div
               style={{
@@ -134,6 +164,61 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
             </div>
           ),
         },
+        {
+          id: "cebidprice",
+          header: <Typography>Bid Price</Typography>,
+          accessorFn: (row) => (
+            <div
+              style={{
+                backgroundColor:
+                  row.cE_strikePrice !== closeToStrikePrice.cE_strikePrice
+                    ? row.cE_strikePrice < underlayingPrice
+                      ? "#fffee5"
+                      : "#f9f9f9"
+                    : "white",
+              }}
+            >
+              <Typography fontSize={fontSize}>{row.cE_bidprice || 0}</Typography>
+            </div>
+          ),
+        },
+        {
+          id: "ceOfferPrice",
+          header: <Typography>Offer Price</Typography>,
+        },
+        {
+          id: "ceIntrValFut",
+          header: <Typography>Intr Value(Fut)</Typography>,
+        },
+        {
+          id: "ceIntrValSpot",
+          header: <Typography>Intr Value(Spot)</Typography>,
+        },
+        {
+          id: "timeVal",
+          header: <Typography>Time Value</Typography>,
+        },
+        //
+
+        //
+        {
+          id: "ceLTP",
+          header: <Typography>LTP</Typography>,
+          accessorFn: (row) => (
+            <div
+              style={{
+                backgroundColor:
+                  row.cE_strikePrice !== closeToStrikePrice.cE_strikePrice
+                    ? row.cE_strikePrice < underlayingPrice
+                      ? "#fffee5"
+                      : "#f9f9f9"
+                    : "white",
+              }}
+            >
+              {row.cE_lastPrice}
+            </div>
+          ),
+        },
       ],
     },
     //
@@ -156,6 +241,21 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
             );
           },
         },
+        {
+          header: "IV",
+          accessorFn: (rows) => {
+            return (
+              <div
+                style={{
+                  backgroundColor:
+                    rows.cE_strikePrice === closeToStrikePrice.cE_strikePrice ? "white" : "",
+                }}
+              >
+                <Typography fontSize={fontSize}>{rows.cE_impliedVolatility}</Typography>
+              </div>
+            );
+          },
+        },
       ],
     },
     //
@@ -163,8 +263,62 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
       header: <div style={{ color: "#039855", fontSize: "medium" }}>Puts</div>,
       columns: [
         {
+          id: "peLTP",
+          header: <Typography>LTP</Typography>,
+          accessorFn: (row) => (
+            <div
+              style={{
+                backgroundColor:
+                  row.pE_strikePrice !== closeToStrikePrice.pE_strikePrice
+                    ? row.pE_strikePrice > underlayingPrice
+                      ? "#fffee5"
+                      : "#f9f9f9"
+                    : "white",
+              }}
+            >
+              {row.pE_lastPrice}
+            </div>
+          ),
+        },
+        {
+          id: "petimeVal",
+          header: <Typography>Time Value</Typography>,
+        },
+        {
+          id: "peIntrValSpot",
+          header: <Typography>Intr Value(Spot)</Typography>,
+        },
+        {
+          id: "peIntrValFut",
+          header: <Typography>Intr Value(Fut)</Typography>,
+        },
+        {
+          id: "peOfferPrice",
+          header: <Typography>Offer Price</Typography>,
+        },
+        {
+          id: "pebidprice",
+          header: <Typography>Bid Price</Typography>,
+          accessorFn: (rows) => (
+            <div
+              style={{
+                backgroundColor:
+                  rows.pE_strikePrice !== closeToStrikePrice.pE_strikePrice
+                    ? rows.pE_strikePrice > underlayingPrice
+                      ? "#fffee5"
+                      : "#f9f9f9"
+                    : "white",
+              }}
+            >
+              <Typography fontSize={fontSize}>
+                <Typography fontSize={fontSize}>{rows.pE_bidprice || 0}</Typography>
+              </Typography>
+            </div>
+          ),
+        },
+        {
           id: "peio",
-          header: <Typography>OI</Typography>,
+          header: <Typography>OI-Lakh</Typography>,
           accessorFn: (rows) => (
             <div
               style={{
@@ -211,44 +365,74 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
             </div>
           ),
         },
-        //
         {
-          id: "peaskprice",
-          header: <Typography>Ask price</Typography>,
-          accessorFn: (rows) => (
-            <div
-              style={{
-                backgroundColor:
-                  rows.pE_strikePrice !== closeToStrikePrice.pE_strikePrice
-                    ? rows.pE_strikePrice > underlayingPrice
-                      ? "#fffee5"
-                      : "#f9f9f9"
-                    : "white",
-              }}
-            >
-              <Typography fontSize={fontSize}>{rows.pE_askPrice || 0}</Typography>
-            </div>
-          ),
+          id: "peOichangepercent",
+          header: <Typography>OI Change %</Typography>,
         },
         {
-          id: "pebidprice",
-          header: <Typography>Bid Price</Typography>,
-          accessorFn: (rows) => (
-            <div
-              style={{
-                backgroundColor:
-                  rows.pE_strikePrice !== closeToStrikePrice.pE_strikePrice
-                    ? rows.pE_strikePrice > underlayingPrice
-                      ? "#fffee5"
-                      : "#f9f9f9"
-                    : "white",
-              }}
-            >
-              <Typography fontSize={fontSize}>
-                <Typography fontSize={fontSize}>{rows.pE_bidprice || 0}</Typography>
-              </Typography>
-            </div>
-          ),
+          id: "peOichange",
+          header: <Typography>OI change</Typography>,
+          accessorFn: (row) => {
+            return (
+              <div
+                style={{
+                  backgroundColor:
+                    row.cE_strikePrice !== closeToStrikePrice.cE_strikePrice
+                      ? row.cE_strikePrice < underlayingPrice
+                        ? "#fffee5"
+                        : "#f9f9f9"
+                      : "white",
+                }}
+              >
+                <Typography fontSize={fontSize}>{row.pE_changeinOpenInterest || 0}</Typography>
+              </div>
+            );
+          },
+        },
+        //
+        {
+          id: "peVolume",
+          header: <Typography>Volume</Typography>,
+          accessorFn: (row) => {
+            return (
+              <div
+                style={{
+                  backgroundColor:
+                    row.pE_strikePrice !== closeToStrikePrice.pE_strikePrice
+                      ? row.pE_strikePrice > underlayingPrice
+                        ? "#fffee5"
+                        : "#f9f9f9"
+                      : "white",
+                }}
+              >
+                <Typography fontSize={fontSize}>{row.pE_totalTradedVolume || 0}</Typography>
+              </div>
+            );
+          },
+        },
+        {
+          id: "pePOP",
+          header: <Typography>POP</Typography>,
+        },
+        {
+          id: "pePCR",
+          header: <Typography>PCR</Typography>,
+        },
+        {
+          id: "peDelta",
+          header: <Typography>Delta</Typography>,
+        },
+        {
+          id: "peTheta",
+          header: <Typography>Theta</Typography>,
+        },
+        {
+          id: "peVegga",
+          header: <Typography>Vega</Typography>,
+        },
+        {
+          id: "peGamma",
+          header: <Typography>Gamma</Typography>,
         },
       ],
     },
@@ -298,6 +482,91 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
           }}
         />
       </ThemeProvider>
+      {/* <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell
+                colSpan={3}
+                style={{ textAlign: "right", backgroundColor: "#FFF6F6", fontSize: "medium" }}
+              >
+                <b style={{ marginRight: "15px", color: "#785859" }}>CALLS (CE)</b>
+              </TableCell>
+              <TableCell></TableCell>
+              <TableCell style={{ textAlign: "left", backgroundColor: "#f1fbf6" }} colSpan={3}>
+                <b style={{ marginLeft: "15px", color: "#039855", fontSize: "medium" }}>
+                  PUTS (PE)
+                </b>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Bid Price</TableCell>
+              <TableCell>Ask Price</TableCell>
+              <TableCell>OI</TableCell>
+              <TableCell>Strike Prices</TableCell>
+              <TableCell>Bid Price</TableCell>
+              <TableCell>Ask Price</TableCell>
+              <TableCell>OI</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {combinedData.map((call, index) => (
+              <TableRow key={index}>
+                <TableCell
+                  style={{
+                    backgroundColor: call.cE_strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
+                  }}
+                >
+                  {call.bidprice}
+                </TableCell>
+
+                <TableCell
+                  style={{
+                    backgroundColor: call.cE_strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
+                  }}
+                >
+                  {call.cE_askPrice}
+                </TableCell>
+                <TableCell
+                  style={{
+                    backgroundColor: call.cE_strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
+                  }}
+                >
+                  <div>{call.cE_openInterest}</div>
+                </TableCell>
+                <TableCell style={{ backgroundColor: "E9ECF0" }}>
+                  <div>
+                    <button style={{ width: "70px", padding: "3px", border: "none" }}>
+                      {call.cE_strikePrice}
+                    </button>
+                  </div>
+                </TableCell>
+                <TableCell
+                  style={{
+                    backgroundColor: call.pE_strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
+                  }}
+                >
+                  {call.pE_bidprice}
+                </TableCell>
+                <TableCell
+                  style={{
+                    backgroundColor: call.pE_strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
+                  }}
+                >
+                  {call.pE_askPrice}
+                </TableCell>
+                <TableCell
+                  style={{
+                    backgroundColor: call.pE_strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
+                  }}
+                >
+                  {call.pE_openInterest}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer> */}
     </Box>
   );
 };
@@ -351,88 +620,3 @@ export default OptionChain;
 //     state: "Nebraska",
 //   },
 // ];
-//  <TableContainer component={Paper}>
-//           <Table>
-//             <TableHead>
-//               <TableRow>
-//                 <TableCell
-//                   colSpan={3}
-//                   style={{ textAlign: "right", backgroundColor: "#FFF6F6", fontSize: "medium" }}
-//                 >
-//                   <b style={{ marginRight: "15px", color: "#785859" }}>CALLS (CE)</b>
-//                 </TableCell>
-//                 <TableCell></TableCell>
-//                 <TableCell style={{ textAlign: "left", backgroundColor: "#f1fbf6" }} colSpan={3}>
-//                   <b style={{ marginLeft: "15px", color: "#039855", fontSize: "medium" }}>
-//                     PUTS (PE)
-//                   </b>
-//                 </TableCell>
-//               </TableRow>
-//               <TableRow>
-//                 <TableCell>Bid Price</TableCell>
-//                 <TableCell>Ask Price</TableCell>
-//                 <TableCell>OI</TableCell>
-//                 <TableCell>Strike Prices</TableCell>
-//                 <TableCell>Bid Price</TableCell>
-//                 <TableCell>Ask Price</TableCell>
-//                 <TableCell>OI</TableCell>
-//               </TableRow>
-//             </TableHead>
-//             <TableBody>
-//               {callsData.map((call, index) => (
-//                 <TableRow key={index}>
-//                   <TableCell
-//                     style={{
-//                       backgroundColor: call.strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
-//                     }}
-//                   >
-//                     {call.bidprice}
-//                   </TableCell>
-
-//                   <TableCell
-//                     style={{
-//                       backgroundColor: call.strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
-//                     }}
-//                   >
-//                     {call.askPrice}
-//                   </TableCell>
-//                   <TableCell
-//                     style={{
-//                       backgroundColor: call.strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
-//                     }}
-//                   >
-//                     <div>{call.openInterest.toFixed(2)}</div>
-//                   </TableCell>
-//                   <TableCell style={{ backgroundColor: "E9ECF0" }}>
-//                     <div>
-//                       <button style={{ width: "70px", padding: "3px", border: "none" }}>
-//                         {call.strikePrice}
-//                       </button>
-//                     </div>
-//                   </TableCell>
-//                   <TableCell
-//                     style={{
-//                       backgroundColor: call.strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
-//                     }}
-//                   >
-//                     {putsData[index] ? putsData[index].bidprice : 0}{" "}
-//                   </TableCell>
-//                   <TableCell
-//                     style={{
-//                       backgroundColor: call.strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
-//                     }}
-//                   >
-//                     {putsData[index] ? putsData[index].askPrice : 0}
-//                   </TableCell>
-//                   <TableCell
-//                     style={{
-//                       backgroundColor: call.strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
-//                     }}
-//                   >
-//                     {putsData[index] ? putsData[index].openInterest.toFixed(2) : 0}
-//                   </TableCell>
-//                 </TableRow>
-//               ))}
-//             </TableBody>
-//           </Table>
-//         </TableContainer>

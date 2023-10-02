@@ -18,6 +18,7 @@ import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import MSDrawerTable from "./MSDrawerTable";
 import { useDispatch, useSelector } from "react-redux";
 import { getNIFTYExpiryDate } from "Redux/RealActions";
+import { makingReqforNSE } from "Redux/RealActions";
 
 export default function MSDrawer() {
   // var expiryDates = [
@@ -35,9 +36,11 @@ export default function MSDrawer() {
 
   const dispatch = useDispatch();
 
+  const [symbol, setSymbol] = React.useState(1);
   React.useEffect(() => {
-    dispatch(getNIFTYExpiryDate(1));
-  }, []);
+    dispatch(getNIFTYExpiryDate(symbol));
+    dispatch(makingReqforNSE(0, symbol));
+  }, [symbol]);
   const expiryDates = useSelector((store) => store.realReducer.expiryDates);
   const [selectedExpiryDate, setSelectedExpiryDate] = React.useState("");
   const handleExpiryDateChange = (event) => {
@@ -55,6 +58,10 @@ export default function MSDrawer() {
     bottom: false,
     right: false,
   });
+
+  const handleStream = (value) => {
+    setSymbol(value);
+  };
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
@@ -117,7 +124,7 @@ export default function MSDrawer() {
               <Select
                 style={{ height: "37px" }}
                 defaultValue={1}
-                // onChange={(e) => handleStream(e.target.value)}
+                onChange={(e) => handleStream(e.target.value)}
               >
                 <MenuItem style={{ height: "100%" }} value={1}>
                   NIFTY

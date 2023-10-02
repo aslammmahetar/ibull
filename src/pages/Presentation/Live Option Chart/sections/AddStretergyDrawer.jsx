@@ -20,22 +20,24 @@ import { Search } from "@mui/icons-material";
 import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import { Tab, TabIndicator, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 import MSDrawerTable from "pages/Presentation/MultiStrikeOI/MSDrawerTable";
+import { useSelector } from "react-redux";
 
 export default function AddStretergyDrawer() {
   const [open, setOpen] = React.useState(false);
-  var expiryDates = [
-    "13-Sep-2023",
-    "20-Sep-2023",
-    "28-Sep-2023",
-    "04-Oct-2023",
-    "11-Oct-2023",
-    "26-Oct-2023",
-    "30-Nov-2023",
-    "28-Dec-2023",
-    "28-Mar-2024",
-    "27-Jun-2024",
-  ];
+  // var expiryDates = [
+  //   "13-Sep-2023",
+  //   "20-Sep-2023",
+  //   "28-Sep-2023",
+  //   "04-Oct-2023",
+  //   "11-Oct-2023",
+  //   "26-Oct-2023",
+  //   "30-Nov-2023",
+  //   "28-Dec-2023",
+  //   "28-Mar-2024",
+  //   "27-Jun-2024",
+  // ];
   const [selectedExpiryDate, setSelectedExpiryDate] = React.useState("");
+  const expiryDates = useSelector((store) => store.realReducer.expiryDates);
   const handleExpiryDateChange = (event) => {
     setSelectedExpiryDate(event.target.value);
   };
