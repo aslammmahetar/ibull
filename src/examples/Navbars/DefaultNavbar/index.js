@@ -486,7 +486,7 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
               onClick={async () => {
                 try {
                   let req = await axios.post(
-                    "http://192.168.1.5/NSE/GetNSEData?interval=-15&symbol=1"
+                    "http://192.168.1.8/NSE/GetNSEData?interval=-15&symbol=1"
                   );
                   console.log(req.data);
                 } catch (error) {
@@ -500,7 +500,7 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
               onClick={async () => {
                 try {
                   let req = await axios.post(
-                    "http://192.168.1.5/NSE/GetNSEData?interval=-15&symbol=2"
+                    "http://192.168.1.8/NSE/GetNSEData?interval=-15&symbol=2"
                   );
                   console.log(req.data);
                 } catch (error) {
@@ -514,7 +514,7 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
               onClick={async () => {
                 try {
                   let req = await axios.post(
-                    "http://192.168.1.5/NSE/GetNSEData?interval=-15&symbol=3"
+                    "http://192.168.1.8/NSE/GetNSEData?interval=-15&symbol=3"
                   );
                   console.log(req.data);
                 } catch (error) {

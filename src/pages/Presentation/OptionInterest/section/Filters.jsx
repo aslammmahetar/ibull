@@ -215,7 +215,7 @@ export const Filters = () => {
               </Typography>
               {strikesAboveAndBelowVal.map((el, index) => (
                 <Button
-                  onClick={() => dispatch(makingReqforNSE(el + el + 2))}
+                  onClick={() => dispatch(makingReqforNSE(el))}
                   size="small"
                   variant="outlined"
                   style={{
@@ -233,7 +233,7 @@ export const Filters = () => {
             </Box>
           </Box>
           <Box width={"100%"} textAlign={"right"}>
-            <Button startIcon={<RestartAltIcon />} onClick={() => dispatch(makingReqforNSE(10))}>
+            <Button startIcon={<RestartAltIcon />} onClick={() => dispatch(makingReqforNSE(5))}>
               Reset
             </Button>
           </Box>

@@ -35,9 +35,10 @@ function AboutUs() {
   const [filteredData, setFilteredData] = useState([]);
   const [callMax, setCallmaxOI] = useState(0);
   const [putMax, setPutmaxOI] = useState(0);
-  const [closestElement, setClosestElement] = useState({});
+  const [closeToStrikePrice, setClosestElement] = useState({});
   const [symbol, setSymbol] = useState(1);
   const [originalData, setOriginalData] = useState([]);
+  const [bool, setBool] = useState(false);
 
   //from redux
   const ulValue = useSelector((store) => store.realReducer.ulValue);
@@ -87,9 +88,7 @@ function AboutUs() {
   console.log(formattedDate);
 
   //expirydate special case
-  const [selectedExpiryDate, setSelectedExpiryDate] = useState(
-    expiryDates.length > 0 ? expiryDates[0] : formattedDate
-  );
+  const [selectedExpiryDate, setSelectedExpiryDate] = useState(formattedDate);
   const store = useSelector((store) => store.realReducer.data);
   console.log(store);
 
@@ -181,7 +180,7 @@ function AboutUs() {
     setPutmaxOI(PEmaxOI);
     setFilteredData(filtered2);
     setOriginalData(filtered2);
-  }, [selectedExpiryDate, store, closestElement]);
+  }, [selectedExpiryDate, store, closeToStrikePrice]);
 
   //
   useEffect(() => {
@@ -195,9 +194,10 @@ function AboutUs() {
         const currDiff = Math.abs(curr.cE_strikePrice - targetValue);
         return prevDiff < currDiff ? prev : curr;
       });
-      setClosestElement(closestElement);
-    }
 
+      setClosestElement(closestElement);
+      console.log(closestElement);
+    }
     if (closestElement) {
       // Use originalData to reset filteredData
       setFilteredData(originalData);
@@ -210,7 +210,7 @@ function AboutUs() {
     } else {
       console.log("No closest element found.");
     }
-  }, [closestElement, lessThanATM, greaterThanATM, ulValue]);
+  }, [closeToStrikePrice, lessThanATM, greaterThanATM, ulValue, bool]);
 
   //handling expirydates filter
   const handleExpiryDateChange = (event) => {
@@ -251,6 +251,7 @@ function AboutUs() {
           mx: { xs: 2, lg: 3 },
           mt: -10,
           mb: 4,
+          // backgroundColor:"#011627",
           boxShadow: ({ boxShadows: { xxl } }) => xxl,
         }}
       >
@@ -404,21 +405,12 @@ function AboutUs() {
           combinedData={filteredData}
           CemaxOI={callMax}
           PeMaxOI={putMax}
-          closeToStrikePrice={closestElement}
+          closeToStrikePrice={closeToStrikePrice}
         />
-        <SettingComp />
-        <Card
-          sx={{
-            p: 2,
-          }}
-        >
-          <Typography textAlign={"center"} color={"red"} style={{ opacity: 0.6 }} variant="h6">
-            <CampaignIcon />
-            {"     "}
-            {timeAlert}
-          </Typography>
-        </Card>
       </Card>
+      <div className="sticky-div" style={{ position: "sticky", bottom: "0" }}>
+        <SettingComp />
+      </div>
       <MKBox pt={6} px={1} mt={6}>
         <DefaultFooter content={footerRoutes} />
       </MKBox>

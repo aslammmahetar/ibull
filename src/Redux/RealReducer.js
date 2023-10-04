@@ -62,9 +62,11 @@ const initialState = {
   currentMonth: true,
   nextMonth: true,
   timeAlert: "",
+  currentMonthselementsAroundClosest: [],
+  nextMonthselementsAroundClosest: [],
 };
 
-const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Ogu", "Sep", "Oct", "Nov", "Dec"];
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const currentDate = new Date();
 const currentMonthname = currentDate.getMonth();
 
@@ -86,21 +88,68 @@ export const realReducer = (state = initialState, { type, payload, count }) => {
     }
     case GET_REQ_NSE_SUCCESS: {
       console.log(payload);
-      const ulValue = payload[0].pE_underlyingValue;
-      const octData = payload.filter((el) =>
+      console.log(payload[0]);
+      console.log(count);
+      const data = payload[0];
+      const ulValue = payload[0][0].pE_underlyingValue;
+      console.log(ulValue);
+      const currentMonth = payload[0].filter((el) =>
         el.cE_expiryDate.includes(months[currentMonthname] && months[currentMonthname + 1])
       );
-      const novData = payload.filter((el) =>
+      console.log(currentMonth);
+      const nextMonth = payload[0].filter((el) =>
         el.cE_expiryDate.includes(months[currentMonthname + 1] && months[currentMonthname + 2])
       );
+      console.log(nextMonth);
+      // const firstTwhoMonthData = [...currentMonth, ...nextMonth];
+      const currentMonthClosestElement = currentMonth.reduce((prev, curr) => {
+        const prevDiff = Math.abs(prev.cE_strikePrice - ulValue);
+        const currDiff = Math.abs(curr.cE_strikePrice - ulValue);
+        return prevDiff < currDiff ? prev : curr;
+      });
+      const currentMonthIndex = currentMonth.indexOf(currentMonthClosestElement);
+      const currentMontstartIndex = Math.max(0, currentMonthIndex - count);
+      const currentMontendIndex = Math.min(currentMonth.length - 1, currentMonthIndex + count);
+      const currentMonthselementsAroundClosest = currentMonth.slice(
+        currentMontstartIndex,
+        currentMontendIndex + 1
+      );
+      const strikePriceArray = currentMonthselementsAroundClosest.map((el) => el.cE_strikePrice);
+      const uniqueStrikePrices = [];
 
-      let twoMonthStrikePrice = payload.map((el) => el.cE_strikePrice);
+      strikePriceArray.forEach((strikePrice, index) => {
+        if (strikePriceArray.indexOf(strikePrice) === index) {
+          uniqueStrikePrices.push(strikePrice);
+        } else {
+          uniqueStrikePrices.push("");
+        }
+      });
+
+      console.log(currentMonthselementsAroundClosest);
+
+      const nextMonthClosestElement = nextMonth.reduce((prev, curr) => {
+        const prevDiff = Math.abs(prev.cE_strikePrice - ulValue);
+        const currDiff = Math.abs(curr.cE_strikePrice - ulValue);
+        return prevDiff < currDiff ? prev : curr;
+      });
+
+      const nextMonthindex = nextMonth.indexOf(nextMonthClosestElement);
+
+      const nextMonthStartindex = Math.max(0, nextMonthindex - count);
+      const nextMonthEndindex = Math.min(nextMonth.length - 1, nextMonthindex + count);
+      const nextMonthselementsAroundClosest = nextMonth.slice(
+        nextMonthStartindex,
+        nextMonthEndindex + 1
+      );
+      console.log(nextMonthselementsAroundClosest);
       return {
         ...state,
         isLoading: false,
-        strikePrices: twoMonthStrikePrice.slice(0, count),
-        data: payload,
-        twoMonthData: [...octData, ...novData],
+        strikePrices: uniqueStrikePrices,
+        data: data,
+        twoMonthData: currentMonthselementsAroundClosest,
+        currentMonthselementsAroundClosest: currentMonthselementsAroundClosest,
+        nextMonthselementsAroundClosest: nextMonthselementsAroundClosest,
         ulValue: ulValue,
       };
     }

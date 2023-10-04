@@ -6,6 +6,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import smallFontImage from "assets/images/smallfont.png";
 import mediumFontImage from "assets/images/mediumfont.png";
 import largeFontImage from "assets/images/largefont.png";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import {
   FormControl,
@@ -15,14 +16,20 @@ import {
   ImageListItem,
   Radio,
   RadioGroup,
+  Stack,
+  Switch,
   Tab,
-  Tabs,
   Typography,
 } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { fontSizeChange } from "Redux/action";
 import { getLessThanATMData } from "Redux/RealActions";
 import { getGreaterThanATMData } from "Redux/RealActions";
+import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { ltpView } from "Redux/OcAction";
+import { ltpViewButton } from "Redux/OcAction";
+import { allColumnView } from "Redux/OcAction";
+import { greekView } from "Redux/OcAction";
 
 export default function SwipeableTemporaryDrawer() {
   const lessThanButton = ["10", "20", "30", "40", "50"];
@@ -63,6 +70,14 @@ export default function SwipeableTemporaryDrawer() {
   };
   const handleRadio = (event) => {
     setRadioValue(event.target.value);
+  };
+
+  const handleSwitchChange = (e) => {
+    console.log(e.target.checked);
+  };
+  const handleClick = (anchor) => {
+    // Handle your click event logic here
+    dispatch(ltpView()); // Dispatch the ltpView action
   };
 
   ///
@@ -184,17 +199,43 @@ export default function SwipeableTemporaryDrawer() {
           </ImageList>
         </Box>
       </Box>
-      <Box sx={{ width: "100%" }}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="wrapped label tabs example"
-          onClick={(e) => e.stopPropagation()} // Add this line to stop event propagation
-        >
-          <Tab value="LTP View" label="LTP View" wrapped />
-          <Tab value="Greek View" label="Greek View" />
-          <Tab value="All Column View" label="All Column View" />
-        </Tabs>
+      <Box sx={{ width: "100%" }} onClick={(e) => e.stopPropagation()}>
+        <TabContext value={value} on>
+          <Box
+            sx={{ borderBottom: 1, borderColor: "divider" }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <TabList onChange={handleChange} aria-label="lab API tabs example">
+              <Tab label="LTP view" value="1" />
+              <Tab label="Greek view" value="2" />
+              <Tab label="All column view" value="3" />
+            </TabList>
+          </Box>
+          <TabPanel value="1">Item one</TabPanel>
+          <TabPanel value="2">Item Two</TabPanel>
+          <TabPanel value="3">
+            <Stack>
+              <Box>
+                <Switch id="email-alerts" onChange={handleSwitchChange} />
+                <FormLabel color="black" style={{ fontSize: "medium" }}>
+                  OI Change
+                </FormLabel>
+              </Box>
+              <Box>
+                <Switch id="email-alerts" onChange={handleSwitchChange} />
+                <FormLabel color="black" style={{ fontSize: "medium" }}>
+                  OI Lakh
+                </FormLabel>
+              </Box>
+              <Box>
+                <Switch id="email-alerts" onChange={handleSwitchChange} />
+                <FormLabel color="black" style={{ fontSize: "medium" }}>
+                  LTP
+                </FormLabel>
+              </Box>
+            </Stack>
+          </TabPanel>
+        </TabContext>
       </Box>
     </Box>
   );
@@ -203,9 +244,47 @@ export default function SwipeableTemporaryDrawer() {
     <div>
       {["right"].map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)} startIcon={<SettingsIcon />}>
-            Settings
-          </Button>
+          <Box
+            display={"flex"}
+            justifyContent={"space-between"}
+            flexDirection={{ xs: "column", md: "row" }} // Adjust the layout for different screen sizes
+            bgcolor={"whitesmoke"}
+            // padding={{ xs: 2, md: 4 }} // Adjust padding for different screen sizes
+          >
+            <Box display={"flex"} marginBottom={{ xs: 2, md: 0 }}>
+              <Box className="left-div" marginRight={{ xs: 2, md: 3 }}>
+                <Button
+                  endIcon={<ExpandMoreIcon onClick={toggleDrawer(anchor, true)} />}
+                  onClick={handleClick}
+                >
+                  LTP View
+                </Button>
+              </Box>
+              <Box className="left-div" marginRight={{ xs: 2, md: 3 }}>
+                <Button
+                  onClick={() => dispatch(greekView())}
+                  endIcon={<ExpandMoreIcon onClick={toggleDrawer(anchor, true)} />}
+                >
+                  GREEK view
+                </Button>
+              </Box>
+              <Box className="left-div">
+                <Button
+                  onClick={() => dispatch(allColumnView())}
+                  endIcon={<ExpandMoreIcon onClick={toggleDrawer(anchor, true)} />}
+                >
+                  All Column view
+                </Button>
+              </Box>
+            </Box>
+            <Box>
+              <Box className="right-div" bgcolor={"whitesmoke"}>
+                <Button onClick={toggleDrawer(anchor, true)} startIcon={<SettingsIcon />}>
+                  Settings
+                </Button>
+              </Box>
+            </Box>
+          </Box>
           <SwipeableDrawer
             anchor={anchor}
             open={state[anchor]}

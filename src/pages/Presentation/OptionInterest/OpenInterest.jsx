@@ -5,6 +5,7 @@ import routes from "routes";
 import MKBox from "components/MKBox";
 import bgImage from "assets/images/Banner.jpeg";
 import Footer from "pages/LandingPages/Author/sections/Footer";
+import ScrollToTopButton from "./section/ScrollToTopButton";
 
 const OpenInterest = () => {
   return (
@@ -51,6 +52,7 @@ const OpenInterest = () => {
       >
         <ChartAndFilter />
       </Card>
+      <ScrollToTopButton />
       <Footer />
     </>
   );

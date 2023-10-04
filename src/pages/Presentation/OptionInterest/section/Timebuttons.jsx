@@ -11,8 +11,7 @@ const Timebuttons = () => {
     <Stack spacing={2}>
       {/* <MKButton
         onClick={() => {
-          dispatch(makingReqforTimeIntData(-5));
-        }}
+          dispatch(makingReqforTimeIntData(-5));3        }}
         disabled
         size="small"
         variant="outlined"
@@ -22,7 +21,7 @@ const Timebuttons = () => {
       </MKButton> */}
       {/* <MKButton
         onClick={() => {
-          dispatch(makingReqforTimeIntData(-10));
+          dispatch(makingReqforTimeIntData(-10))3
         }}
         size="small"
         variant="outlined"
@@ -32,7 +31,7 @@ const Timebuttons = () => {
       </MKButton> */}
       <MKButton
         onClick={() => {
-          dispatch(makingReqforTimeIntData(-15));
+          dispatch(makingReqforTimeIntData(-15, 3));
         }}
         size="small"
         variant="outlined"
@@ -42,7 +41,7 @@ const Timebuttons = () => {
       </MKButton>
       <MKButton
         onClick={() => {
-          dispatch(makingReqforTimeIntData(-30));
+          dispatch(makingReqforTimeIntData(-30, 3));
         }}
         size="small"
         variant="outlined"
@@ -52,7 +51,7 @@ const Timebuttons = () => {
       </MKButton>
       <MKButton
         onClick={() => {
-          dispatch(makingReqforTimeIntData(-45));
+          dispatch(makingReqforTimeIntData(-45, 3));
         }}
         size="small"
         variant="outlined"
@@ -62,7 +61,7 @@ const Timebuttons = () => {
       </MKButton>
       <MKButton
         onClick={() => {
-          dispatch(makingReqforTimeIntData(-60));
+          dispatch(makingReqforTimeIntData(-60, 3));
         }}
         size="small"
         variant="outlined"
@@ -72,7 +71,7 @@ const Timebuttons = () => {
       </MKButton>
       <MKButton
         onClick={() => {
-          dispatch(makingReqforTimeIntData(-120));
+          dispatch(makingReqforTimeIntData(-120, 31));
         }}
         size="small"
         variant="outlined"
@@ -82,7 +81,7 @@ const Timebuttons = () => {
       </MKButton>
       <MKButton
         onClick={() => {
-          dispatch(makingReqforTimeIntData(-180));
+          dispatch(makingReqforTimeIntData(-180, 3));
         }}
         size="small"
         variant="outlined"
