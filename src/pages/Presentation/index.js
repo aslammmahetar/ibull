@@ -48,6 +48,11 @@ import bgImage from "assets/images/Banner.jpeg";
 
 // import Signup from "pages/LandingPages/SignUp/Index";
 import SignInBasic from "pages/LandingPages/SignIn";
+import Information from "./sections/Information";
+import DesignBlocks from "./sections/DesignBlocks";
+import { Pages } from "@mui/icons-material";
+import BuiltByDevelopers from "./components/BuiltByDevelopers";
+import OurFeatureSection from "./sections/OurFeatureSection";
 
 function Presentation() {
   return (
@@ -88,10 +93,11 @@ function Presentation() {
           boxShadow: ({ boxShadows: { xxl } }) => xxl,
         }}
       >
+        <OurFeatureSection />
         <Counters />
-        {/* <Information /> */}
-        {/* <DesignBlocks /> */}
-        {/* <Pages />
+        {/* <Information />
+        <DesignBlocks />
+        <Pages />
         <Container sx={{ mt: 6 }}>
           <BuiltByDevelopers />
         </Container> */}

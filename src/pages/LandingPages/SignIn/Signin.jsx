@@ -1,6 +1,5 @@
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
-import MuiLink from "@mui/material/Link";
 
 import PropTypes from "prop-types";
 
@@ -13,11 +12,13 @@ import MKTypography from "components/MKTypography";
 import MKButton from "components/MKButton";
 
 // Images
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MKInput from "components/MKInput";
 import { Box, Button, Snackbar, Typography } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 import { Logotag } from "../logotag/Logotag";
+import { useDispatch, useSelector } from "react-redux";
+import { loginRequest } from "Redux/authAction";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -33,14 +34,31 @@ const Signin = ({ handleToggle }) => {
     vertical: "top",
     horizontal: "center",
   });
+  const { isAuth, successMsg, error } = useSelector((store) => store.authReducer);
+  const position = { vertical: " bottom", horizontal: "center" };
+  useEffect(() => {
+    // Check the updated Redux state when isAuth changes
+    if (isAuth) {
+      setVariant("success");
+      console.log("Hii");
+      setState({ ...position, open: true });
 
+      setAlert(successMsg !== "" ? successMsg : "Login Successful");
+    } else if (error) {
+      setVariant("error");
+      setState({ ...position, open: true });
+      setAlert(error);
+    }
+  }, [isAuth, successMsg, error]);
   const handleClose = () => {
     setState({ ...state, open: false });
   };
   const { vertical, horizontal, open } = state;
 
+  const dispatch = useDispatch();
+
   ///
-  const handleLogin = (newState) => {
+  const handleLogin = async (newState) => {
     if (!loginID) {
       setVariant("error");
       setAlert("Please Enter Mobile Number");
@@ -54,36 +72,8 @@ const Signin = ({ handleToggle }) => {
       return;
     }
 
-    ///
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-
-    var raw = JSON.stringify({
-      UserName: loginID,
-      Password: inpPassword,
-    });
-
-    var requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-
-    fetch("http://192.168.1.5/Account/Login", requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.status === 1) {
-          setVariant("error");
-        } else {
-          setVariant("success");
-        }
-        setState({ ...newState, open: true });
-        setAlert(result.respmsg);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // Dispatch the login request and wait for it to complete
+    dispatch(loginRequest(loginID, inpPassword));
   };
 
   return (

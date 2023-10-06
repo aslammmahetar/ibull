@@ -4,7 +4,7 @@ import MSfilters from "./MSfilters";
 import { Box, Card } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
-import SolarEmploymentChart from "../Charts/SolarEmplomentchart";
+import SolarEmploymentChart from "./MultiStrikeOIChart";
 import LineChart from "../Charts/LineChart";
 const useStyles = makeStyles((theme) => ({
   chartContainer: {
@@ -34,7 +34,6 @@ const MSChartAndFilters = ({ data }) => {
         >
           <Card sx={{ padding: "10px" }}>
             <SolarEmploymentChart data={data} />
-            <LineChart />
             <hr />
           </Card>
         </Box>

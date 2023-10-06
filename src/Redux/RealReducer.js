@@ -141,7 +141,6 @@ export const realReducer = (state = initialState, { type, payload, count }) => {
         nextMonthStartindex,
         nextMonthEndindex + 1
       );
-      console.log(nextMonthselementsAroundClosest);
       return {
         ...state,
         isLoading: false,

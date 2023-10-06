@@ -27,6 +27,10 @@ th {
     padding: 1px;
     /* This sets the border of the table data cells */
 }
+.tbleHead {
+  font-size: small;
+  text-align: center;
+}
 .setting_container {
     background-color: "";
   }

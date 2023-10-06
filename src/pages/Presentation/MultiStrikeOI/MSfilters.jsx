@@ -1,4 +1,7 @@
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Box,
   Button,
   Card,
@@ -9,6 +12,7 @@ import {
   IconButton,
   MenuItem,
   Select,
+  Stack,
   Tooltip,
   Typography,
 } from "@mui/material";
@@ -75,6 +79,104 @@ const MSfilters = () => {
         </Card>
         <MSDrawer />
       </Box>
+      <Accordion>
+        <AccordionSummary>
+          <Typography variant="h5">Strike Groups</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Box>
+            <Typography variant="h6">Group 1</Typography>
+            <Card sx={{ p: 1 }}>
+              <Box display={"flex"}>
+                <Box>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        // checked={selectAll}
+                        // onChange={handleSelectAllChange} // Handle "Select All" checkbox change
+                        name="28 SEP 2400 CE"
+                      />
+                    }
+                    label="28 SEP 2400 CE"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        // checked={selectAll}
+                        // onChange={handleSelectAllChange} // Handle "Select All" checkbox change
+                        name="28 SEP 2400 CE"
+                      />
+                    }
+                    label="28 SEP 2400 CE"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        // checked={selectAll}
+                        // onChange={handleSelectAllChange} // Handle "Select All" checkbox change
+                        name="28 SEP 2400 CE"
+                      />
+                    }
+                    label="28 SEP 2400 CE"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        // checked={selectAll}
+                        // onChange={handleSelectAllChange} // Handle "Select All" checkbox change
+                        name="28 SEP 2400 CE"
+                      />
+                    }
+                    label="28 SEP 2400 CE"
+                  />
+                </Box>
+                <Box>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        // checked={selectAll}
+                        // onChange={handleSelectAllChange} // Handle "Select All" checkbox change
+                        name="28 SEP 2400 CE"
+                      />
+                    }
+                    label="28 SEP 2400 CE"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        // checked={selectAll}
+                        // onChange={handleSelectAllChange} // Handle "Select All" checkbox change
+                        name="28 SEP 2400 CE"
+                      />
+                    }
+                    label="28 SEP 2400 CE"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        // checked={selectAll}
+                        // onChange={handleSelectAllChange} // Handle "Select All" checkbox change
+                        name="28 SEP 2400 CE"
+                      />
+                    }
+                    label="28 SEP 2400 CE"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        // checked={selectAll}
+                        // onChange={handleSelectAllChange} // Handle "Select All" checkbox change
+                        name="28 SEP 2400 CE"
+                      />
+                    }
+                    label="28 SEP 2400 CE"
+                  />
+                </Box>
+              </Box>
+            </Card>
+          </Box>
+        </AccordionDetails>
+      </Accordion>
     </MKBox>
   );
 };

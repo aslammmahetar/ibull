@@ -16,7 +16,7 @@ import HighchartsLineChart from "../Charts/HighchartsLineChart";
 import MultiStrikeIVChart from "../Charts/MultiStrikeIVChart";
 import StaticXAxisChart from "../Charts/StaticXAxisChart";
 import LineChartComponent from "../Charts/LineChartComponent";
-import SolarEmploymentChart from "../Charts/SolarEmplomentchart";
+import SolarEmploymentChart from "../MultiStrikeOI/MultiStrikeOIChart";
 import TradingViewWidget from "../Charts/TradingViewWidget";
 
 const Watchlist = () => {

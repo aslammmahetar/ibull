@@ -32,7 +32,7 @@ import MaxPain, { MaxPaionContent } from "./sections/MaxPain";
 import OptionIntFuture from "./sections/OptionIntFuture";
 import OptionIV, { OptionIVContent } from "./sections/OptionIV";
 import IVPercentile, { IVPercentileContent } from "./sections/IVPercentile";
-import SolarEmploymentChart from "../Charts/SolarEmplomentchart";
+import SolarEmploymentChart from "../MultiStrikeOI/MultiStrikeOIChart";
 import StockMarketChart from "../Charts/StockMarketChart";
 import { Search } from "@mui/icons-material";
 import KnowMoreDrawer from "./sections/KnowMoreDrawer";

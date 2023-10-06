@@ -2,6 +2,7 @@ import {
   ALL_COLUMN_VIEW_ACTION_TYPE,
   GREEK_VIEW_ACTION_VIEW,
   LTP_VIEW_ACTION_TYPE,
+  TOGGLE_COLUMN,
 } from "./OcAction";
 
 // Reducer code remains the same, using the modified action type
@@ -89,7 +90,13 @@ export const OptionChainReducer = (state = initialState, { type, payload }) => {
         columnCount: 6,
       };
     }
-
+    case TOGGLE_COLUMN: {
+      console.log(payload);
+      return {
+        ...state,
+        [payload]: !state[payload],
+      };
+    }
     default:
       return state;
   }

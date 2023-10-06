@@ -1,8 +1,8 @@
 import React from "react";
-import SettingDrawer from "./SettingDrawer"; // Import your SettingDrawer component here
+import SettingsDialog from "./SetttingDialog";
 
 const SettingComp = () => {
-  return <SettingDrawer />;
+  return <SettingsDialog />;
 };
 
 export default SettingComp;

@@ -3,11 +3,8 @@ import React, { useState } from "react";
 // @mui material components
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
-import MuiLink from "@mui/material/Link";
 
 // @mui icons
-import FacebookIcon from "@mui/icons-material/Facebook";
-import GitHubIcon from "@mui/icons-material/GitHub";
 import GoogleIcon from "@mui/icons-material/Google";
 
 // Material Kit 2 React components
@@ -17,20 +14,11 @@ import MKInput from "components/MKInput";
 import { Alert, Box, Button, Container, Snackbar, TextField, Typography } from "@mui/material";
 import MKButton from "components/MKButton";
 import { baseURL } from "App";
+import { registerFailure } from "Redux/authAction";
+import { useDispatch } from "react-redux";
+import { registerUser } from "Redux/authAction";
 
 function Signup({ handleToggle }) {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [mobile, setMobile] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loginId, setLoginID] = useState("");
-  const [DOB, setDOB] = useState("");
-  const [city, setCity] = useState("");
-  const [pinCode, setPinCode] = useState("");
-  const [address, setAddress] = useState("");
-  const [statee, setStatee] = useState("");
-
   //alert states
   const [variant, setVariant] = useState("");
   const [alertt, setAlert] = useState("");
@@ -44,27 +32,21 @@ function Signup({ handleToggle }) {
   const handleClose = () => {
     setState({ ...state, open: false });
   };
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [mobile, setMobile] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loginId, setLoginID] = useState("");
+  const [DOB, setDOB] = useState("");
+  const [city, setCity] = useState("");
+  const [pinCode, setPinCode] = useState("");
+  const [address, setAddress] = useState("");
+  const [statee, setStatee] = useState("");
+
+  const dispatch = useDispatch();
 
   const handleRegister = async (newState) => {
-    if (
-      !firstName ||
-      !lastName ||
-      !mobile ||
-      !email ||
-      !password ||
-      !loginId ||
-      !DOB ||
-      !city ||
-      !pinCode ||
-      !address ||
-      !statee
-    ) {
-      setVariant("error");
-      setAlert("All fields are required");
-      setState({ ...newState, open: true });
-      return;
-    }
-    const url = `${baseURL}/Account/RegisterUser`;
     const data = {
       firstName: firstName,
       lastName: lastName,
@@ -78,37 +60,12 @@ function Signup({ handleToggle }) {
       loginId: loginId,
       password: password,
     };
-    fetch(url, {
-      method: "POST",
-      headers: {
-        Accept: "*/*",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        // Check if the response is not JSON (e.g., plain text or HTML)
-        if (response.headers.get("content-type").indexOf("application/json") === -1) {
-          // Handle non-JSON response here
-          return response.text(); // Or response.blob(), response.arrayBuffer(), etc., depending on the response type
-        }
-
-        return response.json();
-      })
-
-      // Handle the response data here
-      .then((data) => {
-        console.log(data);
-      })
-
-      // Handle errors here
-      .catch((error) => {
-        console.error("Got an error:", error);
-      });
+    if (Object.values(data).some((value) => !value)) {
+      // Check if any field is empty
+      dispatch(registerFailure("All fields are required"));
+    } else {
+      dispatch(registerUser(data));
+    }
   };
 
   return (

@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import "./table.css";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { allColumnView } from "Redux/OcAction";
 
 const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeToStrikePrice }) => {
@@ -80,7 +80,11 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
               <TableRow>
                 <TableCell
                   colSpan={columnCount}
-                  style={{ textAlign: "right", backgroundColor: "#FFF6F6", fontSize: "medium" }}
+                  style={{
+                    textAlign: "right",
+                    backgroundColor: "#FFF6F6",
+                    fontSize: "small",
+                  }}
                 >
                   <b style={{ marginRight: "15px", color: "#785859" }}>CALLS </b>
                 </TableCell>
@@ -90,47 +94,44 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                   style={{ textAlign: "left", backgroundColor: "#f1fbf6" }}
                   colSpan={columnCount}
                 >
-                  <b style={{ marginLeft: "15px", color: "#039855", fontSize: "medium" }}>PUTS</b>
+                  <b style={{ marginLeft: "15px", color: "#039855", fontSize: "small" }}>PUTS</b>
                 </TableCell>
               </TableRow>
               <TableRow>
-                {gamma && <TableCell>Gamma</TableCell>}
-                {vega && <TableCell>Vegga</TableCell>}
-                {theta && <TableCell>Thetta</TableCell>}
-                {delta && <TableCell>Delta</TableCell>}
-                {volume && <TableCell>Volume</TableCell>}
-                {oiChange && <TableCell>OI change</TableCell>}
-                {oiChangePer && <TableCell>OI change %</TableCell>}
-                {OI_lakh && <TableCell>OI Lakh</TableCell>}
-                {bidprice && <TableCell>Bid Price</TableCell>}
-                {offerPrice && <TableCell>Offer Price</TableCell>}
-                {intrValFut && <TableCell>Intr Value(Fut)</TableCell>}
-                {intrValSpot && <TableCell>Intr Value(Spot)</TableCell>}
-                {timeValue && <TableCell>Time Value</TableCell>}
-                {LTP && <TableCell>LTP</TableCell>}
-                <TableCell>Strike Prices</TableCell>
-                <TableCell>IV</TableCell>
-                {LTP && <TableCell>LTP</TableCell>}
-                {timeValue && <TableCell>Time Value</TableCell>}
-                {intrValSpot && <TableCell>Intr Value(Spot)</TableCell>}
-                {intrValFut && <TableCell>Intr Value(Fut)</TableCell>}
-                {offerPrice && <TableCell>Offer Price</TableCell>}
-                {bidprice && <TableCell>Bid Price</TableCell>}
-                {OI_lakh && <TableCell>OI Lakh</TableCell>}
-                {oiChangePer && <TableCell>OI change %</TableCell>}
-                {oiChange && <TableCell>OI change</TableCell>}
-                {volume && <TableCell>Volume</TableCell>}
-                {delta && <TableCell>Delta</TableCell>}
-                {theta && <TableCell>Thetta</TableCell>}
-                {vega && <TableCell>Vegga</TableCell>}
-                {gamma && <TableCell>Gamma</TableCell>}
+                {gamma && <TableCell className="tbleHead">Gamma</TableCell>}
+                {vega && <TableCell className="tbleHead">Vegga</TableCell>}
+                {theta && <TableCell className="tbleHead">Thetta</TableCell>}
+                {delta && <TableCell className="tbleHead">Delta</TableCell>}
+                {volume && <TableCell className="tbleHead">Volume</TableCell>}
+                {oiChange && <TableCell className="tbleHead">OI change</TableCell>}
+                {oiChangePer && <TableCell className="tbleHead">OI change %</TableCell>}
+                {OI_lakh && <TableCell className="tbleHead">OI Lakh</TableCell>}
+                {bidprice && <TableCell className="tbleHead">Bid Price</TableCell>}
+                {offerPrice && <TableCell className="tbleHead">Offer Price</TableCell>}
+                {intrValFut && <TableCell className="tbleHead">Intr Value(Fut)</TableCell>}
+                {intrValSpot && <TableCell className="tbleHead">Intr Value(Spot)</TableCell>}
+                {timeValue && <TableCell className="tbleHead">Time Value</TableCell>}
+                {LTP && <TableCell className="tbleHead"> LTP</TableCell>}
+                <TableCell className="tbleHead">Strike Prices</TableCell>
+                <TableCell className="tbleHead">IV</TableCell>
+                {LTP && <TableCell className="tbleHead">LTP</TableCell>}
+                {timeValue && <TableCell className="tbleHead">Time Value</TableCell>}
+                {intrValSpot && <TableCell className="tbleHead">Intr Value(Spot)</TableCell>}
+                {intrValFut && <TableCell className="tbleHead">Intr Value(Fut)</TableCell>}
+                {offerPrice && <TableCell className="tbleHead">Offer Price</TableCell>}
+                {bidprice && <TableCell className="tbleHead">Bid Price</TableCell>}
+                {OI_lakh && <TableCell className="tbleHead">OI Lakh</TableCell>}
+                {oiChangePer && <TableCell className="tbleHead">OI change %</TableCell>}
+                {oiChange && <TableCell className="tbleHead">OI change</TableCell>}
+                {volume && <TableCell className="tbleHead">Volume</TableCell>}
+                {delta && <TableCell className="tbleHead">Delta</TableCell>}
+                {theta && <TableCell className="tbleHead">Thetta</TableCell>}
+                {vega && <TableCell className="tbleHead">Vegga</TableCell>}
+                {gamma && <TableCell className="tbleHead">Gamma</TableCell>}
               </TableRow>
             </TableHead>
             <TableBody>
               {combinedData.map((call, index) => {
-                if (call.cE_strikePrice !== closeToStrikePrice.cE_strikePrice) {
-                  console.log(closeToStrikePrice);
-                }
                 return (
                   <TableRow key={index} style={{ padding: "-5px" }}>
                     {gamma && (

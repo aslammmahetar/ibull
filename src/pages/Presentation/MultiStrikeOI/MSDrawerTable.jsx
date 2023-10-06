@@ -1,5 +1,9 @@
 import { ThemeProvider } from "@emotion/react";
 import { Box, Typography, createTheme } from "@mui/material";
+import { addSelectedCEStrike } from "Redux/MSAction";
+import { addSelectedPEStrike } from "Redux/MSAction";
+import { removeSelectedPEStrike } from "Redux/MSAction";
+import { removeSelectedCEStrike } from "Redux/MSAction";
 import { MaterialReactTable } from "material-react-table";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,6 +17,11 @@ const MSDrawerTable = ({ setSelectedExpiryDate, expiryDates, selectedExpiryDate 
 
   const store = useSelector((store) => store.realReducer.data);
   const ulValue = useSelector((store) => store.realReducer.ulValue);
+  const dispatch = useDispatch();
+  const selected_CE_StrikePrices = useSelector((store) => store.MSreducer.selected_CE_StrikePrices); // Access selected strike prices from Redux store
+  const selected_PE_StrikePrices = useSelector((store) => store.MSreducer.selected_PE_StrikePrices);
+  console.log("CE:", selected_CE_StrikePrices);
+  console.log("PE:", selected_PE_StrikePrices);
   useEffect(() => {
     setData(store);
     setSelectedExpiryDate(expiryDates[0]);
@@ -22,7 +31,15 @@ const MSDrawerTable = ({ setSelectedExpiryDate, expiryDates, selectedExpiryDate 
   useEffect(() => {
     //filteration by the exprydates
     const filtered2 =
-      store.length > 0 ? store.filter((item) => item.cE_expiryDate === selectedExpiryDate) : [];
+      store.length > 0
+        ? store
+            .map((item) => ({
+              ...item,
+              CEchecked: false, // Add a checked property and initialize it to false for each row
+              PEchecked: false,
+            }))
+            .filter((item) => item.cE_expiryDate === selectedExpiryDate)
+        : [];
     let CEmaxOI = -Infinity;
     let PEmaxOI = -Infinity;
 
@@ -39,6 +56,60 @@ const MSDrawerTable = ({ setSelectedExpiryDate, expiryDates, selectedExpiryDate 
     setPutmaxOI(PEmaxOI);
     setFilteredData(filtered2);
   }, [data, selectedExpiryDate]);
+
+  const CEhandleCheckboxChange = (clickedRow) => {
+    // Create a copy of filteredData with updated checked property
+    const updatedData = filteredData.map((row) => {
+      if (row === clickedRow) {
+        // Toggle the checked property for the clicked row
+        return {
+          ...row,
+          CEchecked: !row.CEchecked,
+        };
+      }
+      return row;
+    });
+
+    // Get the strike price of the clicked row
+    const clickedStrikePrice = clickedRow.cE_strikePrice;
+
+    if (clickedRow.CEchecked) {
+      // Dispatch an action to remove the strike price from the selectedStrikePrices array
+      dispatch(removeSelectedCEStrike(clickedStrikePrice));
+    } else {
+      // Dispatch an action to add the strike price to the selectedStrikePrices array
+      dispatch(addSelectedCEStrike(clickedStrikePrice));
+    }
+
+    setFilteredData(updatedData);
+  };
+  const PEhandleCheckboxChange = (clickedRow) => {
+    // Create a copy of filteredData with updated checked property
+    const updatedData = filteredData.map((row) => {
+      if (row === clickedRow) {
+        // Toggle the checked property for the clicked row
+        return {
+          ...row,
+          PEchecked: !row.PEchecked,
+        };
+      }
+      return row;
+    });
+
+    // Get the strike price of the clicked row
+    const clickedPEStrikePrice = clickedRow;
+
+    if (clickedRow.PEchecked) {
+      // Dispatch an action to remove the strike price from the selected_PE_StrikePrices array
+      dispatch(removeSelectedPEStrike(clickedPEStrikePrice));
+    } else {
+      // Dispatch an action to add the strike price to the selected_PE_StrikePrices array
+      dispatch(addSelectedPEStrike(clickedPEStrikePrice));
+    }
+
+    setFilteredData(updatedData);
+  };
+
   const combinedColumns = [
     {
       id: "ceio",
@@ -66,7 +137,13 @@ const MSDrawerTable = ({ setSelectedExpiryDate, expiryDates, selectedExpiryDate 
             }}
           >
             <p>{rows.cE_openInterest ? rows.cE_openInterest : 0}</p>
-            <input type="checkbox" style={{ zIndex: 1, cursor: "pointer" }} />
+            <input
+              type="checkbox"
+              checked={rows.CEchecked}
+              disabled={!rows.CEchecked && selected_CE_StrikePrices.length == 4}
+              onChange={() => CEhandleCheckboxChange(rows)}
+              style={{ zIndex: 1, cursor: "pointer" }}
+            />
           </div>
           <div
             style={{
@@ -136,7 +213,14 @@ const MSDrawerTable = ({ setSelectedExpiryDate, expiryDates, selectedExpiryDate 
               padding: 2,
             }}
           >
-            <input type="checkbox" style={{ zIndex: 1, cursor: "pointer" }} />
+            {" "}
+            <input
+              type="checkbox"
+              checked={rows.PEchecked}
+              disabled={!rows.PEchecked && selected_PE_StrikePrices.length == 4}
+              onChange={() => PEhandleCheckboxChange(rows)}
+              style={{ zIndex: 1, cursor: "pointer" }}
+            />
             <p style={{ zIndex: 1 }}>{rows.pE_openInterest ? rows.pE_openInterest : 0}</p>
           </div>
         </div>
@@ -186,6 +270,7 @@ const MSDrawerTable = ({ setSelectedExpiryDate, expiryDates, selectedExpiryDate 
           }}
         />
       </ThemeProvider>
+      <p>Selected Strike Prices: {selected_CE_StrikePrices.join(", ")}</p>
     </Box>
   );
 };

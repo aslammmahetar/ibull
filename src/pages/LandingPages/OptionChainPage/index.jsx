@@ -18,7 +18,6 @@ import footerRoutes from "footer.routes";
 // import bgImage from "/"
 import bgImage from "assets/images/Banner.jpeg";
 
-import CampaignIcon from "@mui/icons-material/Campaign";
 import { FormControl, IconButton, MenuItem, Select, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { BarChartOutlined, OndemandVideo, Search, ShowChartOutlined } from "@mui/icons-material";

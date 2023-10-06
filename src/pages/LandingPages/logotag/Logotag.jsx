@@ -1,10 +1,10 @@
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import React from "react";
 
 export const Logotag = () => {
   return (
-    <Grid xs={12} sm={10} md={6} lg={6}>
-      <h1
+    <Grid xs={12} sm={10} md={6} lg={7}>
+      <Typography
         style={{
           textAlign: "left",
         }}
@@ -18,14 +18,15 @@ export const Logotag = () => {
         >
           iBull
         </span>
-      </h1>
-      <h3
+      </Typography>
+      <Typography
+        variant="h6"
         style={{
           fontFamily: `'Orbitron', 'sans-serif'`,
         }}
       >
-        " Trade Fearlessly with iBull Options by Your Side "
-      </h3>
+        Unlock Your Financial Potential with IBull - Trade Options like a Pro
+      </Typography>
     </Grid>
   );
 };

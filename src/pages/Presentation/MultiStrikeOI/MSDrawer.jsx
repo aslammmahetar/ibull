@@ -19,6 +19,7 @@ import MSDrawerTable from "./MSDrawerTable";
 import { useDispatch, useSelector } from "react-redux";
 import { getNIFTYExpiryDate } from "Redux/RealActions";
 import { makingReqforNSE } from "Redux/RealActions";
+import axios from "axios";
 
 export default function MSDrawer() {
   // var expiryDates = [
@@ -42,6 +43,11 @@ export default function MSDrawer() {
     dispatch(makingReqforNSE(0, symbol));
   }, [symbol]);
   const expiryDates = useSelector((store) => store.realReducer.expiryDates);
+  const selected_CE_StrikePrices = useSelector((store) => store.MSreducer.selected_CE_StrikePrices);
+  console.log(selected_CE_StrikePrices);
+
+  const selected_PE_StrikePrices = useSelector((store) => store.MSreducer.selected_PE_StrikePrices);
+  console.log(selected_PE_StrikePrices);
   const [selectedExpiryDate, setSelectedExpiryDate] = React.useState("");
   const handleExpiryDateChange = (event) => {
     setSelectedExpiryDate(event.target.value);
@@ -71,6 +77,35 @@ export default function MSDrawer() {
     setState({ ...state, [anchor]: open });
   };
 
+  const handleMOILines = () => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+      strikePrices: [11000, 12000, 12700, 13000, 13500, 14000, 14500],
+      symbol: 1,
+    });
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch("http://192.168.1.7/NSE/GetAllNSEDataBySP", requestOptions)
+      .then((response) => response.json())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+    // axios.post(`http://192.168.1.7/NSE/GetAllNSEDataBySp`, [
+    //   {
+    //     strikes: [...selected_CE_StrikePrices, selected_PE_StrikePrices],
+    //     symbol: symbol,
+    //   },
+    // ]);
+    console.log();
+  };
+
   const list = (anchor) => (
     <Box
       sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 414, p: 1 }}
@@ -90,7 +125,9 @@ export default function MSDrawer() {
           <Typography pl={2}>Group 1</Typography>
         </Box>
         <Box width={"25%"}>
-          <Button style={{ border: "solid grey 1px" }}>Cancel</Button>
+          <Button style={{ border: "solid grey 1px" }} onClick={handleMOILines}>
+            Done
+          </Button>
         </Box>
       </Box>
       <Box

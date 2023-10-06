@@ -44,7 +44,7 @@ export const makingReqforNSE =
   (dispatch) => {
     dispatch(getNseData()); // Dispatch the action function
     axios
-      .get(`http://192.168.1.8/NSE/GetAllNSEDataByExp?interval=-15&symbol=${symbol}`)
+      .get(`http://192.168.1.7/NSE/GetAllNSEDataBySym?interval=-15&symbol=${symbol}`)
       .then((res) => {
         console.log(res);
         dispatch(getNseSuccess(res.data, count));
@@ -67,7 +67,7 @@ export const getDataWithIntFails = () => {
 export const makingReqforTimeIntData = (interval, symbol) => (dispatch) => {
   dispatch(getDataWithInt());
   axios
-    .get(`http://192.168.1.8/NSE/GetAllNSEDataByExp?interval=${interval}&symbol=${symbol}`)
+    .get(`http://192.168.1.7/NSE/GetAllNSEDataBySym?interval=${interval}&symbol=${symbol}`)
     .then((res) => {
       console.log(res);
     })
@@ -80,7 +80,7 @@ export const getExpiryDateSuc = (payload) => {
 
 export const getNIFTYExpiryDate = (symbol) => (dispatch) => {
   axios
-    .get(`http://192.168.1.8/NSE/GetAllExpiries?symbol=${symbol}`)
+    .get(`http://192.168.1.7/NSE/GetAllExpiries?symbol=${symbol}`)
     .then((res) => {
       dispatch(getExpiryDateSuc(res.data));
     })
