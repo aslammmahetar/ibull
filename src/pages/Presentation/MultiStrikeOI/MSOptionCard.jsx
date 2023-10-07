@@ -14,23 +14,23 @@ function OptionCard({ cardNumber, isSelected, onClick, optionType }) {
           <Checkbox
             // checked={selectAll}
             // onChange={handleSelectAllChange} // Handle "Select All" checkbox change
-            name={`${el[`${type}_expiryDate`].slice(0, 6)} ${el[`${type}_strikePrice']} ${type}`}
+            name={`${el[`${type}_expiryDate`].slice(0, 6)} ${el[`${type}_strikePrice ${type}`}
           />
         }
-        label={`${el[`${type}_expiryDate`].slice(0, 6)} ${el[`${type}_strikePrice']} ${type}`}
+        label={`${el[`${type}_expiryDate`].slice(0, 6)} ${el[`${type}_strikePrice`]} ${type}`}
       />
     ));
   };
-      
+
   return (
-    groups.length && (
+    groups.length ? (
       <Card onClick={onClick} style={{ backgroundColor: isSelected ? "lightblue" : "white" }}>
         <CardContent>
           {optionType === "CE" && renderOptions(groups[0].CE, "cE")}
           {optionType === "PE" && renderOptions(groups[0].PE, "pE")}
         </CardContent>
       </Card>
-    )
+    ) : null
   );
 }
 
