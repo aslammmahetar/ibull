@@ -13,7 +13,8 @@ const MSoi = () => {
   const dispatch = useDispatch();
 
   const data = useSelector((store) => store.realReducer.strikePrices);
-
+  const groups = useSelector((store) => store.MSreducer.groups);
+  console.log(groups);
   useEffect(() => {
     dispatch(makingReqforNSE(10));
   }, []);

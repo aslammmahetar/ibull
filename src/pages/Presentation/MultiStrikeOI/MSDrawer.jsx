@@ -6,7 +6,6 @@ import {
   Card,
   FormControl,
   IconButton,
-  InputBase,
   MenuItem,
   Select,
   Tooltip,
@@ -19,22 +18,9 @@ import MSDrawerTable from "./MSDrawerTable";
 import { useDispatch, useSelector } from "react-redux";
 import { getNIFTYExpiryDate } from "Redux/RealActions";
 import { makingReqforNSE } from "Redux/RealActions";
-import axios from "axios";
+import { makingGroup } from "Redux/MSAction";
 
 export default function MSDrawer() {
-  // var expiryDates = [
-  //   "13-Sep-2023",
-  //   "20-Sep-2023",
-  //   "28-Sep-2023",
-  //   "04-Oct-2023",
-  //   "11-Oct-2023",
-  //   "26-Oct-2023",
-  //   "30-Nov-2023",
-  //   "28-Dec-2023",
-  //   "28-Mar-2024",
-  //   "27-Jun-2024",
-  // ];
-
   const dispatch = useDispatch();
 
   const [symbol, setSymbol] = React.useState(1);
@@ -82,7 +68,7 @@ export default function MSDrawer() {
     myHeaders.append("Content-Type", "application/json");
 
     var raw = JSON.stringify({
-      strikePrices: [11000, 12000, 12700, 13000, 13500, 14000, 14500],
+      strikePrices: [11000],
       symbol: 1,
     });
 
@@ -104,6 +90,12 @@ export default function MSDrawer() {
     //   },
     // ]);
     console.log();
+    const newGroup = {
+      id: Math.random(),
+      CE: [...selected_CE_StrikePrices],
+      PE: [...selected_PE_StrikePrices],
+    };
+    dispatch(makingGroup(newGroup));
   };
 
   const list = (anchor) => (

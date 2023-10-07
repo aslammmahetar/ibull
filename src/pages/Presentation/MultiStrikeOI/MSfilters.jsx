@@ -5,25 +5,30 @@ import {
   Box,
   Button,
   Card,
-  Checkbox,
   FormControl,
-  FormControlLabel,
-  FormGroup,
   IconButton,
   MenuItem,
   Select,
-  Stack,
   Tooltip,
   Typography,
 } from "@mui/material";
 import MKBox from "components/MKBox";
-import React from "react";
+import React, { useState } from "react";
 import { Search } from "@mui/icons-material";
 import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
-import StarHalfIcon from "@mui/icons-material/StarHalf";
 import MSDrawer from "./MSDrawer";
+import OptionCard from "./MSOptionCard";
+import { useSelector } from "react-redux";
 
 const MSfilters = () => {
+  const [selectedCard, setSelectedCard] = useState(null);
+
+  const groups = useSelector((store) => store.MSreducer.groups);
+
+  const handleCardClick = (cardNumber) => {
+    setSelectedCard(cardNumber);
+  };
+
   return (
     <MKBox width={"100%"} display={{ lg: "block" }}>
       <Box display={{ xs: "block", md: "block", lg: "flex" }} justifyContent={"space-between"}>
@@ -85,95 +90,53 @@ const MSfilters = () => {
         </AccordionSummary>
         <AccordionDetails>
           <Box>
-            <Typography variant="h6">Group 1</Typography>
-            <Card sx={{ p: 1 }}>
-              <Box display={"flex"}>
-                <Box>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        // checked={selectAll}
-                        // onChange={handleSelectAllChange} // Handle "Select All" checkbox change
-                        name="28 SEP 2400 CE"
+            <Box display={"flex"}>
+              <Box>
+                {/* {groups.map((el, index) => {
+                  return (
+                    <>
+                      <Typography variant="h6">Group {index + 1}</Typography>
+                      <OptionCard
+                        cardNumber={1}
+                        isSelected={selectedCard === 1}
+                        onClick={() => handleCardClick(1)}
                       />
-                    }
-                    label="28 SEP 2400 CE"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        // checked={selectAll}
-                        // onChange={handleSelectAllChange} // Handle "Select All" checkbox change
-                        name="28 SEP 2400 CE"
-                      />
-                    }
-                    label="28 SEP 2400 CE"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        // checked={selectAll}
-                        // onChange={handleSelectAllChange} // Handle "Select All" checkbox change
-                        name="28 SEP 2400 CE"
-                      />
-                    }
-                    label="28 SEP 2400 CE"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        // checked={selectAll}
-                        // onChange={handleSelectAllChange} // Handle "Select All" checkbox change
-                        name="28 SEP 2400 CE"
-                      />
-                    }
-                    label="28 SEP 2400 CE"
-                  />
-                </Box>
-                <Box>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        // checked={selectAll}
-                        // onChange={handleSelectAllChange} // Handle "Select All" checkbox change
-                        name="28 SEP 2400 CE"
-                      />
-                    }
-                    label="28 SEP 2400 CE"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        // checked={selectAll}
-                        // onChange={handleSelectAllChange} // Handle "Select All" checkbox change
-                        name="28 SEP 2400 CE"
-                      />
-                    }
-                    label="28 SEP 2400 CE"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        // checked={selectAll}
-                        // onChange={handleSelectAllChange} // Handle "Select All" checkbox change
-                        name="28 SEP 2400 CE"
-                      />
-                    }
-                    label="28 SEP 2400 CE"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        // checked={selectAll}
-                        // onChange={handleSelectAllChange} // Handle "Select All" checkbox change
-                        name="28 SEP 2400 CE"
-                      />
-                    }
-                    label="28 SEP 2400 CE"
-                  />
-                </Box>
+                    </>
+                  );
+                })} */}
+                {groups.map((group, index) => (
+                  <div key={group.id}>
+                    <Typography variant="h6">Group {index + 1}</Typography>
+                    <Card sx={{ p: 1 }}>
+                      {/* Render CE and PE strike prices for this group */}
+                      {group.CE.map((CEPrice, index) => (
+                        <OptionCard
+                          key={index}
+                          cardNumber={index + 1}
+                          isSelected={selectedCard === index + 1}
+                          onClick={() => handleCardClick(index + 1)}
+                          optionType="CE"
+                          /* Pass necessary props for OptionCard */
+                        />
+                      ))}
+                      {group.PE.map((PEPrice, index) => {
+                        console.log(PEPrice);
+                        return (
+                          <OptionCard
+                            key={index}
+                            cardNumber={index + 1}
+                            optionType="PE"
+                            isSelected={selectedCard === index + 1}
+                            onClick={() => handleCardClick(index + 1)}
+                            /* Pass necessary props for OptionCard */
+                          />
+                        );
+                      })}
+                    </Card>
+                  </div>
+                ))}
               </Box>
-            </Card>
+            </Box>
           </Box>
         </AccordionDetails>
       </Accordion>

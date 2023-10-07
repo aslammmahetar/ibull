@@ -5,7 +5,6 @@ import { Box, Card } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
 import SolarEmploymentChart from "./MultiStrikeOIChart";
-import LineChart from "../Charts/LineChart";
 const useStyles = makeStyles((theme) => ({
   chartContainer: {
     width: "67%",

@@ -71,14 +71,14 @@ const MSDrawerTable = ({ setSelectedExpiryDate, expiryDates, selectedExpiryDate 
     });
 
     // Get the strike price of the clicked row
-    const clickedStrikePrice = clickedRow.cE_strikePrice;
+    const clickedCEStrikePrice = clickedRow;
 
     if (clickedRow.CEchecked) {
-      // Dispatch an action to remove the strike price from the selectedStrikePrices array
-      dispatch(removeSelectedCEStrike(clickedStrikePrice));
+      // Dispatch an action to remove the strike price from the selected_PE_StrikePrices array
+      dispatch(removeSelectedCEStrike(clickedCEStrikePrice));
     } else {
-      // Dispatch an action to add the strike price to the selectedStrikePrices array
-      dispatch(addSelectedCEStrike(clickedStrikePrice));
+      // Dispatch an action to add the strike price to the selected_PE_StrikePrices array
+      dispatch(addSelectedCEStrike(clickedCEStrikePrice));
     }
 
     setFilteredData(updatedData);
