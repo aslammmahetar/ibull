@@ -19,7 +19,7 @@ const DefaultStrike = ({
           Selected
         </Button>
       </MKBox>
-      <Box display={"flex"}>
+      <Box display={"flex"} justifyContent={"space-around"}>
         <FormControlLabel
           control={
             <Checkbox

@@ -30,10 +30,8 @@ export default function MSDrawer() {
   }, [symbol]);
   const expiryDates = useSelector((store) => store.realReducer.expiryDates);
   const selected_CE_StrikePrices = useSelector((store) => store.MSreducer.selected_CE_StrikePrices);
-  console.log(selected_CE_StrikePrices);
 
   const selected_PE_StrikePrices = useSelector((store) => store.MSreducer.selected_PE_StrikePrices);
-  console.log(selected_PE_StrikePrices);
   const [selectedExpiryDate, setSelectedExpiryDate] = React.useState("");
   const handleExpiryDateChange = (event) => {
     setSelectedExpiryDate(event.target.value);
@@ -64,32 +62,32 @@ export default function MSDrawer() {
   };
 
   const handleMOILines = () => {
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
+    // var myHeaders = new Headers();
+    // myHeaders.append("Content-Type", "application/json");
 
-    var raw = JSON.stringify({
-      strikePrices: [11000],
-      symbol: 1,
-    });
+    // var raw = JSON.stringify({
+    //   strikePrices: [11000],
+    //   symbol: 1,
+    // });
 
-    var requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
+    // var requestOptions = {
+    //   method: "POST",
+    //   headers: myHeaders,
+    //   body: raw,
+    //   redirect: "follow",
+    // };
 
-    fetch("http://192.168.1.7/NSE/GetAllNSEDataBySP", requestOptions)
-      .then((response) => response.json())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
-    // axios.post(`http://192.168.1.7/NSE/GetAllNSEDataBySp`, [
-    //   {
-    //     strikes: [...selected_CE_StrikePrices, selected_PE_StrikePrices],
-    //     symbol: symbol,
-    //   },
-    // ]);
-    console.log();
+    // fetch("http://192.168.1.7/NSE/GetAllNSEDataBySP", requestOptions)
+    //   .then((response) => response.json())
+    //   .then((result) => console.log(result))
+    //   .catch((error) => console.log("error", error));
+    // // axios.post(`http://192.168.1.7/NSE/GetAllNSEDataBySp`, [
+    // //   {
+    // //     strikes: [...selected_CE_StrikePrices, selected_PE_StrikePrices],
+    // //     symbol: symbol,
+    // //   },
+    // // ]);
+    // console.log();
     const newGroup = {
       id: Math.random(),
       CE: [...selected_CE_StrikePrices],

@@ -1,59 +1,54 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Highcharts from "highcharts";
 import HighchartsAccessibility from "highcharts/modules/accessibility";
 import HighchartsExporting from "highcharts/modules/exporting";
 import { useSelector } from "react-redux";
-import DefaultStrike from "./DefaultStrike";
 
 // Initialize modules
 HighchartsAccessibility(Highcharts);
 HighchartsExporting(Highcharts);
 
-const MultiStrikeOIChart = ({ data }) => {
-  const [displayLines, setDisplayLines] = useState({
-    "28 SEP 2400 CE": true,
-    "28 SEP 2380 CE": true,
-    "28 SEP 2420 CE": true,
-    "28 SEP 2360 PE": true,
-    "28 SEP 2380 PE": true,
-  });
+const MultiStrikeOIChart = () => {
+  const displayLineNamesArray = useSelector((state) => state.MSreducer.displayLineNamesArray);
+  console.log(displayLineNamesArray);
+  const selectAll = useSelector((state) => state.MSreducer.selectAll);
+  const lineSeries = useSelector((state) => state.MSreducer.lineSeries);
+  console.log(lineSeries);
 
-  const OIData = useSelector((store) => store.realReducer.data);
-  const OI = OIData.map((el) => el.cE_openInterest).slice(0, 15);
-
-  const [selectAll, setSelectAll] = useState(true); // State for "Select All" checkbox
+  // const [selectAll, setSelectAll] = useState(true); // State for "Select All" checkbox
 
   // Function to update the chart based on checkbox state
   const updateChart = (chart) => {
     chart.series.forEach((series) => {
       const seriesName = series.name.replace(/\s/g, "");
-      series.setVisible(displayLines[seriesName]);
+      // series.setVisible(displayLines[seriesName]);
     });
   };
 
   // Function to handle individual checkbox changes
-  const handleCheckboxChange = (event) => {
-    const { name, checked } = event.target;
-    setDisplayLines((prevDisplayLines) => ({
-      ...prevDisplayLines,
-      [name]: checked,
-    }));
-  };
+  // const handleCheckboxChange = (event) => {
+  //   const { name, checked } = event.target;
+  //   const updatedDisplayLines = {
+  //     ...displayLines,
+  //     [name]: checked,
+  //   };
+  //   dispatch(setDisplayLines(updatedDisplayLines));
+  // };
 
   // Function to handle "Select All" checkbox change
-  const handleSelectAllChange = (event) => {
-    const checked = event.target.checked;
-    setSelectAll(checked);
+  // const handleSelectAllChange = (event) => {
+  //   const checked = event.target.checked;
 
-    // Set the displayLines state for all checkboxes based on the "Select All" state
-    setDisplayLines((prevDisplayLines) => {
-      const updatedDisplayLines = {};
-      for (const key in prevDisplayLines) {
-        updatedDisplayLines[key] = checked;
-      }
-      return updatedDisplayLines;
-    });
-  };
+  //   // Dispatch an action to update the selectAll state in Redux
+  //   dispatch(setSelectAll(checked));
+
+  //   // Dispatch an action to update the displayLines state in Redux
+  //   const updatedDisplayLines = {};
+  //   for (const key in displayLines) {
+  //     updatedDisplayLines[key] = checked;
+  //   }
+  //   dispatch(setDisplayLines(updatedDisplayLines));
+  // };
   useEffect(() => {
     // Get the current date in UTC
     const currentDate = new Date();
@@ -103,33 +98,34 @@ const MultiStrikeOIChart = ({ data }) => {
         },
       },
 
-      series: [
-        {
-          name: "28 SEP 2400 CE",
-          data: OI,
-          visible: displayLines["28 SEP 2400 CE"],
-        },
-        {
-          name: "28 SEP 2380 CE",
-          data: [24916, 37941, 29742, 29851, 32490, 30282, 38121, 36885, 33726, 34243, 31050],
-          visible: displayLines["28 SEP 2380 CE"],
-        },
-        {
-          name: "28 SEP 2420 CE",
-          data: [11744, 30000, 16005, 19771, 20185, 24377, 32147, 30912, 29243, 29213, 25663],
-          visible: displayLines["28 SEP 2420 CE"],
-        },
-        {
-          name: "28 SEP 2360 PE",
-          data: [null, null, null, null, null, null, null, null, 11164, 11218, 10077],
-          visible: displayLines["28 SEP 2360 PE"],
-        },
-        {
-          name: "28 SEP 2380 PE",
-          data: [21908, 5548, 8105, 11248, 8989, 11816, 18274, 17300, 13053, 11906, 10073],
-          visible: displayLines["28 SEP 2380 PE"],
-        },
-      ],
+      series: displayLineNamesArray.map((el) => el),
+      //  [
+      //   {
+      //     name: "28 SEP 2400 CE",
+      //     data: lineSeries,
+      //     visible: displayLines["28 SEP 2380 CE"],
+      //   },
+      //   {
+      //     name: "28 SEP 2380 CE",
+      //     data: [24916, 37941, 29742, 29851, 32490, 30282, 38121, 36885, 33726, 34243, 31050],
+      //     visible: displayLines["28 SEP 2380 CE"],
+      //   },
+      //   {
+      //     name: "28 SEP 2420 CE",
+      //     data: [11744, 30000, 16005, 19771, 20185, 24377, 32147, 30912, 29243, 29213, 25663],
+      //     visible: displayLines["28 SEP 2420 CE"],
+      //   },
+      //   {
+      //     name: "28 SEP 2360 PE",
+      //     data: [null, null, null, null, null, null, null, null, 11164, 11218, 10077],
+      //     visible: displayLines["28 SEP 2360 PE"],
+      //   },
+      //   {
+      //     name: "28 SEP 2380 PE",
+      //     data: [21908, 5548, 8105, 11248, 8989, 11816, 18274, 17300, 13053, 11906, 10073],
+      //     visible: displayLines["28 SEP 2380 PE"],
+      //   },
+      // ],
       // ... (rest of the chart options)
     };
 
@@ -139,17 +135,17 @@ const MultiStrikeOIChart = ({ data }) => {
     return () => {
       chart.destroy(); // Cleanup when the component unmounts
     };
-  }, [displayLines, data]);
+  }, [displayLineNamesArray]);
 
   return (
     <div>
       <div id="container" style={{ width: "100%" }}></div>
-      <DefaultStrike
+      {/* <DefaultStrike
         selectAll={selectAll}
         handleCheckboxChange={handleCheckboxChange}
         displayLines={displayLines}
         handleSelectAllChange={handleSelectAllChange}
-      />
+      /> */}
     </div>
   );
 };

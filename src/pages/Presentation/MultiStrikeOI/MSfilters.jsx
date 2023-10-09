@@ -5,7 +5,9 @@ import {
   Box,
   Button,
   Card,
+  Checkbox,
   FormControl,
+  FormControlLabel,
   IconButton,
   MenuItem,
   Select,
@@ -17,16 +19,52 @@ import React, { useState } from "react";
 import { Search } from "@mui/icons-material";
 import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import MSDrawer from "./MSDrawer";
-import OptionCard from "./MSOptionCard";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { lineSeries } from "Redux/MSAction";
 
 const MSfilters = () => {
-  const [selectedCard, setSelectedCard] = useState(null);
-
+  const dispatch = useDispatch();
   const groups = useSelector((store) => store.MSreducer.groups);
+  const [selectedCardIndex, setSelectedCardIndex] = useState(null);
+  const [selectedCheckboxes, setSelectedCheckboxes] = useState([]);
 
-  const handleCardClick = (cardNumber) => {
-    setSelectedCard(cardNumber);
+  const handleCardClick = (index, CE, PE) => {
+    if (selectedCardIndex === index) {
+      // If the clicked card is already selected, deselect it.
+      setSelectedCardIndex(null);
+    } else {
+      // Otherwise, select the clicked card.
+      setSelectedCardIndex(index);
+    }
+
+    console.log(groups);
+
+    const getStrikes = CE.map((el) => el.cE_strikePrice);
+    const checkboxNames = [];
+
+    CE.forEach((CEPrice) => {
+      const name = `${CEPrice.cE_expiryDate.slice(0, 6)} ${CEPrice.cE_strikePrice} CE`;
+      checkboxNames.push(name);
+    });
+
+    PE.forEach((PEPrice) => {
+      const name = `${PEPrice.cE_expiryDate.slice(0, 6)} ${PEPrice.cE_strikePrice} PE`;
+      checkboxNames.push(name);
+    });
+
+    console.log(checkboxNames);
+    const displayLineNamesArray = []; // Initialize an empty array to store objects
+
+    for (let key of checkboxNames) {
+      const displayLineNames = {}; // Initialize a new object for each iteration
+      displayLineNames["name"] = key;
+      displayLineNames["visible"] = true;
+      displayLineNamesArray.push(displayLineNames); // Push the object into the array
+    }
+
+    console.log(displayLineNamesArray); // This will give you an array of displayLineNames objects
+    setSelectedCheckboxes(checkboxNames);
+    dispatch(lineSeries(getStrikes, displayLineNamesArray));
   };
 
   return (
@@ -84,59 +122,54 @@ const MSfilters = () => {
         </Card>
         <MSDrawer />
       </Box>
-      <Accordion>
+      <Accordion sx={{ overflowX: "auto", minWidth: "1000px" }}>
         <AccordionSummary>
           <Typography variant="h5">Strike Groups</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Box>
-            <Box display={"flex"}>
-              <Box>
-                {/* {groups.map((el, index) => {
-                  return (
-                    <>
-                      <Typography variant="h6">Group {index + 1}</Typography>
-                      <OptionCard
-                        cardNumber={1}
-                        isSelected={selectedCard === 1}
-                        onClick={() => handleCardClick(1)}
-                      />
-                    </>
-                  );
-                })} */}
-                {groups.map((group, index) => (
-                  <div key={group.id}>
+          <Box display={"flex"}>
+            {groups.map((group, index) => (
+              <div key={group.id} style={{ overflowX: "auto" }}>
+                <Card
+                  sx={{
+                    p: 1,
+                    m: 1,
+                    backgroundColor: selectedCardIndex === index ? "lightblue" : "white",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => handleCardClick(index, group.CE, group.PE)}
+                >
+                  <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
                     <Typography variant="h6">Group {index + 1}</Typography>
-                    <Card sx={{ p: 1 }}>
-                      {/* Render CE and PE strike prices for this group */}
-                      {group.CE.map((CEPrice, index) => (
-                        <OptionCard
-                          key={index}
-                          cardNumber={index + 1}
-                          isSelected={selectedCard === index + 1}
-                          onClick={() => handleCardClick(index + 1)}
-                          optionType="CE"
-                          /* Pass necessary props for OptionCard */
+                  </Box>
+                  {group.CE.map((CEPrice, index) => (
+                    <FormControlLabel
+                      key={index}
+                      control={
+                        <Checkbox
+                          checked={true} // You can set the checked value as needed
+                          name={`${CEPrice.cE_expiryDate.slice(0, 6)} ${CEPrice.cE_strikePrice} CE`}
                         />
-                      ))}
-                      {group.PE.map((PEPrice, index) => {
-                        console.log(PEPrice);
-                        return (
-                          <OptionCard
-                            key={index}
-                            cardNumber={index + 1}
-                            optionType="PE"
-                            isSelected={selectedCard === index + 1}
-                            onClick={() => handleCardClick(index + 1)}
-                            /* Pass necessary props for OptionCard */
-                          />
-                        );
-                      })}
-                    </Card>
-                  </div>
-                ))}
-              </Box>
-            </Box>
+                      }
+                      label={`${CEPrice.cE_expiryDate.slice(0, 6)} ${CEPrice.cE_strikePrice} CE`}
+                    />
+                  ))}
+                  {group.PE.map((PEPrice, index) => (
+                    <FormControlLabel
+                      key={index}
+                      control={
+                        <Checkbox
+                          checked={true} // You can set the checked value as needed
+                          name={`${PEPrice.cE_expiryDate.slice(0, 6)} ${PEPrice.cE_strikePrice} PE`}
+                        />
+                      }
+                      label={`${PEPrice.cE_expiryDate.slice(0, 6)} ${PEPrice.cE_strikePrice} PE`}
+                    />
+                  ))}
+                </Card>
+              </div>
+            ))}
+            {/* Display the selected checkbox names */}
           </Box>
         </AccordionDetails>
       </Accordion>
