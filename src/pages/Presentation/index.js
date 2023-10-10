@@ -48,11 +48,8 @@ import bgImage from "assets/images/Banner.jpeg";
 
 // import Signup from "pages/LandingPages/SignUp/Index";
 import SignInBasic from "pages/LandingPages/SignIn";
-import Information from "./sections/Information";
-import DesignBlocks from "./sections/DesignBlocks";
-import { Pages } from "@mui/icons-material";
-import BuiltByDevelopers from "./components/BuiltByDevelopers";
 import OurFeatureSection from "./sections/OurFeatureSection";
+import ReviewForm from "./sections/ReviewForm";
 
 function Presentation() {
   return (
@@ -93,8 +90,9 @@ function Presentation() {
           boxShadow: ({ boxShadows: { xxl } }) => xxl,
         }}
       >
-        <OurFeatureSection />
         <Counters />
+        <OurFeatureSection />
+        <ReviewForm />
         {/* <Information />
         <DesignBlocks />
         <Pages />
@@ -147,15 +145,12 @@ function Presentation() {
         </Container> */}
         {/* <Testimonials /> */}
         {/* <Download /> */}
-        <MKBox pt={18} pb={6}>
+        <MKBox pt={5} pb={6}>
           <Container>
             <Grid container spacing={3}>
               <Grid item xs={12} lg={5} ml="auto" sx={{ textAlign: { xs: "center", lg: "left" } }}>
                 <MKTypography variant="h4" fontWeight="bold" mb={0.5}>
                   Thank you for your support!
-                </MKTypography>
-                <MKTypography variant="body1" color="text">
-                  We deliver the best web products
                 </MKTypography>
               </Grid>
               <Grid
@@ -185,15 +180,6 @@ function Presentation() {
                 >
                   <i className="fab fa-facebook" />
                   &nbsp;Share
-                </MKSocialButton>
-                <MKSocialButton
-                  component="a"
-                  href="https://www.pinterest.com/pin/create/button/?url=https://www.creative-tim.com/product/material-kit-react"
-                  target="_blank"
-                  color="pinterest"
-                >
-                  <i className="fab fa-pinterest" />
-                  &nbsp;Pin it
                 </MKSocialButton>
               </Grid>
             </Grid>

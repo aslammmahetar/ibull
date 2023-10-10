@@ -12,6 +12,7 @@ export const MAKE_GROUP = "MAKE_GROUP";
 export const SET_DISPLAY_LINES = "SET_DISPLAY_LINES";
 export const SET_SELECT_ALL = "SET_SELECT_ALL";
 export const GET_SERIES = "GET_SERIES";
+export const TOGGLE_CE_CHECKBOX = "TOGGLE_CE_CHECKBOX";
 
 // Action creators
 export const addSelectedCEStrike = (CEstrikeObject) => ({
@@ -54,12 +55,12 @@ export const getSeries = (result, displayLineNamesArray) => {
 };
 
 export const lineSeries = (strikePrices, displayLineNamesArray) => (dispach) => {
+  console.log(strikePrices);
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-
   var raw = JSON.stringify({
     strikePrices: strikePrices,
-    symbol: 1,
+    symbol: 2,
   });
 
   var requestOptions = {
@@ -73,7 +74,7 @@ export const lineSeries = (strikePrices, displayLineNamesArray) => (dispach) => 
     .then((result) => {
       console.log("result,", result);
       const oi = result.map((el) => el);
-
+      console.log(oi);
       const st = oi.map((el) => el.map((el) => el.cE_openInterest));
       console.log(st);
       const updatedDisplayLineNamesArray = displayLineNamesArray.map((el, index) => ({
@@ -84,4 +85,9 @@ export const lineSeries = (strikePrices, displayLineNamesArray) => (dispach) => 
       dispach(getSeries(result, updatedDisplayLineNamesArray));
     })
     .catch((error) => console.log("error", error));
+};
+
+export const toggleCEcheckBox = (payload) => {
+  console.log(payload);
+  return { type: TOGGLE_CE_CHECKBOX, payload };
 };

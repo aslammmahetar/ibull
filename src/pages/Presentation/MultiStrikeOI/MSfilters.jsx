@@ -21,12 +21,16 @@ import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import MSDrawer from "./MSDrawer";
 import { useDispatch, useSelector } from "react-redux";
 import { lineSeries } from "Redux/MSAction";
+import { toggleCEcheckBox } from "Redux/MSAction";
 
 const MSfilters = () => {
   const dispatch = useDispatch();
   const groups = useSelector((store) => store.MSreducer.groups);
   const [selectedCardIndex, setSelectedCardIndex] = useState(null);
   const [selectedCheckboxes, setSelectedCheckboxes] = useState([]);
+  const ceCheckBocx = useSelector((store) => store.MSreducer.ceCheckBocx);
+  console.log(ceCheckBocx);
+  const CEselectedStrike = useSelector((store) => store.MSreducer.CEselectedStrike);
 
   const handleCardClick = (index, CE, PE) => {
     if (selectedCardIndex === index) {
@@ -39,7 +43,9 @@ const MSfilters = () => {
 
     console.log(groups);
 
-    const getStrikes = CE.map((el) => el.cE_strikePrice);
+    const getCEStrikes = CE.map((el) => el.cE_strikePrice);
+    const getPEStrikes = PE.map((el) => el.pE_strikePrice);
+    const getStrikes = [...getCEStrikes, ...getPEStrikes];
     const checkboxNames = [];
 
     CE.forEach((CEPrice) => {
@@ -65,6 +71,14 @@ const MSfilters = () => {
     console.log(displayLineNamesArray); // This will give you an array of displayLineNames objects
     setSelectedCheckboxes(checkboxNames);
     dispatch(lineSeries(getStrikes, displayLineNamesArray));
+  };
+
+  const handleCECheckBox = (strikePrice) => {
+    dispatch(toggleCEcheckBox(strikePrice));
+    // const updatedCESelectedStrike = CEselectedStrike.includes(strikePrice)
+    //   ? CEselectedStrike.filter((price) => price !== strikePrice)
+    //   : [...CEselectedStrike, strikePrice];
+    // setCEselectedStrike(updatedCESelectedStrike);
   };
 
   return (
@@ -134,21 +148,24 @@ const MSfilters = () => {
                   sx={{
                     p: 1,
                     m: 1,
-                    backgroundColor: selectedCardIndex === index ? "lightblue" : "white",
+                    border: selectedCardIndex === index ? "1px solid black" : "none",
                     cursor: "pointer",
                   }}
-                  onClick={() => handleCardClick(index, group.CE, group.PE)}
                 >
                   <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
                     <Typography variant="h6">Group {index + 1}</Typography>
+                    <Button onClick={() => handleCardClick(index, group.CE, group.PE)}>
+                      {selectedCardIndex === index ? "Seleceted" : "Select"}
+                    </Button>
                   </Box>
                   {group.CE.map((CEPrice, index) => (
                     <FormControlLabel
                       key={index}
                       control={
                         <Checkbox
-                          checked={true} // You can set the checked value as needed
+                          checked={CEselectedStrike}
                           name={`${CEPrice.cE_expiryDate.slice(0, 6)} ${CEPrice.cE_strikePrice} CE`}
+                          onChange={() => handleCECheckBox(CEPrice.cE_strikePrice)}
                         />
                       }
                       label={`${CEPrice.cE_expiryDate.slice(0, 6)} ${CEPrice.cE_strikePrice} CE`}

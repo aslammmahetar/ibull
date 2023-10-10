@@ -9,6 +9,7 @@ import {
   REMOVE_SELECTED_PE_STRIKE,
   SET_DISPLAY_LINES,
   SET_SELECT_ALL,
+  TOGGLE_CE_CHECKBOX,
 } from "./MSAction";
 
 const initialState = {
@@ -17,7 +18,10 @@ const initialState = {
   groups: [],
   displayLineNamesArray: [],
   selectAll: true,
+  CEselectedStrike: false,
   lineSeries: [],
+  strikesForChart: [],
+  ceCheckBocx: [],
 };
 
 export const MSreducer = (state = initialState, action) => {
@@ -48,7 +52,6 @@ export const MSreducer = (state = initialState, action) => {
         ),
       };
     }
-
     case MAKE_GROUP: {
       return {
         ...state,
@@ -72,6 +75,14 @@ export const MSreducer = (state = initialState, action) => {
       return {
         ...state,
         displayLineNamesArray: action.payload.displayLineNamesArray,
+      };
+    }
+    case TOGGLE_CE_CHECKBOX: {
+      console.log(action);
+      return {
+        ...state,
+        CEselectedStrike: !state.CEselectedStrike,
+        ceCheckBocx: [...state.ceCheckBocx, action.payload],
       };
     }
     default:

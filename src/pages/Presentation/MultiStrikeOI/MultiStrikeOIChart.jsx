@@ -14,7 +14,9 @@ const MultiStrikeOIChart = () => {
   const selectAll = useSelector((state) => state.MSreducer.selectAll);
   const lineSeries = useSelector((state) => state.MSreducer.lineSeries);
   console.log(lineSeries);
-
+  const ceCheckBocx = useSelector((store) => store.MSreducer.ceCheckBocx);
+  const CEselectedStrike = useSelector((store) => store.MSreducer.CEselectedStrike);
+  console.log(CEselectedStrike);
   // const [selectAll, setSelectAll] = useState(true); // State for "Select All" checkbox
 
   // Function to update the chart based on checkbox state
@@ -75,7 +77,7 @@ const MultiStrikeOIChart = () => {
       },
       yAxis: {
         title: {
-          text: "Number of Employees",
+          text: "NIFTY FUT",
         },
       },
       xAxis: {
@@ -84,7 +86,7 @@ const MultiStrikeOIChart = () => {
           format: "{value:%H:%M}",
         },
         accessibility: {
-          rangeDescription: "Time Range from 9:15 AM to 3:30 PM with 15-minute Interval",
+          rangeDescription: "Time Range from 9:30 AM to 3:30 PM with 15-minute Interval",
         },
       },
       legend: {},
@@ -98,35 +100,15 @@ const MultiStrikeOIChart = () => {
         },
       },
 
-      series: displayLineNamesArray.map((el) => el),
+      series: displayLineNamesArray.map((el) => ({ ...el, visible: CEselectedStrike })),
+      //Example of array which is this series key is accepting
       //  [
       //   {
       //     name: "28 SEP 2400 CE",
       //     data: lineSeries,
       //     visible: displayLines["28 SEP 2380 CE"],
       //   },
-      //   {
-      //     name: "28 SEP 2380 CE",
-      //     data: [24916, 37941, 29742, 29851, 32490, 30282, 38121, 36885, 33726, 34243, 31050],
-      //     visible: displayLines["28 SEP 2380 CE"],
-      //   },
-      //   {
-      //     name: "28 SEP 2420 CE",
-      //     data: [11744, 30000, 16005, 19771, 20185, 24377, 32147, 30912, 29243, 29213, 25663],
-      //     visible: displayLines["28 SEP 2420 CE"],
-      //   },
-      //   {
-      //     name: "28 SEP 2360 PE",
-      //     data: [null, null, null, null, null, null, null, null, 11164, 11218, 10077],
-      //     visible: displayLines["28 SEP 2360 PE"],
-      //   },
-      //   {
-      //     name: "28 SEP 2380 PE",
-      //     data: [21908, 5548, 8105, 11248, 8989, 11816, 18274, 17300, 13053, 11906, 10073],
-      //     visible: displayLines["28 SEP 2380 PE"],
-      //   },
-      // ],
-      // ... (rest of the chart options)
+      //
     };
 
     // Create the Highcharts chart
@@ -135,7 +117,7 @@ const MultiStrikeOIChart = () => {
     return () => {
       chart.destroy(); // Cleanup when the component unmounts
     };
-  }, [displayLineNamesArray]);
+  }, [displayLineNamesArray, CEselectedStrike]);
 
   return (
     <div>
