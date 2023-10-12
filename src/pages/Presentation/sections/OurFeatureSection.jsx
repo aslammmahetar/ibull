@@ -1,226 +1,91 @@
-// @mui material components
-import { Box } from "@mui/material";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import Icon from "@mui/material/Icon";
-import Stack from "@mui/material/Stack";
+import React from "react";
+import { Grid, Box, Typography, Icon } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 
-// Material Kit 2 React components
-import MKBox from "components/MKBox";
-import MKTypography from "components/MKTypography";
+const features = [
+  {
+    title: "User Friendly Interface",
+    icon: "devices",
+    bgColor: "success",
+  },
+  {
+    title: "Powerful Analytics Tools",
+    icon: "analytics",
+    bgColor: "error",
+  },
+  {
+    title: "Auto Refresh Data",
+    icon: "autorenew",
+    bgColor: "info",
+  },
+  {
+    title: "Powerful Strategy Builder",
+    icon: "local_fire_department",
+    bgColor: "info",
+  },
+  {
+    title: "Option Chart to Analyze Market Participation",
+    icon: "bar_chart",
+    bgColor: "success",
+  },
+  {
+    title: "Profit and Loss Visualization of Strategies",
+    icon: "candlestick_chart",
+    bgColor: "error",
+  },
+];
+
+const useStyles = makeStyles((theme) => ({
+  featureTitle: {
+    transition: "font-size 0.3s ease-in-out",
+  },
+  featureCard: {
+    "&:hover": {
+      "& $featureTitle": {
+        fontSize: "1.2em",
+      },
+    },
+  },
+}));
 
 function OurFeatureSection() {
+  const classes = useStyles();
+
   return (
-    <MKBox component="section" py={{ xs: 3, md: 12 }}>
-      <Grid item xs={12} lg={12} sx={{ ml: { xs: -2, lg: "auto" }, mt: { xs: 6, lg: -3 }, mb: 10 }}>
-        <MKTypography variant="h3" textAlign="center" my={1}>
-          Our Features
-        </MKTypography>
-        <MKBox display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-          <Box display="flex">
-            <MKBox
+    <Box component="section" py={{ xs: 3, md: 12 }}>
+      <Grid container spacing={2}>
+        {features.map((feature, index) => (
+          <Grid key={index} item xs={12} md={4}>
+            <Box
               display="flex"
-              justifyContent="center"
               flexDirection="column"
               alignItems="center"
               textAlign="center"
               p={2}
+              className={classes.featureCard}
             >
-              <MKBox
+              <Box
                 width="5rem"
                 height="5rem"
-                variant="gradient"
-                bgColor="success"
-                color="white"
-                coloredShadow="info"
-                display="flex"
-                alignItems="center"
-                textAlign="center"
-                justifyContent="center"
-                borderRadius="xl"
+                sx={{
+                  bgcolor: feature.bgColor,
+                  color: "white",
+                  borderRadius: "xl",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
               >
-                <Icon class="material-icons-two-tone" fontSize="large">
-                  devices
-                </Icon>
-              </MKBox>
-              <MKBox display="flex" alignItems="center" p={2}>
-                <MKTypography variant="body2" color="text">
-                  <b>User Friendly Interface</b>
-                </MKTypography>
-              </MKBox>
-            </MKBox>
-            <MKBox
-              display="flex"
-              justifyContent="center"
-              flexDirection="column"
-              alignItems="center"
-              textAlign="center"
-              p={2}
-            >
-              <MKBox
-                width="5rem"
-                height="5rem"
-                variant="gradient"
-                bgColor="error"
-                color="white"
-                coloredShadow="info"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                borderRadius="xl"
-              >
-                <Icon fontSize="large" class="material-icons-two-tone">
-                  analytics
-                </Icon>
-              </MKBox>
-              <MKBox display="flex" alignItems="center" p={2}>
-                <MKTypography variant="body2" color="text">
-                  <b>powerful analytics tools</b>
-                </MKTypography>
-              </MKBox>
-            </MKBox>
-            <MKBox
-              display="flex"
-              justifyContent="center"
-              flexDirection="column"
-              alignItems="center"
-              textAlign="center"
-              p={2}
-            >
-              <MKBox
-                width="5rem"
-                height="5rem"
-                variant="gradient"
-                bgColor="info"
-                color="white"
-                coloredShadow="info"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                borderRadius="xl"
-              >
-                <Icon fontSize="large" class="material-icons-two-tone">
-                  autorenew
-                </Icon>
-              </MKBox>
-              <MKTypography variant="body2" color="text" p={2}>
-                <b>Auto Refresh Data</b>
-              </MKTypography>
-            </MKBox>
-          </Box>
-          <Box display="flex">
-            <MKBox
-              display="flex"
-              justifyContent="center"
-              flexDirection="column"
-              alignItems="center"
-              textAlign="center"
-              p={2}
-            >
-              <MKBox
-                width="5rem"
-                height="5rem"
-                variant="gradient"
-                bgColor="info"
-                color="white"
-                coloredShadow="info"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                borderRadius="xl"
-              >
-                <Icon fontSize="large" class="material-icons-two-tone">
-                  local_fire_department
-                </Icon>
-              </MKBox>
-              <MKTypography variant="body2" color="text" p={2}>
-                <b>Powerful Stretergy Builder</b>
-              </MKTypography>
-            </MKBox>
-            <MKBox
-              display="flex"
-              justifyContent="center"
-              flexDirection="column"
-              alignItems="center"
-              textAlign="center"
-              p={2}
-            >
-              <MKBox
-                width="5rem"
-                height="5rem"
-                variant="gradient"
-                bgColor="success"
-                color="white"
-                coloredShadow="info"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                borderRadius="xl"
-              >
-                <Icon class="material-icons-two-tone" fontSize="large">
-                  bar_chart
-                </Icon>
-              </MKBox>
-              <MKTypography variant="body2" color="text" p={2}>
-                <b>
-                  Option chart to <br /> analyse market participation
-                </b>
-              </MKTypography>
-            </MKBox>
-            <MKBox
-              display="flex"
-              justifyContent="center"
-              flexDirection="column"
-              alignItems="center"
-              textAlign="center"
-              p={2}
-            >
-              <MKBox
-                width="5rem"
-                height="5rem"
-                variant="gradient"
-                bgColor="error"
-                color="white"
-                coloredShadow="info"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                borderRadius="xl"
-              >
-                <Icon class="material-icons-two-tone" fontSize="large">
-                  candlestick_chart
-                </Icon>
-              </MKBox>
-              <MKTypography variant="body2" color="text" p={2}>
-                <b>
-                  Profit and Loss <br /> Visualization of strategies
-                </b>
-              </MKTypography>
-            </MKBox>
-          </Box>
-        </MKBox>
-      </Grid>
-      <Container>
-        <Grid container alignItems="center">
-          <Grid item xs={12} lg={12}>
-            <MKTypography variant="h3" textAlign="center" my={1}>
-              Read More About Us
-            </MKTypography>
-            <MKTypography variant="body2" style={{ textAlign: "justify" }} color="text" mb={2}>
-              {" "}
-              <b>
-                IBull is an analytical tool to help and assist you to evaluate and make informed
-                decisions about your trades and investments. also helps you to assess and manage
-                risk exposure by modelling different scenarios and potential outcomes of your option
-                strategies allowing you to construct and analyse complex option strategies, such as
-                spreads, straddles, and iron condors. Enables to simulate various market conditions
-                and assess the impact on option positions.
-              </b>
-            </MKTypography>
+                <Icon fontSize="large">{feature.icon}</Icon>
+              </Box>
+              <Typography variant="body2" color="text" p={2} className={classes.featureTitle}>
+                <b>{feature.title}</b>
+              </Typography>
+            </Box>
           </Grid>
-        </Grid>
-      </Container>
-    </MKBox>
+        ))}
+      </Grid>
+    </Box>
   );
 }
 

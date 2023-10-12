@@ -10,18 +10,18 @@ import {
   SET_DISPLAY_LINES,
   SET_SELECT_ALL,
   TOGGLE_CE_CHECKBOX,
+  DEFAULT_GROUP,
+  DEFAULT_STRIKE,
 } from "./MSAction";
 
 const initialState = {
   selected_CE_StrikePrices: [],
   selected_PE_StrikePrices: [],
   groups: [],
+  defaultGroup: true,
   displayLineNamesArray: [],
-  selectAll: true,
-  CEselectedStrike: false,
-  lineSeries: [],
-  strikesForChart: [],
-  ceCheckBocx: [],
+  defaltStrikes: [],
+  lineVisibilities: {},
 };
 
 export const MSreducer = (state = initialState, action) => {
@@ -78,11 +78,24 @@ export const MSreducer = (state = initialState, action) => {
       };
     }
     case TOGGLE_CE_CHECKBOX: {
+      console.log(action.payload.e);
+      return {
+        ...state,
+        CEselectedStrike: action.payload.e,
+        ceCheckBocx: action.payload.payload,
+      };
+    }
+    case DEFAULT_GROUP: {
+      return {
+        ...state,
+        defaultGroup: !state.defaultGroup,
+      };
+    }
+    case DEFAULT_STRIKE: {
       console.log(action);
       return {
         ...state,
-        CEselectedStrike: !state.CEselectedStrike,
-        ceCheckBocx: [...state.ceCheckBocx, action.payload],
+        defaltStrikes: action.payload,
       };
     }
     default:

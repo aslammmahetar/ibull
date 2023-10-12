@@ -14,7 +14,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { Fragment, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 // react-router components
 import { Link } from "react-router-dom";
@@ -486,7 +486,7 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
               onClick={async () => {
                 try {
                   let req = await axios.post(
-                    "http://192.168.1.7/NSE/GetNSEData?interval=-15&symbol=1"
+                    "http://192.168.1.6/NSE/GetNSEData?interval=-15&symbol=1"
                   );
                   console.log(req.data);
                 } catch (error) {
@@ -500,7 +500,7 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
               onClick={async () => {
                 try {
                   let req = await axios.post(
-                    "http://192.168.1.7/NSE/GetNSEData?interval=-15&symbol=2"
+                    "http://192.168.1.6/NSE/GetNSEData?interval=-15&symbol=2"
                   );
                   console.log(req.data);
                 } catch (error) {
@@ -514,7 +514,7 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
               onClick={async () => {
                 try {
                   let req = await axios.post(
-                    "http://192.168.1.7/NSE/GetNSEData?interval=-15&symbol=3"
+                    "http://192.168.1.6/NSE/GetNSEData?interval=-15&symbol=3"
                   );
                   console.log(req.data);
                 } catch (error) {

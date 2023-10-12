@@ -30,14 +30,13 @@ import { getNIFTYExpiryDate } from "Redux/RealActions";
 function AboutUs() {
   //
   const navigate = useNavigate();
-  const [underlayingPrice, setUnderlayingPrice] = useState(0);
+  const dispatch = useDispatch();
   const [filteredData, setFilteredData] = useState([]);
   const [callMax, setCallmaxOI] = useState(0);
   const [putMax, setPutmaxOI] = useState(0);
   const [closeToStrikePrice, setClosestElement] = useState({});
   const [symbol, setSymbol] = useState(1);
   const [originalData, setOriginalData] = useState([]);
-  const [bool, setBool] = useState(false);
 
   //from redux
   const ulValue = useSelector((store) => store.realReducer.ulValue);
@@ -45,10 +44,15 @@ function AboutUs() {
   const fontSize = useSelector((store) => store.reducer.fontSize);
   const expiryDates = useSelector((store) => store.realReducer.expiryDates);
   const lessThanATM = useSelector((store) => store.realReducer.lessThanATM);
+  console.log(lessThanATM);
   const greaterThanATM = useSelector((store) => store.realReducer.greaterThanATM);
-  const timeAlert = useSelector((store) => store.realReducer.timeAlert);
+  console.log(greaterThanATM);
   const nearestThursday = useSelector((store) => store.realReducer.nearestThurday);
   console.log(nearestThursday);
+  useEffect(() => {
+    dispatch(getNIFTYExpiryDate(symbol));
+    dispatch(makingReqforNSE(0, symbol));
+  }, [symbol, fontSize]);
 
   // Get today's date
   const today = new Date();
@@ -92,57 +96,6 @@ function AboutUs() {
   console.log(store);
 
   //
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getNIFTYExpiryDate(symbol));
-    dispatch(makingReqforNSE(0, symbol));
-  }, [symbol, fontSize]);
-
-  // useEffect(() => {
-  //   // Function to fetch data and update local storage
-  //   const fetchDataAndUpdateLocalStorage = () => {
-  //     if (expiryDates.length > 0) {
-  //       setSelectedExpiryDate(expiryDates[0]);
-  //     }
-
-  //     // Store the current timestamp in local storage
-  //     localStorage.setItem("lastExecutionTime", Date.now());
-  //     console.log("Made a call by default");
-  //   };
-
-  //   const now = new Date();
-  //   const currentHour = now.getHours();
-  //   const currentMinute = now.getMinutes();
-
-  //   // Check if it's between 9:30 AM (09:30) and 3:30 PM (15:30)
-  //   if (
-  //     (currentHour > 9 || (currentHour === 9 && currentMinute >= 30)) &&
-  //     (currentHour < 15 || (currentHour === 15 && currentMinute <= 30))
-  //   ) {
-  //     // Fetch data immediately when the component mounts
-  //     fetchDataAndUpdateLocalStorage();
-
-  //     // Check local storage for the last execution time
-  //     const lastExecutionTime = localStorage.getItem("lastExecutionTime");
-  //     const currentTime = Date.now();
-
-  //     // Calculate the time since the last execution
-  //     const timeSinceLastExecution = currentTime - (lastExecutionTime || 0);
-
-  //     // Set up an interval to fetch data every 15 minutes (900,000 milliseconds)
-  //     const interval = setInterval(() => {
-  //       fetchDataAndUpdateLocalStorage();
-  //       console.log("made call at", Date.now());
-  //     }, 900000 - timeSinceLastExecution); // Adjust the interval based on the time elapsed
-
-  //     // Clean up the interval when the component unmounts
-  //     return () => clearInterval(interval);
-  //   } else {
-  //     // Do not fetch data if it's outside of the specified time range
-  //     console.log("Data fetching paused outside of 9:30 AM to 3:30 PM");
-  //     return dispatch(showTimeAlert("Data updating paused outside of 9:30 AM to 3:30 PM"));
-  //   }
-  // }, [symbol]);
 
   const handleStream = (val) => {
     setSymbol(val);
@@ -150,9 +103,7 @@ function AboutUs() {
 
   //
   useEffect(() => {
-    // setData(store); // Set data from the store
     setSelectedExpiryDate(expiryDates[0]);
-    setUnderlayingPrice(ulValue);
   }, [ulValue]);
 
   //
@@ -209,7 +160,7 @@ function AboutUs() {
     } else {
       console.log("No closest element found.");
     }
-  }, [closeToStrikePrice, lessThanATM, greaterThanATM, ulValue, bool]);
+  }, [closeToStrikePrice, lessThanATM, greaterThanATM, ulValue]);
 
   //handling expirydates filter
   const handleExpiryDateChange = (event) => {
@@ -400,7 +351,7 @@ function AboutUs() {
           </MKBox>
         </Card>
         <OptionChain
-          underlayingPrice={underlayingPrice}
+          underlayingPrice={ulValue}
           combinedData={filteredData}
           CemaxOI={callMax}
           PeMaxOI={putMax}
@@ -418,3 +369,49 @@ function AboutUs() {
 }
 
 export default AboutUs;
+
+// useEffect(() => {
+//   // Function to fetch data and update local storage
+//   const fetchDataAndUpdateLocalStorage = () => {
+//     if (expiryDates.length > 0) {
+//       setSelectedExpiryDate(expiryDates[0]);
+//     }
+
+//     // Store the current timestamp in local storage
+//     localStorage.setItem("lastExecutionTime", Date.now());
+//     console.log("Made a call by default");
+//   };
+
+//   const now = new Date();
+//   const currentHour = now.getHours();
+//   const currentMinute = now.getMinutes();
+
+//   // Check if it's between 9:30 AM (09:30) and 3:30 PM (15:30)
+//   if (
+//     (currentHour > 9 || (currentHour === 9 && currentMinute >= 30)) &&
+//     (currentHour < 15 || (currentHour === 15 && currentMinute <= 30))
+//   ) {
+//     // Fetch data immediately when the component mounts
+//     fetchDataAndUpdateLocalStorage();
+
+//     // Check local storage for the last execution time
+//     const lastExecutionTime = localStorage.getItem("lastExecutionTime");
+//     const currentTime = Date.now();
+
+//     // Calculate the time since the last execution
+//     const timeSinceLastExecution = currentTime - (lastExecutionTime || 0);
+
+//     // Set up an interval to fetch data every 15 minutes (900,000 milliseconds)
+//     const interval = setInterval(() => {
+//       fetchDataAndUpdateLocalStorage();
+//       console.log("made call at", Date.now());
+//     }, 900000 - timeSinceLastExecution); // Adjust the interval based on the time elapsed
+
+//     // Clean up the interval when the component unmounts
+//     return () => clearInterval(interval);
+//   } else {
+//     // Do not fetch data if it's outside of the specified time range
+//     console.log("Data fetching paused outside of 9:30 AM to 3:30 PM");
+//     return dispatch(showTimeAlert("Data updating paused outside of 9:30 AM to 3:30 PM"));
+//   }
+// }, [symbol]);

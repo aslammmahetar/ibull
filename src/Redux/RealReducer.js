@@ -56,14 +56,15 @@ const initialState = {
   ulValue: 0,
   expiryDates: [],
   limitedData: false,
-  lessThanATM: 40,
-  greaterThanATM: 40,
+  lessThanATM: 0,
+  greaterThanATM: 0,
   septData: [],
   currentMonth: true,
   nextMonth: true,
   timeAlert: "",
   currentMonthselementsAroundClosest: [],
   nextMonthselementsAroundClosest: [],
+  currentMonthClosestElement: {},
 };
 
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -101,15 +102,18 @@ export const realReducer = (state = initialState, { type, payload, count }) => {
         el.cE_expiryDate.includes(months[currentMonthname + 1] && months[currentMonthname + 2])
       );
       console.log(nextMonth);
-      // const firstTwhoMonthData = [...currentMonth, ...nextMonth];
       const currentMonthClosestElement = currentMonth.reduce((prev, curr) => {
         const prevDiff = Math.abs(prev.cE_strikePrice - ulValue);
         const currDiff = Math.abs(curr.cE_strikePrice - ulValue);
         return prevDiff < currDiff ? prev : curr;
       });
+      console.log(currentMonthClosestElement);
       const currentMonthIndex = currentMonth.indexOf(currentMonthClosestElement);
-      const currentMontstartIndex = Math.max(0, currentMonthIndex - count);
-      const currentMontendIndex = Math.min(currentMonth.length - 1, currentMonthIndex + count);
+      const currentMontstartIndex = Math.max(0, currentMonthIndex - state.lessThanATM);
+      const currentMontendIndex = Math.min(
+        currentMonth.length - 1,
+        currentMonthIndex + state.greaterThanATM
+      );
       const currentMonthselementsAroundClosest = currentMonth.slice(
         currentMontstartIndex,
         currentMontendIndex + 1
@@ -150,6 +154,7 @@ export const realReducer = (state = initialState, { type, payload, count }) => {
         currentMonthselementsAroundClosest: currentMonthselementsAroundClosest,
         nextMonthselementsAroundClosest: nextMonthselementsAroundClosest,
         ulValue: ulValue,
+        currentMonthClosestElement: currentMonthClosestElement,
       };
     }
     case GET_REQ_NSE_FAILS: {

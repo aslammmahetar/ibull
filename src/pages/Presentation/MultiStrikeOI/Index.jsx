@@ -8,15 +8,40 @@ import MSChartAndFilters from "./MSChartAndFilters";
 import Footer from "pages/LandingPages/Author/sections/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { makingReqforNSE } from "Redux/RealActions";
+import { defaultStrikesToShow } from "Redux/MSAction";
 
 const MSoi = () => {
   const dispatch = useDispatch();
 
   const data = useSelector((store) => store.realReducer.strikePrices);
   const groups = useSelector((store) => store.MSreducer.groups);
+  const currentMonthClosestElement = useSelector(
+    (store) => store.realReducer.currentMonthClosestElement
+  );
+  console.log(currentMonthClosestElement);
   console.log(groups);
   useEffect(() => {
     dispatch(makingReqforNSE(10));
+    // dispatch(
+    //   defaultStrikesToShow(
+    //     [currentMonthClosestElement.cE_strikePrice, currentMonthClosestElement.pE_strikePrice],
+    //     1,
+    //     [
+    //       {
+    //         name: `${currentMonthClosestElement.cE_expiryDate.slice(0, 6)} ${
+    //           currentMonthClosestElement.cE_strikePrice
+    //         } CE`,
+    //         visible: true,
+    //       },
+    //       {
+    //         name: `${currentMonthClosestElement.pE_expiryDate.slice(0, 6)} ${
+    //           currentMonthClosestElement.pE_strikePrice
+    //         } PE`,
+    //         visible: true,
+    //       },
+    //     ]
+    //   )
+    // );
   }, []);
 
   return (

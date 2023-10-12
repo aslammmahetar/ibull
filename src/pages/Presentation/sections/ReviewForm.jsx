@@ -18,7 +18,7 @@ const ReviewForm = ({ onAddReview }) => {
   return (
     <>
       <Typography variant="h4" textAlign={"center"}>
-        Your Feedback Matters! Share Your Thoughts and Help Us Shine."
+        Your Feedback Matters! Share Your Thoughts and Help Us Shine.
       </Typography>
       <div style={{ width: "50%", margin: "auto", marginTop: "25px" }}>
         <Box display={"flex"}>

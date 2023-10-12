@@ -20,10 +20,9 @@ import { getNIFTYExpiryDate } from "Redux/RealActions";
 import { makingReqforNSE } from "Redux/RealActions";
 import { makingGroup } from "Redux/MSAction";
 
-export default function MSDrawer() {
+export default function MSDrawer({ symbol, setSymbol }) {
   const dispatch = useDispatch();
 
-  const [symbol, setSymbol] = React.useState(1);
   React.useEffect(() => {
     dispatch(getNIFTYExpiryDate(symbol));
     dispatch(makingReqforNSE(0, symbol));
@@ -62,32 +61,6 @@ export default function MSDrawer() {
   };
 
   const handleMOILines = () => {
-    // var myHeaders = new Headers();
-    // myHeaders.append("Content-Type", "application/json");
-
-    // var raw = JSON.stringify({
-    //   strikePrices: [11000],
-    //   symbol: 1,
-    // });
-
-    // var requestOptions = {
-    //   method: "POST",
-    //   headers: myHeaders,
-    //   body: raw,
-    //   redirect: "follow",
-    // };
-
-    // fetch("http://192.168.1.7/NSE/GetAllNSEDataBySP", requestOptions)
-    //   .then((response) => response.json())
-    //   .then((result) => console.log(result))
-    //   .catch((error) => console.log("error", error));
-    // // axios.post(`http://192.168.1.7/NSE/GetAllNSEDataBySp`, [
-    // //   {
-    // //     strikes: [...selected_CE_StrikePrices, selected_PE_StrikePrices],
-    // //     symbol: symbol,
-    // //   },
-    // // ]);
-    // console.log();
     const newGroup = {
       id: Math.random(),
       CE: [...selected_CE_StrikePrices],
@@ -208,9 +181,11 @@ export default function MSDrawer() {
     <Card style={{ padding: 10, width: "48%" }}>
       {["right"].map((anchor) => (
         <Box key={anchor} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-          <Typography fontSize={"medium"}>Group 1</Typography>
+          <Typography fontSize={"medium"}>
+            <b>Visualization and Group Management</b>
+          </Typography>
           <Button onClick={toggleDrawer(anchor, true)} style={{ border: "solid black 1px" }}>
-            Add New
+            Create Group
           </Button>
           <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
             {list(anchor)}

@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
     top: 0,
   },
   chartContainer: {
-    border: "solid black 1px",
     width: "100%",
     position: "sticky",
   },
@@ -129,14 +128,6 @@ const ChartAndFilter = () => {
                 </Box>
               </Box>
             </Box>
-          </Card>
-          <Card sx={{ padding: "10px", marginTop: "20px" }}>
-            <WeatherDataChart />
-            <hr />
-          </Card>
-          <Card sx={{ padding: "10px", marginTop: "20px" }}>
-            <KarasjokWeatherChart />
-            <hr />
           </Card>
         </Box>
       </MKBox>

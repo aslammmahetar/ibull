@@ -8,49 +8,17 @@ import { useSelector } from "react-redux";
 HighchartsAccessibility(Highcharts);
 HighchartsExporting(Highcharts);
 
-const MultiStrikeOIChart = () => {
+const MultiStrikeOIChart = ({ seriesVisibility }) => {
+  const defaultStrikes = [
+    {
+      name: "28 SEP 2400 CE",
+      data: [10, 20, 30, 40, 50, 60, 70],
+      visible: true,
+    },
+  ];
+
   const displayLineNamesArray = useSelector((state) => state.MSreducer.displayLineNamesArray);
-  console.log(displayLineNamesArray);
-  const selectAll = useSelector((state) => state.MSreducer.selectAll);
-  const lineSeries = useSelector((state) => state.MSreducer.lineSeries);
-  console.log(lineSeries);
-  const ceCheckBocx = useSelector((store) => store.MSreducer.ceCheckBocx);
-  const CEselectedStrike = useSelector((store) => store.MSreducer.CEselectedStrike);
-  console.log(CEselectedStrike);
-  // const [selectAll, setSelectAll] = useState(true); // State for "Select All" checkbox
-
-  // Function to update the chart based on checkbox state
-  const updateChart = (chart) => {
-    chart.series.forEach((series) => {
-      const seriesName = series.name.replace(/\s/g, "");
-      // series.setVisible(displayLines[seriesName]);
-    });
-  };
-
-  // Function to handle individual checkbox changes
-  // const handleCheckboxChange = (event) => {
-  //   const { name, checked } = event.target;
-  //   const updatedDisplayLines = {
-  //     ...displayLines,
-  //     [name]: checked,
-  //   };
-  //   dispatch(setDisplayLines(updatedDisplayLines));
-  // };
-
-  // Function to handle "Select All" checkbox change
-  // const handleSelectAllChange = (event) => {
-  //   const checked = event.target.checked;
-
-  //   // Dispatch an action to update the selectAll state in Redux
-  //   dispatch(setSelectAll(checked));
-
-  //   // Dispatch an action to update the displayLines state in Redux
-  //   const updatedDisplayLines = {};
-  //   for (const key in displayLines) {
-  //     updatedDisplayLines[key] = checked;
-  //   }
-  //   dispatch(setDisplayLines(updatedDisplayLines));
-  // };
+  const defaultGroup = useSelector((state) => state.MSreducer.defaultGroup);
   useEffect(() => {
     // Get the current date in UTC
     const currentDate = new Date();
@@ -97,18 +65,17 @@ const MultiStrikeOIChart = () => {
           },
           pointStart: startTime,
           pointInterval: interval,
+          pointEnd: endTime,
         },
       },
 
-      series: displayLineNamesArray.map((el) => ({ ...el, visible: CEselectedStrike })),
-      //Example of array which is this series key is accepting
-      //  [
-      //   {
-      //     name: "28 SEP 2400 CE",
-      //     data: lineSeries,
-      //     visible: displayLines["28 SEP 2380 CE"],
-      //   },
-      //
+      series: defaultGroup
+        ? defaultStrikes
+        : displayLineNamesArray.map((el) => ({
+            name: el.name,
+            data: el.data,
+            visible: seriesVisibility[el.name], // Use local state to set visibility
+          })),
     };
 
     // Create the Highcharts chart
@@ -117,17 +84,10 @@ const MultiStrikeOIChart = () => {
     return () => {
       chart.destroy(); // Cleanup when the component unmounts
     };
-  }, [displayLineNamesArray, CEselectedStrike]);
-
+  }, [displayLineNamesArray, seriesVisibility]);
   return (
     <div>
       <div id="container" style={{ width: "100%" }}></div>
-      {/* <DefaultStrike
-        selectAll={selectAll}
-        handleCheckboxChange={handleCheckboxChange}
-        displayLines={displayLines}
-        handleSelectAllChange={handleSelectAllChange}
-      /> */}
     </div>
   );
 };

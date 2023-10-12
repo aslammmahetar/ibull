@@ -55,6 +55,7 @@ const MSDrawerTable = ({ setSelectedExpiryDate, expiryDates, selectedExpiryDate 
     setCallmaxOI(CEmaxOI);
     setPutmaxOI(PEmaxOI);
     setFilteredData(filtered2);
+    console.log(filtered2);
   }, [data, selectedExpiryDate]);
 
   const CEhandleCheckboxChange = (clickedRow) => {

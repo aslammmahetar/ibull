@@ -21,16 +21,19 @@ import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import MSDrawer from "./MSDrawer";
 import { useDispatch, useSelector } from "react-redux";
 import { lineSeries } from "Redux/MSAction";
-import { toggleCEcheckBox } from "Redux/MSAction";
+import SolarEmploymentChart from "./MultiStrikeOIChart";
+import { defaultGroup } from "Redux/MSAction";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const MSfilters = () => {
   const dispatch = useDispatch();
-  const groups = useSelector((store) => store.MSreducer.groups);
-  const [selectedCardIndex, setSelectedCardIndex] = useState(null);
+  const [symbol, setSymbol] = React.useState(1);
+  const [seriesVisibility, setSeriesVisibility] = useState({});
+
   const [selectedCheckboxes, setSelectedCheckboxes] = useState([]);
-  const ceCheckBocx = useSelector((store) => store.MSreducer.ceCheckBocx);
-  console.log(ceCheckBocx);
-  const CEselectedStrike = useSelector((store) => store.MSreducer.CEselectedStrike);
+  const [selectedCardIndex, setSelectedCardIndex] = useState(null);
+  const groups = useSelector((store) => store.MSreducer.groups);
+  console.log(groups);
 
   const handleCardClick = (index, CE, PE) => {
     if (selectedCardIndex === index) {
@@ -40,8 +43,6 @@ const MSfilters = () => {
       // Otherwise, select the clicked card.
       setSelectedCardIndex(index);
     }
-
-    console.log(groups);
 
     const getCEStrikes = CE.map((el) => el.cE_strikePrice);
     const getPEStrikes = PE.map((el) => el.pE_strikePrice);
@@ -64,21 +65,22 @@ const MSfilters = () => {
     for (let key of checkboxNames) {
       const displayLineNames = {}; // Initialize a new object for each iteration
       displayLineNames["name"] = key;
-      displayLineNames["visible"] = true;
+      displayLineNames["visible"] = selectedCheckboxes.includes(checkboxNames[index]);
       displayLineNamesArray.push(displayLineNames); // Push the object into the array
     }
 
-    console.log(displayLineNamesArray); // This will give you an array of displayLineNames objects
     setSelectedCheckboxes(checkboxNames);
-    dispatch(lineSeries(getStrikes, displayLineNamesArray));
+    console.log(displayLineNamesArray); // This will give you an array of displayLineNames objects
+
+    dispatch(lineSeries(getStrikes, displayLineNamesArray, symbol));
+    dispatch(defaultGroup());
   };
 
-  const handleCECheckBox = (strikePrice) => {
-    dispatch(toggleCEcheckBox(strikePrice));
-    // const updatedCESelectedStrike = CEselectedStrike.includes(strikePrice)
-    //   ? CEselectedStrike.filter((price) => price !== strikePrice)
-    //   : [...CEselectedStrike, strikePrice];
-    // setCEselectedStrike(updatedCESelectedStrike);
+  const handleCECheckBox = (isVisible, seriesName) => {
+    setSeriesVisibility({
+      ...seriesVisibility,
+      [seriesName]: isVisible,
+    });
   };
 
   return (
@@ -134,28 +136,29 @@ const MSfilters = () => {
             </Box>
           </MKBox>
         </Card>
-        <MSDrawer />
+        <MSDrawer symbol={symbol} setSymbol={setSymbol} />
       </Box>
-      <Accordion sx={{ overflowX: "auto", minWidth: "1000px" }}>
-        <AccordionSummary>
+      <Accordion sx={{ overflowX: "auto", minWidth: "1000px", mt: 1 }}>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Typography variant="h5">Strike Groups</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Box display={"flex"}>
-            {groups.map((group, index) => (
+            {groups.length == 0 && "Create Group"}
+            {groups.map((group, grpindex) => (
               <div key={group.id} style={{ overflowX: "auto" }}>
                 <Card
                   sx={{
                     p: 1,
                     m: 1,
-                    border: selectedCardIndex === index ? "1px solid black" : "none",
+                    border: selectedCardIndex === grpindex ? "1px solid black" : "none",
                     cursor: "pointer",
                   }}
                 >
                   <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
-                    <Typography variant="h6">Group {index + 1}</Typography>
-                    <Button onClick={() => handleCardClick(index, group.CE, group.PE)}>
-                      {selectedCardIndex === index ? "Seleceted" : "Select"}
+                    <Typography variant="h6">Group {grpindex + 1}</Typography>
+                    <Button onClick={() => handleCardClick(grpindex, group.CE, group.PE)}>
+                      {selectedCardIndex === grpindex ? "Selected" : "Select"}
                     </Button>
                   </Box>
                   {group.CE.map((CEPrice, index) => (
@@ -163,9 +166,22 @@ const MSfilters = () => {
                       key={index}
                       control={
                         <Checkbox
-                          checked={CEselectedStrike}
+                          checked={
+                            selectedCardIndex === grpindex
+                              ? seriesVisibility[
+                                  `${CEPrice.cE_expiryDate.slice(0, 6)} ${
+                                    CEPrice.cE_strikePrice
+                                  } CE`
+                                ]
+                              : true
+                          }
                           name={`${CEPrice.cE_expiryDate.slice(0, 6)} ${CEPrice.cE_strikePrice} CE`}
-                          onChange={() => handleCECheckBox(CEPrice.cE_strikePrice)}
+                          onChange={(e) =>
+                            handleCECheckBox(
+                              e.target.checked,
+                              `${CEPrice.cE_expiryDate.slice(0, 6)} ${CEPrice.cE_strikePrice} CE`
+                            )
+                          }
                         />
                       }
                       label={`${CEPrice.cE_expiryDate.slice(0, 6)} ${CEPrice.cE_strikePrice} CE`}
@@ -176,20 +192,40 @@ const MSfilters = () => {
                       key={index}
                       control={
                         <Checkbox
-                          checked={true} // You can set the checked value as needed
-                          name={`${PEPrice.cE_expiryDate.slice(0, 6)} ${PEPrice.cE_strikePrice} PE`}
+                          checked={
+                            seriesVisibility[
+                              `${PEPrice.pE_expiryDate.slice(0, 6)} ${PEPrice.pE_strikePrice} PE`
+                            ]
+                          }
+                          name={`${PEPrice.pE_expiryDate.slice(0, 6)} ${PEPrice.cE_strikePrice} PE`}
+                          onChange={(e) =>
+                            handleCECheckBox(
+                              e.target.checked,
+                              `${PEPrice.pE_expiryDate.slice(0, 6)} ${PEPrice.pE_strikePrice} PE`
+                            )
+                          }
                         />
                       }
-                      label={`${PEPrice.cE_expiryDate.slice(0, 6)} ${PEPrice.cE_strikePrice} PE`}
+                      label={`${PEPrice.pE_expiryDate.slice(0, 6)} ${PEPrice.pE_strikePrice} PE`}
                     />
                   ))}
                 </Card>
               </div>
             ))}
-            {/* Display the selected checkbox names */}
           </Box>
         </AccordionDetails>
       </Accordion>
+      <Box
+        sx={{
+          marginTop: "10px",
+          width: "100%",
+        }}
+      >
+        <Card sx={{ padding: "10px" }}>
+          <SolarEmploymentChart seriesVisibility={seriesVisibility} />
+          <hr />
+        </Card>
+      </Box>
     </MKBox>
   );
 };

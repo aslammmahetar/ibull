@@ -1,10 +1,8 @@
 import MKBox from "components/MKBox";
 import React from "react";
 import MSfilters from "./MSfilters";
-import { Box, Card } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
-import SolarEmploymentChart from "./MultiStrikeOIChart";
 const useStyles = makeStyles((theme) => ({
   chartContainer: {
     width: "67%",
@@ -25,17 +23,6 @@ const MSChartAndFilters = ({ data }) => {
         }}
       >
         <MSfilters />
-        <Box
-          sx={{
-            marginTop: "10px",
-            width: "100%",
-          }}
-        >
-          <Card sx={{ padding: "10px" }}>
-            <SolarEmploymentChart data={data} />
-            <hr />
-          </Card>
-        </Box>
       </MKBox>
     </div>
   );
