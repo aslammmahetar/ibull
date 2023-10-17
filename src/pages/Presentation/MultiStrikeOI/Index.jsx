@@ -7,42 +7,55 @@ import { Card } from "@mui/material";
 import MSChartAndFilters from "./MSChartAndFilters";
 import Footer from "pages/LandingPages/Author/sections/Footer";
 import { useDispatch, useSelector } from "react-redux";
-import { makingReqforNSE } from "Redux/RealActions";
-import { defaultStrikesToShow } from "Redux/MSAction";
+import { getMSoiData } from "Redux/Multi_Strike_OI/MSAction";
+import { getExpiry } from "Redux/OptionChainPage/ocAction";
+import { defaultStrikesToShow } from "Redux/Multi_Strike_OI/MSAction";
+import ScrollToTopButton from "../OptionInterest/section/ScrollToTopButton";
 
 const MSoi = () => {
   const dispatch = useDispatch();
-
-  const data = useSelector((store) => store.realReducer.strikePrices);
-  const groups = useSelector((store) => store.MSreducer.groups);
+  const symbol = useSelector((store) => store.MSreducer.symbol);
   const currentMonthClosestElement = useSelector(
-    (store) => store.realReducer.currentMonthClosestElement
+    (store) => store.MSreducer.currentMonthClosestElement
   );
-  console.log(currentMonthClosestElement);
-  console.log(groups);
   useEffect(() => {
-    dispatch(makingReqforNSE(10));
-    // dispatch(
-    //   defaultStrikesToShow(
-    //     [currentMonthClosestElement.cE_strikePrice, currentMonthClosestElement.pE_strikePrice],
-    //     1,
-    //     [
-    //       {
-    //         name: `${currentMonthClosestElement.cE_expiryDate.slice(0, 6)} ${
-    //           currentMonthClosestElement.cE_strikePrice
-    //         } CE`,
-    //         visible: true,
-    //       },
-    //       {
-    //         name: `${currentMonthClosestElement.pE_expiryDate.slice(0, 6)} ${
-    //           currentMonthClosestElement.pE_strikePrice
-    //         } PE`,
-    //         visible: true,
-    //       },
-    //     ]
-    //   )
-    // );
-  }, []);
+    dispatch(getMSoiData(symbol));
+    dispatch(getExpiry(symbol));
+
+    dispatch(
+      defaultStrikesToShow(
+        [
+          currentMonthClosestElement &&
+            currentMonthClosestElement.cE_strikePrice,
+          currentMonthClosestElement &&
+            currentMonthClosestElement.pE_strikePrice,
+        ],
+        1,
+        [
+          {
+            name: `${
+              currentMonthClosestElement &&
+              currentMonthClosestElement.cE_expiryDate.slice(0, 6)
+            } ${
+              currentMonthClosestElement &&
+              currentMonthClosestElement.cE_strikePrice
+            } CE`,
+            visible: true,
+          },
+          {
+            name: `${
+              currentMonthClosestElement &&
+              currentMonthClosestElement.pE_expiryDate.slice(0, 6)
+            } ${
+              currentMonthClosestElement &&
+              currentMonthClosestElement.pE_strikePrice
+            } PE`,
+            visible: true,
+          },
+        ]
+      )
+    );
+  }, [symbol]);
 
   return (
     <>
@@ -62,8 +75,14 @@ const MSoi = () => {
         minHeight="27vh"
         width="100%"
         sx={{
-          backgroundImage: ({ functions: { linearGradient, rgba }, palette: { gradients } }) =>
-            `${linearGradient(rgba(gradients.dark.main, 0.6), rgba(gradients.dark.state, 0.6))})`,
+          backgroundImage: ({
+            functions: { linearGradient, rgba },
+            palette: { gradients },
+          }) =>
+            `${linearGradient(
+              rgba(gradients.dark.main, 0.6),
+              rgba(gradients.dark.state, 0.6)
+            )})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           display: "grid",
@@ -84,8 +103,9 @@ const MSoi = () => {
           zIndex: 2,
         }}
       >
-        <MSChartAndFilters data={data} />
+        <MSChartAndFilters />
       </Card>
+      <ScrollToTopButton />
       <Footer />
     </>
   );

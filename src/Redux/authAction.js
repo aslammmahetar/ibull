@@ -13,7 +13,7 @@ export const loginRequest = (username, password) => (dispatch) => {
   dispatch({ type: LOGIN_REQUEST });
 
   axios
-    .post("http://192.168.1.7/Account/Login", {
+    .post("http://192.168.1.2/Account/Login", {
       UserName: username,
       Password: password,
     })
@@ -43,7 +43,10 @@ export const registerUser = (userData) => async (dispatch) => {
   dispatch({ type: REGISTER_REQUEST });
 
   try {
-    const response = await axios.post(`http://192.168.1.7/Account/RegisterUser`, userData);
+    const response = await axios.post(
+      `http://192.168.1.7/Account/RegisterUser`,
+      userData
+    );
 
     if (response.status !== 200) {
       dispatch(registerFailure("Network response was not ok"));

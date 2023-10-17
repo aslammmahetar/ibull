@@ -18,51 +18,73 @@ import footerRoutes from "footer.routes";
 // import bgImage from "/"
 import bgImage from "assets/images/Banner.jpeg";
 
-import { FormControl, IconButton, MenuItem, Select, Typography } from "@mui/material";
+import {
+  FormControl,
+  IconButton,
+  MenuItem,
+  Select,
+  Typography,
+} from "@mui/material";
 import { useEffect, useState } from "react";
-import { BarChartOutlined, OndemandVideo, Search, ShowChartOutlined } from "@mui/icons-material";
+import {
+  BarChartOutlined,
+  OndemandVideo,
+  Search,
+  ShowChartOutlined,
+} from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import OptionChain from "./OptionChain/OptionChain";
-import { makingReqforNSE } from "Redux/RealActions";
 import SettingComp from "./OptionChain/SettingComp";
-import { getNIFTYExpiryDate } from "Redux/RealActions";
+import { getData } from "Redux/OptionChainPage/ocAction";
+import { updateDataAndCalculate } from "Redux/OptionChainPage/ocAction";
+import { getExpiry } from "Redux/OptionChainPage/ocAction";
+import ScrollToTopButton from "pages/Presentation/OptionInterest/section/ScrollToTopButton";
 function AboutUs() {
   //
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [filteredData, setFilteredData] = useState([]);
-  const [callMax, setCallmaxOI] = useState(0);
-  const [putMax, setPutmaxOI] = useState(0);
-  const [closeToStrikePrice, setClosestElement] = useState({});
   const [symbol, setSymbol] = useState(1);
-  const [originalData, setOriginalData] = useState([]);
+  const [data, setData] = useState([]);
 
   //from redux
-  const ulValue = useSelector((store) => store.realReducer.ulValue);
-  console.log(ulValue);
-  const fontSize = useSelector((store) => store.reducer.fontSize);
-  const expiryDates = useSelector((store) => store.realReducer.expiryDates);
-  const lessThanATM = useSelector((store) => store.realReducer.lessThanATM);
-  console.log(lessThanATM);
-  const greaterThanATM = useSelector((store) => store.realReducer.greaterThanATM);
-  console.log(greaterThanATM);
-  const nearestThursday = useSelector((store) => store.realReducer.nearestThurday);
-  console.log(nearestThursday);
+  const ulValue = useSelector((store) => store.OptionChainReducer.ulValue);
+  const store = useSelector((store) => store.OptionChainReducer.data);
+  console.log(store);
+  const filteredData = useSelector(
+    (store) => store.OptionChainReducer.filteredData
+  );
+  const callMax = useSelector((store) => store.OptionChainReducer.callMax);
+  const putMax = useSelector((store) => store.OptionChainReducer.putMax);
+  const closestElement = useSelector(
+    (store) => store.OptionChainReducer.closestElement
+  );
+  const fontSize = useSelector((store) => store.OptionChainReducer.fontSize);
+  const expiryDates = useSelector(
+    (store) => store.OptionChainReducer.expiryDates
+  );
+  console.log(expiryDates);
+  const lessThanATM = useSelector(
+    (store) => store.OptionChainReducer.lessThanATM
+  );
+  const greaterThanATM = useSelector(
+    (store) => store.OptionChainReducer.greaterThanATM
+  );
+  const nearestThursday = useSelector(
+    (store) => store.realReducer.nearestThurday
+  );
   useEffect(() => {
-    dispatch(getNIFTYExpiryDate(symbol));
-    dispatch(makingReqforNSE(0, symbol));
+    dispatch(getExpiry(symbol));
+    dispatch(getData(symbol));
+    setData(filteredData);
   }, [symbol, fontSize]);
 
   // Get today's date
   const today = new Date();
-
   // Find the current day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
   const currentDayOfWeek = today.getDay();
-
   // Calculate the number of days until the next Thursday
   const daysUntilNextThursday = (11 - currentDayOfWeek) % 7;
-
   // Calculate the date of the next Thursday by adding the number of days
   const nextThursday = new Date(today);
   nextThursday.setDate(today.getDate() + daysUntilNextThursday);
@@ -88,84 +110,37 @@ function AboutUs() {
     monthNames[nextThursday.getMonth()]
   }-${nextThursday.getFullYear()}`;
 
-  console.log(formattedDate);
-
   //expirydate special case
-  const [selectedExpiryDate, setSelectedExpiryDate] = useState(formattedDate);
-  const store = useSelector((store) => store.realReducer.data);
-  console.log(store);
-
-  //
+  const [selectedExpiryDate, setSelectedExpiryDate] = useState(expiryDates[0]);
 
   const handleStream = (val) => {
     setSymbol(val);
   };
 
-  //
+  useEffect(() => {
+    dispatch(updateDataAndCalculate(store, selectedExpiryDate, ulValue));
+  }, [selectedExpiryDate, store, ulValue]);
+
   useEffect(() => {
     setSelectedExpiryDate(expiryDates[0]);
-  }, [ulValue]);
-
-  //
-  useEffect(() => {
-    const filtered2 =
-      store.length > 0
-        ? store.filter((item) => {
-            return item.cE_expiryDate === selectedExpiryDate;
-          })
-        : [];
-    let CEmaxOI = -Infinity;
-    let PEmaxOI = -Infinity;
-
-    // Getting maximum values of openInterests
-    for (let el of filtered2) {
-      if (CEmaxOI < el.cE_openInterest) {
-        CEmaxOI = el.cE_openInterest;
-      }
-      if (PEmaxOI < el.pE_openInterest) {
-        PEmaxOI = el.pE_openInterest;
-      }
-    }
-    setCallmaxOI(CEmaxOI);
-    setPutmaxOI(PEmaxOI);
-    setFilteredData(filtered2);
-    setOriginalData(filtered2);
-  }, [selectedExpiryDate, store, closeToStrikePrice]);
-
-  //
-  useEffect(() => {
-    const targetValue = ulValue;
-    let closestElement = null;
-
-    if (originalData.length > 0) {
-      // Use originalData here
-      closestElement = originalData.reduce((prev, curr) => {
-        const prevDiff = Math.abs(prev.cE_strikePrice - targetValue);
-        const currDiff = Math.abs(curr.cE_strikePrice - targetValue);
-        return prevDiff < currDiff ? prev : curr;
-      });
-
-      setClosestElement(closestElement);
-      console.log(closestElement);
-    }
-    if (closestElement) {
-      // Use originalData to reset filteredData
-      setFilteredData(originalData);
-      const index = originalData.indexOf(closestElement);
-      const startIndex = Math.max(0, index - lessThanATM);
-      const endIndex = Math.min(originalData.length - 1, index + greaterThanATM);
-      const elementsAroundClosest = originalData.slice(startIndex, endIndex + 1);
-
-      setFilteredData(elementsAroundClosest);
-    } else {
-      console.log("No closest element found.");
-    }
-  }, [closeToStrikePrice, lessThanATM, greaterThanATM, ulValue]);
-
+  }, [symbol, store, ulValue]);
   //handling expirydates filter
   const handleExpiryDateChange = (event) => {
     setSelectedExpiryDate(event.target.value);
   };
+
+  useEffect(() => {
+    const closestIndex = filteredData.indexOf(closestElement);
+    const startIndex = Math.max(0, closestIndex - lessThanATM);
+    const endIndex = Math.min(
+      filteredData.length - 1,
+      closestIndex + greaterThanATM
+    );
+
+    const elementsAroundClosest = filteredData.slice(startIndex, endIndex + 1);
+    setData(elementsAroundClosest);
+    console.log(elementsAroundClosest);
+  }, [filteredData, lessThanATM, greaterThanATM]);
 
   //
   return (
@@ -182,12 +157,19 @@ function AboutUs() {
         transparent={false}
         dark
       />
+      <ScrollToTopButton />
       <MKBox
         minHeight="25vh"
         width="100%"
         sx={{
-          backgroundImage: ({ functions: { linearGradient, rgba }, palette: { gradients } }) =>
-            `${linearGradient(rgba(gradients.dark.main, 0.6), rgba(gradients.dark.state, 0.6))})`,
+          backgroundImage: ({
+            functions: { linearGradient, rgba },
+            palette: { gradients },
+          }) =>
+            `${linearGradient(
+              rgba(gradients.dark.main, 0.6),
+              rgba(gradients.dark.state, 0.6)
+            )})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           display: "grid",
@@ -213,6 +195,7 @@ function AboutUs() {
             mt: 0,
             mb: 4,
             width: "80%",
+            bgcolor: "#60AFFF",
             boxShadow: ({ boxShadows: { xxl } }) => xxl,
           }}
         >
@@ -220,12 +203,26 @@ function AboutUs() {
             display={"flex"}
             justifyContent={"space-around"}
             sx={{
-              flexDirection: { xs: "column", sm: "column", md: "column", lg: "row" },
+              flexDirection: {
+                xs: "column",
+                sm: "column",
+                md: "column",
+                lg: "row",
+              },
               textAlign: "center",
             }}
           >
-            <MKBox display={"flex"} alignItems={"center"} justifyContent={"center"}>
-              <MKBox display={"flex"} style={{ padding: "5px" }} justifyContent="space-around">
+            <MKBox
+              display={"flex"}
+              alignItems={"center"}
+              justifyContent={"center"}
+              color="white"
+            >
+              <MKBox
+                display={"flex"}
+                style={{ padding: "5px" }}
+                justifyContent="space-around"
+              >
                 <div
                   style={{
                     display: "flex",
@@ -261,11 +258,14 @@ function AboutUs() {
                   }}
                   value={selectedExpiryDate} // Set the value to the selectedExpiryDate state
                   onChange={handleExpiryDateChange}
-                  defaultValue={expiryDates[0]}
                 >
                   {expiryDates.map((item, ind) => {
                     return (
-                      <MenuItem key={ind} value={item} style={{ textAlign: "center" }}>
+                      <MenuItem
+                        key={ind}
+                        value={item}
+                        style={{ textAlign: "center" }}
+                      >
                         <Typography fontSize={"small"} textAlign={"center"}>
                           {item}
                         </Typography>
@@ -336,26 +336,14 @@ function AboutUs() {
               Per Lot
             </MKBox>
             <hr />
-            <MKBox
-              style={{ cursor: "pointer" }}
-              display={"flex"}
-              alignItems={"center"}
-              justifyContent={"center"}
-              fontSize="small"
-            >
-              <MKBox style={{ marginTop: "5px", color: "blue" }}>
-                <OndemandVideo />
-              </MKBox>
-              Demo
-            </MKBox>
           </MKBox>
         </Card>
         <OptionChain
           underlayingPrice={ulValue}
-          combinedData={filteredData}
+          combinedData={data}
           CemaxOI={callMax}
           PeMaxOI={putMax}
-          closeToStrikePrice={closeToStrikePrice}
+          closeToStrikePrice={closestElement}
         />
       </Card>
       <div className="sticky-div" style={{ position: "sticky", bottom: "0" }}>

@@ -1,70 +1,23 @@
-import moment from "moment";
 import {
-  GET_NIFTY_EXPIRYDATES_SUCCESS,
-  GET_REQ_NSE_DATA,
-  GET_REQ_NSE_FAILS,
-  GET_REQ_NSE_SUCCESS,
+  GET_REQ_OI_NSE_DATA_SUCCESS,
+  RESET_SETTINGS,
+  SET_SYMBOL,
   SHOW_CURRENT_MONTH_DATA,
-  SHOW_GREATER_THAN_ATM_DATA,
-  SHOW_LESS_THAN_ATM_DATA,
   SHOW_NEXT_MONTH_DATA,
-  SHOW_TIME_ALERT,
-} from "./RealActions";
-
-// Get today's date
-const today = new Date();
-
-// Find the current day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
-const currentDayOfWeek = today.getDay();
-
-// Calculate the number of days until the next Thursday
-const daysUntilNextThursday = (11 - currentDayOfWeek) % 7;
-
-// Calculate the date of the next Thursday by adding the number of days
-const nextThursday = new Date(today);
-nextThursday.setDate(today.getDate() + daysUntilNextThursday);
-
-// Create an array of month names
-const monthNames = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
-
-// Format the date as "dd-mmm-yyyy"
-const nearestThurday = `${nextThursday.getDate()}-${
-  monthNames[nextThursday.getMonth()]
-}-${nextThursday.getFullYear()}`;
-
-const initialState = {
-  nearestThurday: nearestThurday,
+} from "./OIAction";
+export const initialState = {
   isLoading: false,
-  data: [],
-  strikePrices: [],
   isError: false,
-  twoMonthData: [],
-  columnCount: 0,
+  data: [],
+  strikePrice: [],
+  recentTwomonth: [],
   ulValue: 0,
-  expiryDates: [],
-  limitedData: false,
-  lessThanATM: 0,
-  greaterThanATM: 0,
-  septData: [],
-  currentMonth: true,
-  nextMonth: true,
-  timeAlert: "",
   currentMonthselementsAroundClosest: [],
   nextMonthselementsAroundClosest: [],
-  currentMonthClosestElement: {},
+  currentMonthClosestElement: [],
+  currentMonth: true,
+  nextMonth: true,
+  symbol: 1,
 };
 
 const months = [
@@ -81,26 +34,26 @@ const months = [
   "Nov",
   "Dec",
 ];
-const currentDate = new Date();
-const currentMonthname = currentDate.getMonth();
 
-export const realReducer = (state = initialState, { type, payload, count }) => {
+const currentDate = new Date();
+const currentMonthName = currentDate.getMonth();
+
+export const oiReducer = (state = initialState, { type, payload, count }) => {
   switch (type) {
-    case GET_REQ_NSE_SUCCESS: {
+    case GET_REQ_OI_NSE_DATA_SUCCESS: {
+      console.log(currentMonthName);
       console.log(payload);
-      console.log(payload[0]);
-      console.log(count);
-      const ulValue = payload[0][0].pE_underlyingValue;
+      const ulValue = payload[0][0].cE_underlyingValue;
       console.log(ulValue);
       const currentMonth = payload[0].filter((el) =>
         el.cE_expiryDate.includes(
-          months[currentMonthname] && months[currentMonthname + 1]
+          months[currentMonthName] && months[currentMonthName + 1]
         )
       );
       console.log(currentMonth);
       const nextMonth = payload[0].filter((el) =>
         el.cE_expiryDate.includes(
-          months[currentMonthname + 1] && months[currentMonthname + 2]
+          months[currentMonthName + 1] && months[currentMonthName + 2]
         )
       );
       console.log(nextMonth);
@@ -113,13 +66,10 @@ export const realReducer = (state = initialState, { type, payload, count }) => {
       const currentMonthIndex = currentMonth.indexOf(
         currentMonthClosestElement
       );
-      const currentMontstartIndex = Math.max(
-        0,
-        currentMonthIndex - state.lessThanATM
-      );
+      const currentMontstartIndex = Math.max(0, currentMonthIndex - count);
       const currentMontendIndex = Math.min(
         currentMonth.length - 1,
-        currentMonthIndex + state.greaterThanATM
+        currentMonthIndex + count
       );
       const currentMonthselementsAroundClosest = currentMonth.slice(
         currentMontstartIndex,
@@ -139,7 +89,7 @@ export const realReducer = (state = initialState, { type, payload, count }) => {
       });
 
       console.log(currentMonthselementsAroundClosest);
-
+      console.log(uniqueStrikePrices);
       const nextMonthClosestElement = nextMonth.reduce((prev, curr) => {
         const prevDiff = Math.abs(prev.cE_strikePrice - ulValue);
         const currDiff = Math.abs(curr.cE_strikePrice - ulValue);
@@ -148,45 +98,24 @@ export const realReducer = (state = initialState, { type, payload, count }) => {
 
       const nextMonthindex = nextMonth.indexOf(nextMonthClosestElement);
 
-      const nextMonthStartindex = Math.max(0, nextMonthindex - count);
+      const nextMonthStartindex = Math.max(0, nextMonthindex - 5);
       const nextMonthEndindex = Math.min(
         nextMonth.length - 1,
-        nextMonthindex + count
+        nextMonthindex + 5
       );
       const nextMonthselementsAroundClosest = nextMonth.slice(
         nextMonthStartindex,
         nextMonthEndindex + 1
       );
+
       return {
         ...state,
-        isLoading: false,
-        strikePrices: uniqueStrikePrices,
-        twoMonthData: currentMonthselementsAroundClosest,
+        recentTwomonth: currentMonthselementsAroundClosest,
         currentMonthselementsAroundClosest: currentMonthselementsAroundClosest,
         nextMonthselementsAroundClosest: nextMonthselementsAroundClosest,
+        strikePrice: uniqueStrikePrices,
         ulValue: ulValue,
         currentMonthClosestElement: currentMonthClosestElement,
-      };
-    }
-    case GET_REQ_NSE_FAILS: {
-      return {
-        ...state,
-        isLoading: false,
-        isError: true,
-      };
-    }
-    case SHOW_LESS_THAN_ATM_DATA: {
-      return {
-        ...state,
-        limitedData: true,
-        lessThanATM: payload,
-      };
-    }
-    case SHOW_GREATER_THAN_ATM_DATA: {
-      return {
-        ...state,
-        limiitedData: true,
-        greaterThanATM: payload,
       };
     }
     case SHOW_CURRENT_MONTH_DATA: {
@@ -201,10 +130,18 @@ export const realReducer = (state = initialState, { type, payload, count }) => {
         nextMonth: !state.nextMonth,
       };
     }
-    case SHOW_TIME_ALERT: {
+    case SET_SYMBOL: {
       return {
         ...state,
-        timeAlert: payload,
+        symbol: payload,
+      };
+    }
+    case RESET_SETTINGS: {
+      return {
+        ...state,
+        symbol: 1,
+        currentMonth: true,
+        nextMonth: true,
       };
     }
     default:

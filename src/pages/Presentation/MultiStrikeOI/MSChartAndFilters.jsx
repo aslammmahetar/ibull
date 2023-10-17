@@ -14,7 +14,12 @@ const MSChartAndFilters = ({ data }) => {
     <div className={classes.root}>
       <MKBox
         sx={{
-          flexDirection: { xs: "column", sm: "column", md: "column", lg: "row" },
+          flexDirection: {
+            xs: "column",
+            sm: "column",
+            md: "column",
+            lg: "row",
+          },
         }}
         style={{
           width: "100%",

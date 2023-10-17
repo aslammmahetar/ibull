@@ -1,18 +1,3 @@
-/*
-=========================================================
-* Material Kit 2 React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-kit-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 // @mui material components
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -50,6 +35,7 @@ import bgImage from "assets/images/Banner.jpeg";
 import SignInBasic from "pages/LandingPages/SignIn";
 import OurFeatureSection from "./sections/OurFeatureSection";
 import ReviewForm from "./sections/ReviewForm";
+import ScrollToTopButton from "./OptionInterest/section/ScrollToTopButton";
 
 function Presentation() {
   return (
@@ -64,6 +50,7 @@ function Presentation() {
         }}
         sticky
       />
+      <ScrollToTopButton />
       <MKBox
         minHeight="75vh"
         width="100%"
@@ -85,7 +72,8 @@ function Presentation() {
           mx: { xs: 2, lg: 3 },
           mt: -8,
           mb: 4,
-          backgroundColor: ({ palette: { white }, functions: { rgba } }) => rgba(white.main, 0.8),
+          backgroundColor: ({ palette: { white }, functions: { rgba } }) =>
+            rgba(white.main, 0.8),
           backdropFilter: "saturate(200%) blur(30px)",
           boxShadow: ({ boxShadows: { xxl } }) => xxl,
         }}
@@ -149,7 +137,13 @@ function Presentation() {
         <MKBox pt={5} pb={6}>
           <Container>
             <Grid container spacing={3}>
-              <Grid item xs={12} lg={5} ml="auto" sx={{ textAlign: { xs: "center", lg: "left" } }}>
+              <Grid
+                item
+                xs={12}
+                lg={5}
+                ml="auto"
+                sx={{ textAlign: { xs: "center", lg: "left" } }}
+              >
                 <MKTypography variant="h4" fontWeight="bold" mb={0.5}>
                   Thank you for your support!
                 </MKTypography>

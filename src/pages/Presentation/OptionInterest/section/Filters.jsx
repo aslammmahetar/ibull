@@ -24,15 +24,18 @@ import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import MKButton from "components/MKButton";
 import { useDispatch, useSelector } from "react-redux";
 
-import { makingReqforNSE } from "Redux/RealActions";
-import { showCurrentMonthData } from "Redux/RealActions";
-import { showNextMonthData } from "Redux/RealActions";
+import { showCurrentMonthData } from "Redux/Open_Interest/OIAction";
+import { showNextMonthData } from "Redux/Open_Interest/OIAction";
+import { getReqOI } from "Redux/Open_Interest/OIAction";
+import { setSymbol } from "Redux/Open_Interest/OIAction";
+import { resetSettings } from "Redux/Open_Interest/OIAction";
 
 export const Filters = () => {
   const strikesAboveAndBelowVal = [5, 10, 15, 20, 25, "All"];
 
-  const currentIsChecked = useSelector((state) => state.realReducer.currentMonth);
-  const nextIscChecked = useSelector((store) => store.realReducer.nextMonth);
+  const currentIsChecked = useSelector((state) => state.oiReducer.currentMonth);
+  const nextIscChecked = useSelector((store) => store.oiReducer.nextMonth);
+  const symbol = useSelector((store) => store.oiReducer.symbol);
   const dispatch = useDispatch();
 
   const handleCurrentBoxChange = () => {
@@ -44,14 +47,10 @@ export const Filters = () => {
 
   const [selectFontSize, setSelectedFontSize] = React.useState(null);
 
-  const [symbol, setSymbol] = useState(1);
-
-  useEffect(() => {
-    dispatch(makingReqforNSE(10, symbol)); // Dispatch the function to fetch data
-  }, [symbol]);
+  // const [symbol, setSymbol] = useState(1);
 
   const handleSymbol = (val) => {
-    setSymbol(val);
+    dispatch(setSymbol(val));
   };
 
   return (
@@ -106,7 +105,10 @@ export const Filters = () => {
                   <TrendingUpOutlinedIcon color="info" />
                 </Button>
               </Tooltip>
-              <Button variant="outlined" style={{ width: "5px", color: "blue", marginLeft: "4px" }}>
+              <Button
+                variant="outlined"
+                style={{ width: "5px", color: "blue", marginLeft: "4px" }}
+              >
                 info
               </Button>
             </Box>
@@ -197,12 +199,20 @@ export const Filters = () => {
                 <Box style={{ display: "flex" }}>
                   <FormControlLabel
                     control={
-                      <Checkbox checked={currentIsChecked} onChange={handleCurrentBoxChange} />
+                      <Checkbox
+                        checked={currentIsChecked}
+                        onChange={handleCurrentBoxChange}
+                      />
                     }
                     label="Current"
                   />
                   <FormControlLabel
-                    control={<Checkbox checked={nextIscChecked} onChange={handleNextBoxXChange} />}
+                    control={
+                      <Checkbox
+                        checked={nextIscChecked}
+                        onChange={handleNextBoxXChange}
+                      />
+                    }
                     label="Next"
                   />
                 </Box>
@@ -215,11 +225,12 @@ export const Filters = () => {
               </Typography>
               {strikesAboveAndBelowVal.map((el, index) => (
                 <Button
-                  onClick={() => dispatch(makingReqforNSE(el))}
+                  onClick={() => dispatch(getReqOI(symbol, el))}
                   size="small"
                   variant="outlined"
                   style={{
-                    backgroundColor: selectFontSize === index ? "blue" : "white",
+                    backgroundColor:
+                      selectFontSize === index ? "blue" : "white",
                     color: selectFontSize === index ? "white" : "black",
                     width: "20px",
                     fontSize: "9px",
@@ -233,7 +244,10 @@ export const Filters = () => {
             </Box>
           </Box>
           <Box width={"100%"} textAlign={"right"}>
-            <Button startIcon={<RestartAltIcon />} onClick={() => dispatch(makingReqforNSE(5))}>
+            <Button
+              startIcon={<RestartAltIcon />}
+              onClick={() => dispatch(resetSettings())}
+            >
               Reset
             </Button>
           </Box>

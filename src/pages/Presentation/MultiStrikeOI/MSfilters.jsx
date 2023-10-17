@@ -8,6 +8,7 @@ import {
   Checkbox,
   FormControl,
   FormControlLabel,
+  Icon,
   IconButton,
   MenuItem,
   Select,
@@ -15,24 +16,27 @@ import {
   Typography,
 } from "@mui/material";
 import MKBox from "components/MKBox";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Search } from "@mui/icons-material";
 import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import MSDrawer from "./MSDrawer";
 import { useDispatch, useSelector } from "react-redux";
-import { lineSeries } from "Redux/MSAction";
 import SolarEmploymentChart from "./MultiStrikeOIChart";
-import { defaultGroup } from "Redux/MSAction";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { lineSeries } from "Redux/Multi_Strike_OI/MSAction";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { defaultGroup } from "Redux/Multi_Strike_OI/MSAction";
+import { selectDefaultGroup } from "Redux/Multi_Strike_OI/MSAction";
+import { deleteGroup } from "Redux/Multi_Strike_OI/MSAction";
 
 const MSfilters = () => {
   const dispatch = useDispatch();
   const [symbol, setSymbol] = React.useState(1);
-  const [seriesVisibility, setSeriesVisibility] = useState({});
 
+  const groups = useSelector((store) => store.MSreducer.groups);
+  const [seriesVisibility, setSeriesVisibility] = useState({});
   const [selectedCheckboxes, setSelectedCheckboxes] = useState([]);
   const [selectedCardIndex, setSelectedCardIndex] = useState(null);
-  const groups = useSelector((store) => store.MSreducer.groups);
   console.log(groups);
 
   const handleCardClick = (index, CE, PE) => {
@@ -50,12 +54,16 @@ const MSfilters = () => {
     const checkboxNames = [];
 
     CE.forEach((CEPrice) => {
-      const name = `${CEPrice.cE_expiryDate.slice(0, 6)} ${CEPrice.cE_strikePrice} CE`;
+      const name = `${CEPrice.cE_expiryDate.slice(0, 6)} ${
+        CEPrice.cE_strikePrice
+      } CE`;
       checkboxNames.push(name);
     });
 
     PE.forEach((PEPrice) => {
-      const name = `${PEPrice.cE_expiryDate.slice(0, 6)} ${PEPrice.cE_strikePrice} PE`;
+      const name = `${PEPrice.cE_expiryDate.slice(0, 6)} ${
+        PEPrice.cE_strikePrice
+      } PE`;
       checkboxNames.push(name);
     });
 
@@ -65,7 +73,9 @@ const MSfilters = () => {
     for (let key of checkboxNames) {
       const displayLineNames = {}; // Initialize a new object for each iteration
       displayLineNames["name"] = key;
-      displayLineNames["visible"] = selectedCheckboxes.includes(checkboxNames[index]);
+      displayLineNames["visible"] = selectedCheckboxes.includes(
+        checkboxNames[index]
+      );
       displayLineNamesArray.push(displayLineNames); // Push the object into the array
     }
 
@@ -73,19 +83,27 @@ const MSfilters = () => {
     console.log(displayLineNamesArray); // This will give you an array of displayLineNames objects
 
     dispatch(lineSeries(getStrikes, displayLineNamesArray, symbol));
-    dispatch(defaultGroup());
+    dispatch(selectDefaultGroup(false));
   };
 
   const handleCECheckBox = (isVisible, seriesName) => {
-    setSeriesVisibility({
-      ...seriesVisibility,
-      [seriesName]: isVisible,
-    });
+    if (selectedCardIndex !== null) {
+      setSeriesVisibility((prevVisibility) => ({
+        ...prevVisibility,
+        [seriesName]: isVisible,
+      }));
+    }
   };
-
+  const handleDeleteBox = (index) => {
+    dispatch(dispatch(selectDefaultGroup(true)));
+    dispatch(deleteGroup(index));
+  };
   return (
     <MKBox width={"100%"} display={{ lg: "block" }}>
-      <Box display={{ xs: "block", md: "block", lg: "flex" }} justifyContent={"space-between"}>
+      <Box
+        display={{ xs: "block", md: "block", lg: "flex" }}
+        justifyContent={"space-between"}
+      >
         <Card
           sx={{
             display: "flex",
@@ -130,7 +148,10 @@ const MSfilters = () => {
                   <TrendingUpOutlinedIcon color="info" />
                 </Button>
               </Tooltip>
-              <Button variant="outlined" style={{ width: "5px", color: "blue", marginLeft: "4px" }}>
+              <Button
+                variant="outlined"
+                style={{ width: "5px", color: "blue", marginLeft: "4px" }}
+              >
                 info
               </Button>
             </Box>
@@ -151,13 +172,24 @@ const MSfilters = () => {
                   sx={{
                     p: 1,
                     m: 1,
-                    border: selectedCardIndex === grpindex ? "1px solid black" : "none",
+                    border:
+                      selectedCardIndex === grpindex
+                        ? "1px solid black"
+                        : "none",
                     cursor: "pointer",
                   }}
                 >
-                  <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
+                  <Box
+                    display={"flex"}
+                    justifyContent={"space-between"}
+                    alignItems={"center"}
+                  >
                     <Typography variant="h6">Group {grpindex + 1}</Typography>
-                    <Button onClick={() => handleCardClick(grpindex, group.CE, group.PE)}>
+                    <Button
+                      onClick={() =>
+                        handleCardClick(grpindex, group.CE, group.PE)
+                      }
+                    >
                       {selectedCardIndex === grpindex ? "Selected" : "Select"}
                     </Button>
                   </Box>
@@ -166,6 +198,7 @@ const MSfilters = () => {
                       key={index}
                       control={
                         <Checkbox
+                          disabled={selectedCardIndex !== grpindex}
                           checked={
                             selectedCardIndex === grpindex
                               ? seriesVisibility[
@@ -173,18 +206,24 @@ const MSfilters = () => {
                                     CEPrice.cE_strikePrice
                                   } CE`
                                 ]
-                              : true
+                              : false
                           }
-                          name={`${CEPrice.cE_expiryDate.slice(0, 6)} ${CEPrice.cE_strikePrice} CE`}
+                          name={`${CEPrice.cE_expiryDate.slice(0, 6)} ${
+                            CEPrice.cE_strikePrice
+                          } CE`}
                           onChange={(e) =>
                             handleCECheckBox(
                               e.target.checked,
-                              `${CEPrice.cE_expiryDate.slice(0, 6)} ${CEPrice.cE_strikePrice} CE`
+                              `${CEPrice.cE_expiryDate.slice(0, 6)} ${
+                                CEPrice.cE_strikePrice
+                              } CE`
                             )
                           }
                         />
                       }
-                      label={`${CEPrice.cE_expiryDate.slice(0, 6)} ${CEPrice.cE_strikePrice} CE`}
+                      label={`${CEPrice.cE_expiryDate.slice(0, 6)} ${
+                        CEPrice.cE_strikePrice
+                      } CE`}
                     />
                   ))}
                   {group.PE.map((PEPrice, index) => (
@@ -192,23 +231,41 @@ const MSfilters = () => {
                       key={index}
                       control={
                         <Checkbox
+                          disabled={selectedCardIndex !== grpindex}
                           checked={
-                            seriesVisibility[
-                              `${PEPrice.pE_expiryDate.slice(0, 6)} ${PEPrice.pE_strikePrice} PE`
-                            ]
+                            selectedCardIndex === grpindex
+                              ? seriesVisibility[
+                                  `${PEPrice.pE_expiryDate.slice(0, 6)} ${
+                                    PEPrice.pE_strikePrice
+                                  } PE`
+                                ]
+                              : false
                           }
-                          name={`${PEPrice.pE_expiryDate.slice(0, 6)} ${PEPrice.cE_strikePrice} PE`}
+                          name={`${PEPrice.pE_expiryDate.slice(0, 6)} ${
+                            PEPrice.cE_strikePrice
+                          } PE`}
                           onChange={(e) =>
                             handleCECheckBox(
                               e.target.checked,
-                              `${PEPrice.pE_expiryDate.slice(0, 6)} ${PEPrice.pE_strikePrice} PE`
+                              `${PEPrice.pE_expiryDate.slice(0, 6)} ${
+                                PEPrice.pE_strikePrice
+                              } PE`
                             )
                           }
                         />
                       }
-                      label={`${PEPrice.pE_expiryDate.slice(0, 6)} ${PEPrice.pE_strikePrice} PE`}
+                      label={`${PEPrice.pE_expiryDate.slice(0, 6)} ${
+                        PEPrice.pE_strikePrice
+                      } PE`}
                     />
                   ))}
+                  <Box display={"flex"} justifyContent={"right"}>
+                    <Icon
+                      color="error"
+                      component={DeleteIcon}
+                      onClick={() => handleDeleteBox(grpindex)}
+                    />
+                  </Box>
                 </Card>
               </div>
             ))}

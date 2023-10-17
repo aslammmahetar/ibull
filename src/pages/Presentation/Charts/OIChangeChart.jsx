@@ -1,36 +1,31 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Bar } from "react-chartjs-2";
-import { useDispatch, useSelector } from "react-redux";
-import { makingReqforNSE } from "Redux/RealActions";
+import { useSelector } from "react-redux";
 import Timebuttons from "../OptionInterest/section/Timebuttons";
 import CircularIndeterminate from "pages/CircularIndeterminate";
 
 const OICHange = () => {
-  const dispatch = useDispatch();
-  const strikePrices = useSelector((store) => store.realReducer.strikePrices);
-  const twoMonthdata = useSelector((store) => store.realReducer.twoMonthData);
+  const strikePrices = useSelector((store) => store.oiReducer.strikePrice);
+  const twoMonthdata = useSelector((store) => store.oiReducer.recentTwomonth);
   const currentMonthselementsAroundClosest = useSelector(
-    (store) => store.realReducer.currentMonthselementsAroundClosest
+    (store) => store.oiReducer.currentMonthselementsAroundClosest
   );
   const nextMonthselementsAroundClosest = useSelector(
-    (store) => store.realReducer.nextMonthselementsAroundClosest
+    (store) => store.oiReducer.nextMonthselementsAroundClosest
   );
-  const currentMonth = useSelector((store) => store.realReducer.currentMonth);
-  const nextMonth = useSelector((store) => store.realReducer.nextMonth);
-
-  useEffect(() => {
-    dispatch(makingReqforNSE(5));
-  }, []);
-
+  const currentMonth = useSelector((store) => store.oiReducer.currentMonth);
+  const nextMonth = useSelector((store) => store.oiReducer.nextMonth);
   const displayDataPe = () => {
     if (currentMonth && nextMonth) {
-      const returnIt = currentMonthselementsAroundClosest.map((dataPoint, index) => {
-        console.log(dataPoint, index);
-        return (
-          (dataPoint?.pE_changeinOpenInterest || 0) +
-          (nextMonthselementsAroundClosest[index]?.pE_changeinOpenInterest || 0)
-        );
-      });
+      const returnIt = currentMonthselementsAroundClosest.map(
+        (dataPoint, index) => {
+          return (
+            (dataPoint?.pE_changeinOpenInterest || 0) +
+            (nextMonthselementsAroundClosest[index]?.pE_changeinOpenInterest ||
+              0)
+          );
+        }
+      );
       return returnIt;
     } else if (currentMonth && !nextMonth) {
       const returnIt = currentMonthselementsAroundClosest.map(
@@ -47,13 +42,15 @@ const OICHange = () => {
 
   const displayDataCe = () => {
     if (currentMonth && nextMonth) {
-      const returnIt = currentMonthselementsAroundClosest.map((dataPoint, index) => {
-        console.log(dataPoint, index);
-        return (
-          (dataPoint?.cE_changeinOpenInterest || 0) +
-          (nextMonthselementsAroundClosest[index]?.cE_changeinOpenInterest || 0)
-        );
-      });
+      const returnIt = currentMonthselementsAroundClosest.map(
+        (dataPoint, index) => {
+          return (
+            (dataPoint?.cE_changeinOpenInterest || 0) +
+            (nextMonthselementsAroundClosest[index]?.cE_changeinOpenInterest ||
+              0)
+          );
+        }
+      );
       return returnIt;
     } else if (currentMonth && !nextMonth) {
       const returnIt = currentMonthselementsAroundClosest.map(
@@ -124,7 +121,12 @@ const OICHange = () => {
         )}
       </div>
       <div
-        style={{ width: "20%", display: "flex", justifyContent: "center", alignItems: "center" }}
+        style={{
+          width: "20%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
         <Timebuttons />
       </div>

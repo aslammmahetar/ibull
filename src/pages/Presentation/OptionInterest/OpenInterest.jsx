@@ -6,8 +6,19 @@ import MKBox from "components/MKBox";
 import bgImage from "assets/images/Banner.jpeg";
 import Footer from "pages/LandingPages/Author/sections/Footer";
 import ScrollToTopButton from "./section/ScrollToTopButton";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getReqOI } from "Redux/Open_Interest/OIAction";
 
 const OpenInterest = () => {
+  const data = useSelector((store) => store.oiReducer.data);
+  console.log(data);
+  const symbol = useSelector((store) => store.oiReducer.symbol);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getReqOI(symbol, 5)); // Dispatch the function to fetch data
+  }, [symbol]);
   return (
     <>
       <CssBaseline />
@@ -29,8 +40,14 @@ const OpenInterest = () => {
         minHeight="27vh"
         width="100%"
         sx={{
-          backgroundImage: ({ functions: { linearGradient, rgba }, palette: { gradients } }) =>
-            `${linearGradient(rgba(gradients.dark.main, 0.6), rgba(gradients.dark.state, 0.6))})`,
+          backgroundImage: ({
+            functions: { linearGradient, rgba },
+            palette: { gradients },
+          }) =>
+            `${linearGradient(
+              rgba(gradients.dark.main, 0.6),
+              rgba(gradients.dark.state, 0.6)
+            )})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           display: "grid",

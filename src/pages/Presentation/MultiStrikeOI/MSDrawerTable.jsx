@@ -1,25 +1,34 @@
 import { ThemeProvider } from "@emotion/react";
 import { Box, Typography, createTheme } from "@mui/material";
-import { addSelectedCEStrike } from "Redux/MSAction";
-import { addSelectedPEStrike } from "Redux/MSAction";
-import { removeSelectedPEStrike } from "Redux/MSAction";
-import { removeSelectedCEStrike } from "Redux/MSAction";
+import { addSelectedCEStrike } from "Redux/Multi_Strike_OI/MSAction";
+import { addSelectedPEStrike } from "Redux/Multi_Strike_OI/MSAction";
+import { removeSelectedPEStrike } from "Redux/Multi_Strike_OI/MSAction";
+import { removeSelectedCEStrike } from "Redux/Multi_Strike_OI/MSAction";
 import { MaterialReactTable } from "material-react-table";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-const MSDrawerTable = ({ setSelectedExpiryDate, expiryDates, selectedExpiryDate }) => {
+const MSDrawerTable = ({
+  setSelectedExpiryDate,
+  expiryDates,
+  selectedExpiryDate,
+}) => {
   const [underlayingPrice, setUnderlayingPrice] = useState(0);
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [callMax, setCallmaxOI] = useState(0);
   const [putMax, setPutmaxOI] = useState(0);
 
-  const store = useSelector((store) => store.realReducer.data);
-  const ulValue = useSelector((store) => store.realReducer.ulValue);
+  const store = useSelector((store) => store.MSreducer.data);
+  console.log(store);
+  const ulValue = useSelector((store) => store.MSreducer.ulValue);
   const dispatch = useDispatch();
-  const selected_CE_StrikePrices = useSelector((store) => store.MSreducer.selected_CE_StrikePrices); // Access selected strike prices from Redux store
-  const selected_PE_StrikePrices = useSelector((store) => store.MSreducer.selected_PE_StrikePrices);
+  const selected_CE_StrikePrices = useSelector(
+    (store) => store.MSreducer.selected_CE_StrikePrices
+  ); // Access selected strike prices from Redux store
+  const selected_PE_StrikePrices = useSelector(
+    (store) => store.MSreducer.selected_PE_StrikePrices
+  );
   console.log("CE:", selected_CE_StrikePrices);
   console.log("PE:", selected_PE_StrikePrices);
   useEffect(() => {
@@ -42,7 +51,7 @@ const MSDrawerTable = ({ setSelectedExpiryDate, expiryDates, selectedExpiryDate 
         : [];
     let CEmaxOI = -Infinity;
     let PEmaxOI = -Infinity;
-
+    console.log(filtered2);
     //getting maximum values of openInterests
     for (let el of filtered2) {
       if (CEmaxOI < el.cE_openInterest) {
@@ -123,7 +132,8 @@ const MSDrawerTable = ({ setSelectedExpiryDate, expiryDates, selectedExpiryDate 
             display: "flex",
             flexDirection: "row-reverse",
             textAlign: "left",
-            backgroundColor: rows.cE_strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
+            backgroundColor:
+              rows.cE_strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
           }}
         >
           <div
@@ -134,7 +144,8 @@ const MSDrawerTable = ({ setSelectedExpiryDate, expiryDates, selectedExpiryDate 
               justifyContent: "space-around",
               alignItems: "center",
               width: "100%",
-              backgroundColor: rows.cE_strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
+              backgroundColor:
+                rows.cE_strikePrice < underlayingPrice ? "#fffee5" : "#f9f9f9",
             }}
           >
             <p>{rows.cE_openInterest ? rows.cE_openInterest : 0}</p>
@@ -179,7 +190,8 @@ const MSDrawerTable = ({ setSelectedExpiryDate, expiryDates, selectedExpiryDate 
           className="main"
           style={{
             position: "relative",
-            backgroundColor: rows.pE_strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
+            backgroundColor:
+              rows.pE_strikePrice > underlayingPrice ? "#fffee5" : "#f9f9f9",
             padding: 7,
             display: "flex",
             flexDirection: "row-reverse",
@@ -222,7 +234,9 @@ const MSDrawerTable = ({ setSelectedExpiryDate, expiryDates, selectedExpiryDate 
               onChange={() => PEhandleCheckboxChange(rows)}
               style={{ zIndex: 1, cursor: "pointer" }}
             />
-            <p style={{ zIndex: 1 }}>{rows.pE_openInterest ? rows.pE_openInterest : 0}</p>
+            <p style={{ zIndex: 1 }}>
+              {rows.pE_openInterest ? rows.pE_openInterest : 0}
+            </p>
           </div>
         </div>
       ),
@@ -271,7 +285,6 @@ const MSDrawerTable = ({ setSelectedExpiryDate, expiryDates, selectedExpiryDate 
           }}
         />
       </ThemeProvider>
-      <p>Selected Strike Prices: {selected_CE_StrikePrices.join(", ")}</p>
     </Box>
   );
 };

@@ -1,15 +1,15 @@
 import React from "react";
-import * as ReactDOMClient from "react-dom/client";
+import { createRoot } from "react-dom";
 import { BrowserRouter } from "react-router-dom";
-import App from "App";
-import { Provider } from "react-redux";
-import { store, persistor } from "Redux/store"; // Import the persistor
+import App from "./App"; // Correct path to App component
+import { store, persistor } from "./Redux/store"; // Import the persistor
 import { ChakraProvider } from "@chakra-ui/react";
-import { PersistGate } from "redux-persist/integration/react"; // Import PersistGate
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 
 const container = document.getElementById("root");
 
-const root = ReactDOMClient.createRoot(container);
+const root = createRoot(container);
 
 root.render(
   <Provider store={store}>

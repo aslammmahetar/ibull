@@ -10,8 +10,10 @@ export const GET_NIFTY_EXPIRYDATES_FAIL = "GET_NIFTY_EXPIRYDATES_FAIL";
 
 // data with time limit
 export const GET_REQ_DATA_WITH_TIME_INT = "GET_REQ_DATA_WITH_TIME_INT";
-export const GET_REQ_DATA_WITH_TIME_INT_SUCCESS = "GET_REQ_DATA_WITH_TIME_INT_SUCCESS";
-export const GET_REQ_DATA_WITH_TIME_INT_FAILS = "GET_REQ_DATA_WITH_TIME_INT_FAILS";
+export const GET_REQ_DATA_WITH_TIME_INT_SUCCESS =
+  "GET_REQ_DATA_WITH_TIME_INT_SUCCESS";
+export const GET_REQ_DATA_WITH_TIME_INT_FAILS =
+  "GET_REQ_DATA_WITH_TIME_INT_FAILS";
 
 // limited data
 export const SHOW_LESS_THAN_ATM_DATA = "SHOW_LESS_THAN_ATM_DATA";
@@ -44,7 +46,9 @@ export const makingReqforNSE =
   (dispatch) => {
     dispatch(getNseData()); // Dispatch the action function
     axios
-      .get(`http://192.168.1.6/NSE/GetAllNSEDataBySym?interval=-15&symbol=${symbol}`)
+      .get(
+        `http://192.168.1.6/NSE/GetAllNSEDataBySym?interval=-15&symbol=${symbol}`
+      )
       .then((res) => {
         console.log(res);
         dispatch(getNseSuccess(res.data, count));
@@ -67,7 +71,9 @@ export const getDataWithIntFails = () => {
 export const makingReqforTimeIntData = (interval, symbol) => (dispatch) => {
   dispatch(getDataWithInt());
   axios
-    .get(`http://192.168.1.6/NSE/GetAllNSEDataBySym?interval=${interval}&symbol=${symbol}`)
+    .get(
+      `http://192.168.1.6/NSE/GetAllNSEDataBySym?interval=${interval}&symbol=${symbol}`
+    )
     .then((res) => {
       console.log(res);
     })

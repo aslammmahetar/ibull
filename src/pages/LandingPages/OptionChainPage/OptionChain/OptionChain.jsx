@@ -12,10 +12,16 @@ import {
 import "./table.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef } from "react";
-import { allColumnView } from "Redux/OcAction";
+import { allColumnView } from "Redux/OptionChainPage/ocAction";
 
-const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeToStrikePrice }) => {
-  const fontSize = useSelector((store) => store.reducer.fontSize);
+const OptionChain = ({
+  underlayingPrice,
+  combinedData,
+  CemaxOI,
+  PeMaxOI,
+  closeToStrikePrice,
+}) => {
+  const fontSize = useSelector((store) => store.OptionChainReducer.fontSize);
   const tableContainerRef = useRef(null);
 
   const {
@@ -33,10 +39,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
     intrValSpot,
     timeValue,
     LTP,
-    IV,
     columnCount,
   } = useSelector((store) => store.OptionChainReducer);
-  console.log(oiChange, oiChangePer);
   useEffect(() => {
     // Calculate the desired scroll positions (in pixels) to center the table content
     if (tableContainerRef.current) {
@@ -74,7 +78,10 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
   return (
     <Box className={"table-container"}>
       <ThemeProvider theme={theme}>
-        <div style={{ height: "100vh", overflow: "auto" }} ref={tableContainerRef}>
+        <div
+          style={{ height: "100vh", overflow: "auto" }}
+          ref={tableContainerRef}
+        >
           <Table>
             <TableHead>
               <TableRow>
@@ -86,7 +93,9 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                     fontSize: "small",
                   }}
                 >
-                  <b style={{ marginRight: "15px", color: "#785859" }}>CALLS </b>
+                  <b style={{ marginRight: "15px", color: "#785859" }}>
+                    CALLS{" "}
+                  </b>
                 </TableCell>
                 <TableCell style={{ border: "none" }}></TableCell>
                 <TableCell style={{ border: "none" }}></TableCell>
@@ -94,7 +103,15 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                   style={{ textAlign: "left", backgroundColor: "#f1fbf6" }}
                   colSpan={columnCount}
                 >
-                  <b style={{ marginLeft: "15px", color: "#039855", fontSize: "small" }}>PUTS</b>
+                  <b
+                    style={{
+                      marginLeft: "15px",
+                      color: "#039855",
+                      fontSize: "small",
+                    }}
+                  >
+                    PUTS
+                  </b>
                 </TableCell>
               </TableRow>
               <TableRow>
@@ -103,26 +120,54 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                 {theta && <TableCell className="tbleHead">Thetta</TableCell>}
                 {delta && <TableCell className="tbleHead">Delta</TableCell>}
                 {volume && <TableCell className="tbleHead">Volume</TableCell>}
-                {oiChange && <TableCell className="tbleHead">OI change</TableCell>}
-                {oiChangePer && <TableCell className="tbleHead">OI change %</TableCell>}
+                {oiChange && (
+                  <TableCell className="tbleHead">OI change</TableCell>
+                )}
+                {oiChangePer && (
+                  <TableCell className="tbleHead">OI change %</TableCell>
+                )}
                 {OI_lakh && <TableCell className="tbleHead">OI Lakh</TableCell>}
-                {bidprice && <TableCell className="tbleHead">Bid Price</TableCell>}
-                {offerPrice && <TableCell className="tbleHead">Offer Price</TableCell>}
-                {intrValFut && <TableCell className="tbleHead">Intr Value(Fut)</TableCell>}
-                {intrValSpot && <TableCell className="tbleHead">Intr Value(Spot)</TableCell>}
-                {timeValue && <TableCell className="tbleHead">Time Value</TableCell>}
+                {bidprice && (
+                  <TableCell className="tbleHead">Bid Price</TableCell>
+                )}
+                {offerPrice && (
+                  <TableCell className="tbleHead">Offer Price</TableCell>
+                )}
+                {intrValFut && (
+                  <TableCell className="tbleHead">Intr Value(Fut)</TableCell>
+                )}
+                {intrValSpot && (
+                  <TableCell className="tbleHead">Intr Value(Spot)</TableCell>
+                )}
+                {timeValue && (
+                  <TableCell className="tbleHead">Time Value</TableCell>
+                )}
                 {LTP && <TableCell className="tbleHead"> LTP</TableCell>}
                 <TableCell className="tbleHead">Strike Prices</TableCell>
                 <TableCell className="tbleHead">IV</TableCell>
                 {LTP && <TableCell className="tbleHead">LTP</TableCell>}
-                {timeValue && <TableCell className="tbleHead">Time Value</TableCell>}
-                {intrValSpot && <TableCell className="tbleHead">Intr Value(Spot)</TableCell>}
-                {intrValFut && <TableCell className="tbleHead">Intr Value(Fut)</TableCell>}
-                {offerPrice && <TableCell className="tbleHead">Offer Price</TableCell>}
-                {bidprice && <TableCell className="tbleHead">Bid Price</TableCell>}
+                {timeValue && (
+                  <TableCell className="tbleHead">Time Value</TableCell>
+                )}
+                {intrValSpot && (
+                  <TableCell className="tbleHead">Intr Value(Spot)</TableCell>
+                )}
+                {intrValFut && (
+                  <TableCell className="tbleHead">Intr Value(Fut)</TableCell>
+                )}
+                {offerPrice && (
+                  <TableCell className="tbleHead">Offer Price</TableCell>
+                )}
+                {bidprice && (
+                  <TableCell className="tbleHead">Bid Price</TableCell>
+                )}
                 {OI_lakh && <TableCell className="tbleHead">OI Lakh</TableCell>}
-                {oiChangePer && <TableCell className="tbleHead">OI change %</TableCell>}
-                {oiChange && <TableCell className="tbleHead">OI change</TableCell>}
+                {oiChangePer && (
+                  <TableCell className="tbleHead">OI change %</TableCell>
+                )}
+                {oiChange && (
+                  <TableCell className="tbleHead">OI change</TableCell>
+                )}
                 {volume && <TableCell className="tbleHead">Volume</TableCell>}
                 {delta && <TableCell className="tbleHead">Delta</TableCell>}
                 {theta && <TableCell className="tbleHead">Thetta</TableCell>}
@@ -138,7 +183,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                       <TableCell
                         style={{
                           backgroundColor:
-                            call.cE_strikePrice !== closeToStrikePrice.cE_strikePrice
+                            call.cE_strikePrice !==
+                            closeToStrikePrice.cE_strikePrice
                               ? call.cE_strikePrice < underlayingPrice
                                 ? "#fffee5"
                                 : "#f9f9f9"
@@ -153,7 +199,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                       <TableCell
                         style={{
                           backgroundColor:
-                            call.cE_strikePrice !== closeToStrikePrice.cE_strikePrice
+                            call.cE_strikePrice !==
+                            closeToStrikePrice.cE_strikePrice
                               ? call.cE_strikePrice < underlayingPrice
                                 ? "#fffee5"
                                 : "#f9f9f9"
@@ -168,7 +215,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                       <TableCell
                         style={{
                           backgroundColor:
-                            call.cE_strikePrice !== closeToStrikePrice.cE_strikePrice
+                            call.cE_strikePrice !==
+                            closeToStrikePrice.cE_strikePrice
                               ? call.cE_strikePrice < underlayingPrice
                                 ? "#fffee5"
                                 : "#f9f9f9"
@@ -183,7 +231,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                       <TableCell
                         style={{
                           backgroundColor:
-                            call.cE_strikePrice !== closeToStrikePrice.cE_strikePrice
+                            call.cE_strikePrice !==
+                            closeToStrikePrice.cE_strikePrice
                               ? call.cE_strikePrice < underlayingPrice
                                 ? "#fffee5"
                                 : "#f9f9f9"
@@ -198,7 +247,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                       <TableCell
                         style={{
                           backgroundColor:
-                            call.cE_strikePrice !== closeToStrikePrice.cE_strikePrice
+                            call.cE_strikePrice !==
+                            closeToStrikePrice.cE_strikePrice
                               ? call.cE_strikePrice < underlayingPrice
                                 ? "#fffee5"
                                 : "#f9f9f9"
@@ -213,7 +263,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                       <TableCell
                         style={{
                           backgroundColor:
-                            call.cE_strikePrice !== closeToStrikePrice.cE_strikePrice
+                            call.cE_strikePrice !==
+                            closeToStrikePrice.cE_strikePrice
                               ? call.cE_strikePrice < underlayingPrice
                                 ? "#fffee5"
                                 : "#f9f9f9"
@@ -228,7 +279,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                       <TableCell
                         style={{
                           backgroundColor:
-                            call.cE_strikePrice !== closeToStrikePrice.cE_strikePrice
+                            call.cE_strikePrice !==
+                            closeToStrikePrice.cE_strikePrice
                               ? call.cE_strikePrice < underlayingPrice
                                 ? "#fffee5"
                                 : "#f9f9f9"
@@ -243,7 +295,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                       <TableCell
                         style={{
                           backgroundColor:
-                            call.cE_strikePrice !== closeToStrikePrice.cE_strikePrice
+                            call.cE_strikePrice !==
+                            closeToStrikePrice.cE_strikePrice
                               ? call.cE_strikePrice < underlayingPrice
                                 ? "#fffee5"
                                 : "#f9f9f9"
@@ -257,7 +310,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                             flexDirection: "row-reverse",
                             textAlign: "left",
                             backgroundColor:
-                              call.cE_strikePrice !== closeToStrikePrice.cE_strikePrice
+                              call.cE_strikePrice !==
+                              closeToStrikePrice.cE_strikePrice
                                 ? call.cE_strikePrice < underlayingPrice
                                   ? "#fffee5"
                                   : "#f9f9f9"
@@ -269,7 +323,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                               textAlign: "left",
                               marginRight: "170px",
                               backgroundColor:
-                                call.cE_strikePrice !== closeToStrikePrice.cE_strikePrice
+                                call.cE_strikePrice !==
+                                closeToStrikePrice.cE_strikePrice
                                   ? call.cE_strikePrice < underlayingPrice
                                     ? "#fffee5"
                                     : "#f9f9f9"
@@ -279,7 +334,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                             <Typography
                               fontSize={fontSize}
                               bgcolor={
-                                call.cE_strikePrice !== closeToStrikePrice.cE_strikePrice
+                                call.cE_strikePrice !==
+                                closeToStrikePrice.cE_strikePrice
                                   ? call.cE_strikePrice < underlayingPrice
                                     ? "#fffee5"
                                     : "#f9f9f9"
@@ -292,7 +348,9 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                           <div
                             style={{
                               position: "absolute",
-                              width: `${(call.cE_openInterest / CemaxOI) * 100}%`,
+                              width: `${
+                                (call.cE_openInterest / CemaxOI) * 100
+                              }%`,
                               backgroundColor: "red",
                               color: "red",
                               borderTopLeftRadius: "10px",
@@ -309,7 +367,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                       <TableCell
                         style={{
                           backgroundColor:
-                            call.cE_strikePrice !== closeToStrikePrice.cE_strikePrice
+                            call.cE_strikePrice !==
+                            closeToStrikePrice.cE_strikePrice
                               ? call.cE_strikePrice < underlayingPrice
                                 ? "#fffee5"
                                 : "#f9f9f9"
@@ -324,7 +383,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                       <TableCell
                         style={{
                           backgroundColor:
-                            call.cE_strikePrice !== closeToStrikePrice.cE_strikePrice
+                            call.cE_strikePrice !==
+                            closeToStrikePrice.cE_strikePrice
                               ? call.cE_strikePrice < underlayingPrice
                                 ? "#fffee5"
                                 : "#f9f9f9"
@@ -339,7 +399,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                       <TableCell
                         style={{
                           backgroundColor:
-                            call.cE_strikePrice !== closeToStrikePrice.cE_strikePrice
+                            call.cE_strikePrice !==
+                            closeToStrikePrice.cE_strikePrice
                               ? call.cE_strikePrice < underlayingPrice
                                 ? "#fffee5"
                                 : "#f9f9f9"
@@ -354,7 +415,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                       <TableCell
                         style={{
                           backgroundColor:
-                            call.cE_strikePrice !== closeToStrikePrice.cE_strikePrice
+                            call.cE_strikePrice !==
+                            closeToStrikePrice.cE_strikePrice
                               ? call.cE_strikePrice < underlayingPrice
                                 ? "#fffee5"
                                 : "#f9f9f9"
@@ -369,7 +431,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                       <TableCell
                         style={{
                           backgroundColor:
-                            call.cE_strikePrice !== closeToStrikePrice.cE_strikePrice
+                            call.cE_strikePrice !==
+                            closeToStrikePrice.cE_strikePrice
                               ? call.cE_strikePrice < underlayingPrice
                                 ? "#fffee5"
                                 : "#f9f9f9"
@@ -384,7 +447,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                       <TableCell
                         style={{
                           backgroundColor:
-                            call.cE_strikePrice !== closeToStrikePrice.cE_strikePrice
+                            call.cE_strikePrice !==
+                            closeToStrikePrice.cE_strikePrice
                               ? call.cE_strikePrice < underlayingPrice
                                 ? "#fffee5"
                                 : "#f9f9f9"
@@ -424,7 +488,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                       <TableCell
                         style={{
                           backgroundColor:
-                            call.pE_strikePrice !== closeToStrikePrice.pE_strikePrice
+                            call.pE_strikePrice !==
+                            closeToStrikePrice.pE_strikePrice
                               ? call.pE_strikePrice > underlayingPrice
                                 ? "#fffee5"
                                 : "#f9f9f9"
@@ -439,7 +504,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                       <TableCell
                         style={{
                           backgroundColor:
-                            call.pE_strikePrice !== closeToStrikePrice.pE_strikePrice
+                            call.pE_strikePrice !==
+                            closeToStrikePrice.pE_strikePrice
                               ? call.pE_strikePrice > underlayingPrice
                                 ? "#fffee5"
                                 : "#f9f9f9"
@@ -454,7 +520,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                       <TableCell
                         style={{
                           backgroundColor:
-                            call.pE_strikePrice !== closeToStrikePrice.pE_strikePrice
+                            call.pE_strikePrice !==
+                            closeToStrikePrice.pE_strikePrice
                               ? call.pE_strikePrice > underlayingPrice
                                 ? "#fffee5"
                                 : "#f9f9f9"
@@ -469,7 +536,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                       <TableCell
                         style={{
                           backgroundColor:
-                            call.pE_strikePrice !== closeToStrikePrice.pE_strikePrice
+                            call.pE_strikePrice !==
+                            closeToStrikePrice.pE_strikePrice
                               ? call.pE_strikePrice > underlayingPrice
                                 ? "#fffee5"
                                 : "#f9f9f9"
@@ -484,7 +552,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                       <TableCell
                         style={{
                           backgroundColor:
-                            call.pE_strikePrice !== closeToStrikePrice.pE_strikePrice
+                            call.pE_strikePrice !==
+                            closeToStrikePrice.pE_strikePrice
                               ? call.pE_strikePrice > underlayingPrice
                                 ? "#fffee5"
                                 : "#f9f9f9"
@@ -499,7 +568,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                       <TableCell
                         style={{
                           backgroundColor:
-                            call.pE_strikePrice !== closeToStrikePrice.pE_strikePrice
+                            call.pE_strikePrice !==
+                            closeToStrikePrice.pE_strikePrice
                               ? call.pE_strikePrice > underlayingPrice
                                 ? "#fffee5"
                                 : "#f9f9f9"
@@ -514,7 +584,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                       <TableCell
                         style={{
                           backgroundColor:
-                            call.pE_strikePrice !== closeToStrikePrice.pE_strikePrice
+                            call.pE_strikePrice !==
+                            closeToStrikePrice.pE_strikePrice
                               ? call.pE_strikePrice > underlayingPrice
                                 ? "#fffee5"
                                 : "#f9f9f9"
@@ -525,7 +596,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                           style={{
                             position: "relative",
                             backgroundColor:
-                              call.pE_strikePrice !== closeToStrikePrice.pE_strikePrice
+                              call.pE_strikePrice !==
+                              closeToStrikePrice.pE_strikePrice
                                 ? call.pE_strikePrice > underlayingPrice
                                   ? "#fffee5"
                                   : "#f9f9f9"
@@ -537,7 +609,9 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                               position: "absolute",
                               top: 0,
                               left: 0,
-                              width: `${(call.pE_openInterest / PeMaxOI) * 100}%`,
+                              width: `${
+                                (call.pE_openInterest / PeMaxOI) * 100
+                              }%`,
                               backgroundColor: "lightgreen",
                               color: "lightgreen",
                               borderTopRightRadius: "10px",
@@ -550,7 +624,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                           <div
                             style={{
                               backgroundColor:
-                                call.pE_strikePrice !== closeToStrikePrice.pE_strikePrice
+                                call.pE_strikePrice !==
+                                closeToStrikePrice.pE_strikePrice
                                   ? call.pE_strikePrice > underlayingPrice
                                     ? "#fffee5"
                                     : "#f9f9f9"
@@ -570,7 +645,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                       <TableCell
                         style={{
                           backgroundColor:
-                            call.pE_strikePrice !== closeToStrikePrice.pE_strikePrice
+                            call.pE_strikePrice !==
+                            closeToStrikePrice.pE_strikePrice
                               ? call.pE_strikePrice > underlayingPrice
                                 ? "#fffee5"
                                 : "#f9f9f9"
@@ -585,7 +661,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                       <TableCell
                         style={{
                           backgroundColor:
-                            call.pE_strikePrice !== closeToStrikePrice.pE_strikePrice
+                            call.pE_strikePrice !==
+                            closeToStrikePrice.pE_strikePrice
                               ? call.pE_strikePrice > underlayingPrice
                                 ? "#fffee5"
                                 : "#f9f9f9"
@@ -600,7 +677,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                       <TableCell
                         style={{
                           backgroundColor:
-                            call.pE_strikePrice !== closeToStrikePrice.pE_strikePrice
+                            call.pE_strikePrice !==
+                            closeToStrikePrice.pE_strikePrice
                               ? call.pE_strikePrice > underlayingPrice
                                 ? "#fffee5"
                                 : "#f9f9f9"
@@ -615,7 +693,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                       <TableCell
                         style={{
                           backgroundColor:
-                            call.pE_strikePrice !== closeToStrikePrice.pE_strikePrice
+                            call.pE_strikePrice !==
+                            closeToStrikePrice.pE_strikePrice
                               ? call.pE_strikePrice > underlayingPrice
                                 ? "#fffee5"
                                 : "#f9f9f9"
@@ -630,7 +709,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                       <TableCell
                         style={{
                           backgroundColor:
-                            call.pE_strikePrice !== closeToStrikePrice.pE_strikePrice
+                            call.pE_strikePrice !==
+                            closeToStrikePrice.pE_strikePrice
                               ? call.pE_strikePrice > underlayingPrice
                                 ? "#fffee5"
                                 : "#f9f9f9"
@@ -645,7 +725,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                       <TableCell
                         style={{
                           backgroundColor:
-                            call.pE_strikePrice !== closeToStrikePrice.pE_strikePrice
+                            call.pE_strikePrice !==
+                            closeToStrikePrice.pE_strikePrice
                               ? call.pE_strikePrice > underlayingPrice
                                 ? "#fffee5"
                                 : "#f9f9f9"
@@ -660,7 +741,8 @@ const OptionChain = ({ underlayingPrice, combinedData, CemaxOI, PeMaxOI, closeTo
                       <TableCell
                         style={{
                           backgroundColor:
-                            call.pE_strikePrice !== closeToStrikePrice.pE_strikePrice
+                            call.pE_strikePrice !==
+                            closeToStrikePrice.pE_strikePrice
                               ? call.pE_strikePrice > underlayingPrice
                                 ? "#fffee5"
                                 : "#f9f9f9"

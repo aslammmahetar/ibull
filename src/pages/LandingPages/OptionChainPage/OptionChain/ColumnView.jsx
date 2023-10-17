@@ -1,11 +1,10 @@
 import { Box, FormLabel, Stack, Switch, Typography } from "@mui/material";
-import { toggleColumn } from "Redux/OcAction";
+import { toggleColumn } from "Redux/OptionChainPage/ocAction";
 import React from "react";
 import { useDispatch } from "react-redux";
 
 const ColumnView = ({ views }) => {
   const dispatch = useDispatch();
-  console.log(views);
   const handleToggle = (switchName) => () => {
     return dispatch(toggleColumn(switchName));
   };
@@ -14,19 +13,31 @@ const ColumnView = ({ views }) => {
     <div style={{ display: "flex", justifyContent: "space-around" }}>
       <Stack>
         <Box>
-          <Switch id="ltpChangePer" checked={views.LTP} onChange={handleToggle("LTP")} />
+          <Switch
+            id="ltpChangePer"
+            checked={views.LTP}
+            onChange={handleToggle("LTP")}
+          />
           <FormLabel color="black" style={{ fontSize: "medium" }}>
             LTP Change %
           </FormLabel>
         </Box>
         <Box>
-          <Switch id="volume" checked={views.volume} onChange={handleToggle("volume")} />
+          <Switch
+            id="volume"
+            checked={views.volume}
+            onChange={handleToggle("volume")}
+          />
           <FormLabel color="black" style={{ fontSize: "medium" }}>
             Volume
           </FormLabel>
         </Box>
         <Box>
-          <Switch id="oichange" checked={views.OI_lakh} onChange={handleToggle("oiChange")} />
+          <Switch
+            id="oichange"
+            checked={views.OI_lakh}
+            onChange={handleToggle("oiChange")}
+          />
           <FormLabel color="black" style={{ fontSize: "medium" }}>
             OI Change
           </FormLabel>
@@ -49,7 +60,11 @@ const ColumnView = ({ views }) => {
           </FormLabel>
         </Box>
         <Box>
-          <Switch id="bidPrice" checked={views.bidprice} onChange={handleToggle("bidprice")} />
+          <Switch
+            id="bidPrice"
+            checked={views.bidprice}
+            onChange={handleToggle("bidprice")}
+          />
           <FormLabel color="black" style={{ fontSize: "medium" }}>
             Bid Price
           </FormLabel>
@@ -61,25 +76,41 @@ const ColumnView = ({ views }) => {
         </Typography>
         <Stack>
           <Box>
-            <Switch id="delta" checked={views.delta} onChange={handleToggle("delta")} />
+            <Switch
+              id="delta"
+              checked={views.delta}
+              onChange={handleToggle("delta")}
+            />
             <FormLabel color="black" style={{ fontSize: "medium" }}>
               Delta
             </FormLabel>
           </Box>{" "}
           <Box>
-            <Switch id="gamma" checked={views.gamma} onChange={handleToggle("gamma")} />
+            <Switch
+              id="gamma"
+              checked={views.gamma}
+              onChange={handleToggle("gamma")}
+            />
             <FormLabel color="black" style={{ fontSize: "medium" }}>
               Gamma
             </FormLabel>
           </Box>{" "}
           <Box>
-            <Switch id="theta" checked={views.theta} onChange={handleToggle("theta")} />
+            <Switch
+              id="theta"
+              checked={views.theta}
+              onChange={handleToggle("theta")}
+            />
             <FormLabel color="black" style={{ fontSize: "medium" }}>
               Theta
             </FormLabel>
           </Box>{" "}
           <Box>
-            <Switch id="vega" checked={views.vega} onChange={handleToggle("vega")} />
+            <Switch
+              id="vega"
+              checked={views.vega}
+              onChange={handleToggle("vega")}
+            />
             <FormLabel color="black" style={{ fontSize: "medium" }}>
               Vega
             </FormLabel>

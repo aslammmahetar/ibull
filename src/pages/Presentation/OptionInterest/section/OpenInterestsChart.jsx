@@ -1,35 +1,32 @@
-import { makingReqforNSE } from "Redux/RealActions";
 import CircularIndeterminate from "pages/CircularIndeterminate";
-import React, { useEffect } from "react";
+import React from "react";
 import { Bar } from "react-chartjs-2";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const OpenInterestChart = () => {
-  const dispatch = useDispatch();
-  const strikePrices = useSelector((store) => store.realReducer.strikePrices);
-  const twoMonthdata = useSelector((store) => store.realReducer.twoMonthData);
+  const strikePrices = useSelector((store) => store.oiReducer.strikePrice);
+  const twoMonthdata = useSelector((store) => store.oiReducer.recentTwomonth);
+  console.log(twoMonthdata);
+
   const currentMonthselementsAroundClosest = useSelector(
-    (store) => store.realReducer.currentMonthselementsAroundClosest
+    (store) => store.oiReducer.currentMonthselementsAroundClosest
   );
   const nextMonthselementsAroundClosest = useSelector(
-    (store) => store.realReducer.nextMonthselementsAroundClosest
+    (store) => store.oiReducer.nextMonthselementsAroundClosest
   );
-  const currentMonth = useSelector((store) => store.realReducer.currentMonth);
-  const nextMonth = useSelector((store) => store.realReducer.nextMonth);
-
-  useEffect(() => {
-    dispatch(makingReqforNSE(5));
-  }, []);
+  const currentMonth = useSelector((store) => store.oiReducer.currentMonth);
+  const nextMonth = useSelector((store) => store.oiReducer.nextMonth);
 
   const displayDataPe = () => {
     if (currentMonth && nextMonth) {
-      const returnIt = currentMonthselementsAroundClosest.map((dataPoint, index) => {
-        console.log(dataPoint, index);
-        return (
-          (dataPoint?.pE_openInterest || 0) +
-          (nextMonthselementsAroundClosest[index]?.pE_openInterest || 0)
-        );
-      });
+      const returnIt = currentMonthselementsAroundClosest.map(
+        (dataPoint, index) => {
+          return (
+            (dataPoint?.pE_openInterest || 0) +
+            (nextMonthselementsAroundClosest[index]?.pE_openInterest || 0)
+          );
+        }
+      );
       return returnIt;
     } else if (currentMonth && !nextMonth) {
       const returnIt = currentMonthselementsAroundClosest.map(
@@ -48,8 +45,8 @@ const OpenInterestChart = () => {
     if (currentMonth && nextMonth) {
       const returnIt = currentMonthselementsAroundClosest.map(
         (dataPoint, index) =>
-          dataPoint.cE_openInterest ||
-          0 + nextMonthselementsAroundClosest[index].cE_openInterest ||
+          dataPoint?.cE_openInterest ||
+          0 + nextMonthselementsAroundClosest[index]?.cE_openInterest ||
           0
       );
       return returnIt;
@@ -114,7 +111,11 @@ const OpenInterestChart = () => {
 
   return (
     <div style={{ width: "100%" }}>
-      {twoMonthdata.length > 0 ? <Bar data={data} options={options} /> : <CircularIndeterminate />}
+      {twoMonthdata.length > 0 ? (
+        <Bar data={data} options={options} />
+      ) : (
+        <CircularIndeterminate />
+      )}
     </div>
   );
 };

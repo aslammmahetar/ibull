@@ -16,21 +16,22 @@ import { Search } from "@mui/icons-material";
 import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import MSDrawerTable from "./MSDrawerTable";
 import { useDispatch, useSelector } from "react-redux";
-import { getNIFTYExpiryDate } from "Redux/RealActions";
-import { makingReqforNSE } from "Redux/RealActions";
-import { makingGroup } from "Redux/MSAction";
+import { makingGroup } from "Redux/Multi_Strike_OI/MSAction";
+import { setMSSymbol } from "Redux/Multi_Strike_OI/MSAction";
 
-export default function MSDrawer({ symbol, setSymbol }) {
+export default function MSDrawer() {
   const dispatch = useDispatch();
 
-  React.useEffect(() => {
-    dispatch(getNIFTYExpiryDate(symbol));
-    dispatch(makingReqforNSE(0, symbol));
-  }, [symbol]);
-  const expiryDates = useSelector((store) => store.realReducer.expiryDates);
-  const selected_CE_StrikePrices = useSelector((store) => store.MSreducer.selected_CE_StrikePrices);
+  const expiryDates = useSelector(
+    (store) => store.OptionChainReducer.expiryDates
+  );
+  const selected_CE_StrikePrices = useSelector(
+    (store) => store.MSreducer.selected_CE_StrikePrices
+  );
 
-  const selected_PE_StrikePrices = useSelector((store) => store.MSreducer.selected_PE_StrikePrices);
+  const selected_PE_StrikePrices = useSelector(
+    (store) => store.MSreducer.selected_PE_StrikePrices
+  );
   const [selectedExpiryDate, setSelectedExpiryDate] = React.useState("");
   const handleExpiryDateChange = (event) => {
     setSelectedExpiryDate(event.target.value);
@@ -49,11 +50,14 @@ export default function MSDrawer({ symbol, setSymbol }) {
   });
 
   const handleStream = (value) => {
-    setSymbol(value);
+    dispatch(setMSSymbol(value));
   };
 
   const toggleDrawer = (anchor, open) => (event) => {
-    if (event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
       return;
     }
 
@@ -71,7 +75,10 @@ export default function MSDrawer({ symbol, setSymbol }) {
 
   const list = (anchor) => (
     <Box
-      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 414, p: 1 }}
+      sx={{
+        width: anchor === "top" || anchor === "bottom" ? "auto" : 414,
+        p: 1,
+      }}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
@@ -85,7 +92,7 @@ export default function MSDrawer({ symbol, setSymbol }) {
           alignItems={"center"}
           onClick={(e) => e.stopPropagation()}
         >
-          <Typography pl={2}>Group 1</Typography>
+          <Typography pl={2}>Create New Group</Typography>
         </Box>
         <Box width={"25%"}>
           <Button style={{ border: "solid grey 1px" }} onClick={handleMOILines}>
@@ -140,7 +147,10 @@ export default function MSDrawer({ symbol, setSymbol }) {
                 <TrendingUpOutlinedIcon color="info" />
               </Button>
             </Tooltip>
-            <Button variant="outlined" style={{ width: "5px", color: "blue", marginLeft: "4px" }}>
+            <Button
+              variant="outlined"
+              style={{ width: "5px", color: "blue", marginLeft: "4px" }}
+            >
               info
             </Button>
           </Box>
@@ -180,14 +190,26 @@ export default function MSDrawer({ symbol, setSymbol }) {
   return (
     <Card style={{ padding: 10, width: "48%" }}>
       {["right"].map((anchor) => (
-        <Box key={anchor} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+        <Box
+          key={anchor}
+          display={"flex"}
+          alignItems={"center"}
+          justifyContent={"space-between"}
+        >
           <Typography fontSize={"medium"}>
             <b>Visualization and Group Management</b>
           </Typography>
-          <Button onClick={toggleDrawer(anchor, true)} style={{ border: "solid black 1px" }}>
+          <Button
+            onClick={toggleDrawer(anchor, true)}
+            style={{ border: "solid black 1px" }}
+          >
             Create Group
           </Button>
-          <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
+          <Drawer
+            anchor={anchor}
+            open={state[anchor]}
+            onClose={toggleDrawer(anchor, false)}
+          >
             {list(anchor)}
           </Drawer>
         </Box>

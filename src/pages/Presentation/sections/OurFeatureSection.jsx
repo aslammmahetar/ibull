@@ -29,7 +29,7 @@ const features = [
     bgColor: "success",
   },
   {
-    title: "Profit and Loss Visualization of Strategies",
+    title: "Profit/Loss Visualization of Strategies",
     icon: "candlestick_chart",
     bgColor: "error",
   },
@@ -78,7 +78,12 @@ function OurFeatureSection() {
               >
                 <Icon fontSize="large">{feature.icon}</Icon>
               </Box>
-              <Typography variant="body2" color="text" p={2} className={classes.featureTitle}>
+              <Typography
+                variant="body2"
+                color="text"
+                p={2}
+                className={classes.featureTitle}
+              >
                 <b>{feature.title}</b>
               </Typography>
             </Box>

@@ -1,19 +1,3 @@
-/* eslint-disable no-param-reassign */
-/**
-=========================================================
-* Material Kit 2 React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-kit-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useState, useEffect } from "react";
 
 // react-router components
@@ -244,7 +228,11 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
             {item.collapse && (
               <Icon
                 fontSize="small"
-                sx={{ fontWeight: "normal", verticalAlign: "middle", mr: -0.5 }}
+                sx={{
+                  fontWeight: "normal",
+                  verticalAlign: "middle",
+                  mr: -0.5,
+                }}
               >
                 keyboard_arrow_right
               </Icon>
@@ -384,7 +372,11 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
                     {item.collapse && (
                       <Icon
                         fontSize="small"
-                        sx={{ fontWeight: "normal", verticalAlign: "middle", mr: -0.5 }}
+                        sx={{
+                          fontWeight: "normal",
+                          verticalAlign: "middle",
+                          mr: -0.5,
+                        }}
                       >
                         keyboard_arrow_right
                       </Icon>
@@ -441,7 +433,11 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
         // border="1px solid red"
         mx={{ xs: 0, lg: relative ? 0 : 3 }}
         ml={{ xs: -2, lg: -16.5, md: -11.4 }}
-        width={{ xs: "100%", md: "119.5%", lg: !relative ? "118.7%" : "calc(100% - 48px)" }}
+        width={{
+          xs: "100%",
+          md: "119.5%",
+          lg: !relative ? "118.7%" : "calc(100% - 48px)",
+        }}
         shadow={transparent ? "none" : "md"}
         color={light ? "white" : "dark"}
         position={relative ? "relative" : "absolute"}
@@ -524,8 +520,8 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
             >
               FINNIFTY
             </Button>
-            <AccountMenu />
             {renderNavbarItems}
+            <AccountMenu />
           </MKBox>
           <MKBox
             display={{ xs: "inline-block", lg: "none" }}

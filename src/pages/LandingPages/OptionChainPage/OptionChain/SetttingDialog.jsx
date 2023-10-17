@@ -10,15 +10,19 @@ import Draggable from "react-draggable";
 import { Box } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useDispatch } from "react-redux";
-import { ltpView } from "Redux/OcAction";
-import { greekView } from "Redux/OcAction";
-import { allColumnView } from "Redux/OcAction";
+
 import { SettingsIcon } from "@chakra-ui/icons";
 import ViewSettingsTab from "./ViewSettingTabs";
+import { ltpView } from "Redux/OptionChainPage/ocAction";
+import { greekView } from "Redux/OptionChainPage/ocAction";
+import { allColumnView } from "Redux/OptionChainPage/ocAction";
 
 function PaperComponent(props) {
   return (
-    <Draggable handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
+    <Draggable
+      handle="#draggable-dialog-title"
+      cancel={'[class*="MuiDialogContent-root"]'}
+    >
       <Paper {...props} />
     </Draggable>
   );
@@ -91,26 +95,6 @@ export default function SettingsDialog() {
         <DialogContent>
           <DialogContentText>
             <ViewSettingsTab />
-            {/* <Box sx={{ width: "100%" }} onClick={(e) => e.stopPropagation()}>
-                <TabContext value={value} on>
-                  <Box
-                    sx={{ borderBottom: 1, borderColor: "divider" }}
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <TabList onChange={handleChange} aria-label="lab API tabs example">
-                      <Tab label="LTP view" value="1" />
-                      <Tab label="Greek view" value="2" />
-                      <Tab label="All column view" value="3" />
-                    </TabList>
-                  </Box>
-                  <TabPanel value="1">Item one</TabPanel>
-                  <TabPanel value="2">Item Two</TabPanel>
-                  <TabPanel value="3">
-                    <Typography variant="h6">Customise All Column View </Typography>
-                    
-                  </TabPanel>
-                </TabContext>
-              </Box> */}
           </DialogContentText>
         </DialogContent>
         <DialogActions>

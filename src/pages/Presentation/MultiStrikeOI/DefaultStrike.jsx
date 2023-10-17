@@ -1,86 +1,41 @@
-import { Box, Button, Checkbox, FormControlLabel, Typography } from "@mui/material";
-import MKBox from "components/MKBox";
+import { Box, Checkbox, FormControlLabel } from "@mui/material";
 import React from "react";
-import StarHalfIcon from "@mui/icons-material/StarHalf";
+import { useSelector } from "react-redux";
 
 const DefaultStrike = ({
-  selectAll,
-  handleCheckboxChange,
-  displayLines,
-  handleSelectAllChange,
+  seriesVisibility,
+  setSeriesVisibility,
+  selectedCardIndex,
 }) => {
+  const defaultStrikes = useSelector((store) => store.MSreducer.defaltStrikes);
+
+  const handleCheckboxChange = (isVisible, seriesName) => {
+    console.log(isVisible, seriesName);
+    setSeriesVisibility({
+      ...seriesVisibility,
+      [seriesName]: isVisible,
+    });
+  };
+
   return (
     <div>
-      <MKBox display="flex" justifyContent="space-between">
-        <Typography fontSize={"small"} color={"orange"}>
-          <StarHalfIcon /> Most Active Strikes
-        </Typography>
-        <Button style={{ padding: 3, border: "lightgrey 1px solid", borderRadius: 3 }}>
-          Selected
-        </Button>
-      </MKBox>
       <Box display={"flex"} justifyContent={"space-around"}>
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={selectAll}
-              onChange={handleSelectAllChange} // Handle "Select All" checkbox change
-              name="select-all"
+        {defaultStrikes.map((el, index) => {
+          return (
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={seriesVisibility[`${el.name}`]}
+                  onChange={(e) =>
+                    handleCheckboxChange(e.target.checked, el.name)
+                  }
+                  name={el.name}
+                />
+              }
+              label={el.name}
             />
-          }
-          label="Select All"
-        />
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={displayLines["28 SEP 2400 CE"]}
-              onChange={handleCheckboxChange}
-              name="28 SEP 2400 CE"
-            />
-          }
-          label="28 SEP 2400 CE"
-        />
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={displayLines["28 SEP 2380 CE"]}
-              onChange={handleCheckboxChange}
-              name="28 SEP 2380 CE"
-            />
-          }
-          label="28 SEP 2380 CE
-        "
-        />
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={displayLines["28 SEP 2420 CE"]}
-              onChange={handleCheckboxChange}
-              name="28 SEP 2420 CE"
-            />
-          }
-          label="28 SEP 2420 CE"
-        />
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={displayLines["28 SEP 2360 PE"]}
-              onChange={handleCheckboxChange}
-              name="28 SEP 2360 PE"
-            />
-          }
-          label="28 SEP 2360 PE"
-        />
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={displayLines["28 SEP 2380 PE"]}
-              onChange={handleCheckboxChange}
-              name="28 SEP 2380 PE"
-            />
-          }
-          label="28 SEP 2380 PE"
-        />
+          );
+        })}
       </Box>
     </div>
   );

@@ -11,13 +11,13 @@ import {
   RadioGroup,
   Typography,
 } from "@mui/material";
-import { fontSizeChange } from "Redux/action";
-import { getLessThanATMData } from "Redux/RealActions";
-import { getGreaterThanATMData } from "Redux/RealActions";
 import smallFontImage from "assets/images/smallfont.png";
 import mediumFontImage from "assets/images/mediumfont.png";
 import largeFontImage from "assets/images/largefont.png";
 import { useDispatch } from "react-redux";
+import { fontSizeChange } from "Redux/OptionChainPage/ocAction";
+import { getLessThanATMDataOC } from "Redux/OptionChainPage/ocAction";
+import { getGreaterThanATMOC } from "Redux/OptionChainPage/ocAction";
 const GlobalSettingTab = () => {
   const dispatch = useDispatch();
 
@@ -29,16 +29,18 @@ const GlobalSettingTab = () => {
   const handleRadio = (event) => {
     setRadioValue(event.target.value);
   };
-  const [selectedLessThanButton, setSelectedLessThanButton] = React.useState(null);
+  const [selectedLessThanButton, setSelectedLessThanButton] =
+    React.useState(null);
   const handleLessThanButtonClick = (e, index) => {
     setSelectedLessThanButton(index);
-    dispatch(getLessThanATMData(Number(e.target.innerText)));
+    dispatch(getLessThanATMDataOC(Number(e.target.innerText)));
   };
 
-  const [selectedGreaterThanButton, setSelectedGreaterThanButton] = React.useState(null);
+  const [selectedGreaterThanButton, setSelectedGreaterThanButton] =
+    React.useState(null);
   const handleGreterThanButtonClick = (e, index) => {
     setSelectedGreaterThanButton(index);
-    dispatch(getGreaterThanATMData(Number(e.target.innerText)));
+    dispatch(getGreaterThanATMOC(Number(e.target.innerText)));
   };
 
   const [selectFontSize, setSelectedFontSize] = React.useState(null);
@@ -65,8 +67,16 @@ const GlobalSettingTab = () => {
               onChange={handleRadio}
             >
               <Box display={"flex"}>
-                <FormControlLabel value="lots" control={<Radio />} label="Lots" />
-                <FormControlLabel value="quantitty" control={<Radio />} label="Qty" />
+                <FormControlLabel
+                  value="lots"
+                  control={<Radio />}
+                  label="Lots"
+                />
+                <FormControlLabel
+                  value="quantitty"
+                  control={<Radio />}
+                  label="Qty"
+                />
               </Box>
             </RadioGroup>
           </FormControl>
@@ -84,7 +94,8 @@ const GlobalSettingTab = () => {
                 onClick={(e) => handleLessThanButtonClick(e, index)}
                 style={{
                   border: "solid lightgrey 1px",
-                  backgroundColor: selectedLessThanButton === index ? "blue" : "white",
+                  backgroundColor:
+                    selectedLessThanButton === index ? "blue" : "white",
                   color: selectedLessThanButton === index ? "white" : "black",
                 }}
               >
@@ -106,8 +117,10 @@ const GlobalSettingTab = () => {
                 onClick={(e) => handleGreterThanButtonClick(e, index)}
                 style={{
                   border: "solid lightgrey 1px",
-                  backgroundColor: selectedGreaterThanButton === index ? "blue" : "white",
-                  color: selectedGreaterThanButton === index ? "white" : "black",
+                  backgroundColor:
+                    selectedGreaterThanButton === index ? "blue" : "white",
+                  color:
+                    selectedGreaterThanButton === index ? "white" : "black",
                 }}
               >
                 {button}
@@ -129,10 +142,19 @@ const GlobalSettingTab = () => {
                 }}
               >
                 <ImageListItem key={index}>
-                  <div onClick={() => dispatch(fontSizeChange(fontArray[index]))}>
-                    <img src={item} srcSet={item} alt={"Imges"} loading="lazy" />
+                  <div
+                    onClick={() => dispatch(fontSizeChange(fontArray[index]))}
+                  >
+                    <img
+                      src={item}
+                      srcSet={item}
+                      alt={"Imges"}
+                      loading="lazy"
+                    />
                     <Box textAlign={"center"}>
-                      <Typography fontSize={"Small"}>{fontArray[index]}</Typography>
+                      <Typography fontSize={"Small"}>
+                        {fontArray[index]}
+                      </Typography>
                     </Box>
                   </div>
                 </ImageListItem>

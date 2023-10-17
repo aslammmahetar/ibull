@@ -5,9 +5,7 @@ import { makeStyles } from "@mui/styles";
 import BarChart from "./ChartsSection";
 import { Box, Card, Typography } from "@mui/material";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
-import WeatherDataChart from "pages/Presentation/Charts/WetherDataChart";
 import DatePickerComp from "./DatePickerComp";
-import KarasjokWeatherChart from "pages/Presentation/Charts/KarasjokWeatherChart";
 import OpenInterestChart from "./OpenInterestsChart";
 import { useSelector } from "react-redux";
 const useStyles = makeStyles((theme) => ({
@@ -52,10 +50,14 @@ const ChartAndFilter = () => {
       }`;
     }
     if (currentMonth && !nextMonth) {
-      return `${!months[currentMonthname + 1] ? "Jan" : months[currentMonthname]}`;
+      return `${
+        !months[currentMonthname + 1] ? "Jan" : months[currentMonthname]
+      }`;
     }
     if (!currentMonth && nextMonth) {
-      return `${!months[currentMonthname + 1] ? "Jan" : months[currentMonthname + 1]}`;
+      return `${
+        !months[currentMonthname + 1] ? "Jan" : months[currentMonthname + 1]
+      }`;
     }
     return "Nothing";
   };
@@ -64,7 +66,12 @@ const ChartAndFilter = () => {
     <div className={classes.root}>
       <MKBox
         sx={{
-          flexDirection: { xs: "column", sm: "column", md: "column", lg: "column" },
+          flexDirection: {
+            xs: "column",
+            sm: "column",
+            md: "column",
+            lg: "column",
+          },
         }}
         style={{
           width: "100%",
@@ -83,7 +90,9 @@ const ChartAndFilter = () => {
           <BarChart />
           <Card sx={{ padding: "10px", marginTop: "20px" }}>
             <MKBox style={{ padding: "5px" }}>
-              <Typography variant="h5">Open Interest - {displayMonth()} Expiries</Typography>
+              <Typography variant="h5">
+                Open Interest - {displayMonth()} Expiries
+              </Typography>
             </MKBox>
             <hr />
             <Box display={"flex"}>
