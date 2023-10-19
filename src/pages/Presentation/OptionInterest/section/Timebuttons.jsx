@@ -1,5 +1,5 @@
 import { Stack } from "@mui/material";
-import { makingReqforTimeIntData } from "Redux/RealActions";
+import { getDataBasedOnTime } from "Redux/Open_Interest/OIAction";
 import MKButton from "components/MKButton";
 import React from "react";
 import { useDispatch } from "react-redux";
@@ -9,93 +9,73 @@ const Timebuttons = () => {
 
   return (
     <Stack spacing={2}>
-      {/* <MKButton
-        onClick={() => {
-          dispatch(makingReqforTimeIntData(-5));3        }}
-        disabled
-        size="small"
-        variant="outlined"
-        style={{ color: "#16718D", marginLeft: "2px" }}
-      >
-        Last 5 Mins
-      </MKButton> */}
-      {/* <MKButton
-        onClick={() => {
-          dispatch(makingReqforTimeIntData(-10))3
-        }}
-        size="small"
-        variant="outlined"
-        style={{ color: "#16718D", marginLeft: "2px" }}
-      >
-        Last 10 Mins
-      </MKButton> */}
       <MKButton
         onClick={() => {
-          dispatch(makingReqforTimeIntData(-15, 3));
+          dispatch(getDataBasedOnTime(1, -15));
         }}
         size="small"
         variant="outlined"
-        style={{ color: "#16718D", marginLeft: "2px" }}
+        style={{ color: "#16718D" }}
       >
         Last 15 Mins
       </MKButton>
       <MKButton
         onClick={() => {
-          dispatch(makingReqforTimeIntData(-30, 3));
+          dispatch(getDataBasedOnTime(1, -30));
         }}
         size="small"
         variant="outlined"
-        style={{ color: "#16718D", marginLeft: "2px" }}
+        style={{ color: "#16718D" }}
       >
         Last 30 Mins
       </MKButton>
       <MKButton
         onClick={() => {
-          dispatch(makingReqforTimeIntData(-45, 3));
+          dispatch(getDataBasedOnTime(1, -45));
         }}
         size="small"
         variant="outlined"
-        style={{ color: "#16718D", marginLeft: "2px" }}
+        style={{ color: "#16718D" }}
       >
         Last 45 Mins
       </MKButton>
       <MKButton
         onClick={() => {
-          dispatch(makingReqforTimeIntData(-60, 3));
+          dispatch(getDataBasedOnTime(1, -60));
         }}
         size="small"
         variant="outlined"
-        style={{ color: "#16718D", marginLeft: "2px" }}
+        style={{ color: "#16718D" }}
       >
         Last 1hr
       </MKButton>
       <MKButton
         onClick={() => {
-          dispatch(makingReqforTimeIntData(-120, 31));
+          dispatch(getDataBasedOnTime(1, -120));
         }}
         size="small"
         variant="outlined"
-        style={{ color: "#16718D", marginLeft: "2px" }}
+        style={{ color: "#16718D" }}
       >
         Last 2hr
       </MKButton>
       <MKButton
         onClick={() => {
-          dispatch(makingReqforTimeIntData(-180, 3));
+          dispatch(getDataBasedOnTime(1, -180));
         }}
         size="small"
         variant="outlined"
-        style={{ color: "#16718D", marginLeft: "2px" }}
+        style={{ color: "#16718D" }}
       >
         Last 3hr
       </MKButton>
       <MKButton
         onClick={() => {
-          dispatch(makingReqforTimeIntData(0));
+          dispatch(getDataBasedOnTime(-180, 1));
         }}
         size="small"
         variant="outlined"
-        style={{ color: "#16718D", marginLeft: "2px" }}
+        style={{ color: "#16718D" }}
       >
         Full day
       </MKButton>

@@ -18,20 +18,9 @@ import footerRoutes from "footer.routes";
 // import bgImage from "/"
 import bgImage from "assets/images/Banner.jpeg";
 
-import {
-  FormControl,
-  IconButton,
-  MenuItem,
-  Select,
-  Typography,
-} from "@mui/material";
+import { FormControl, IconButton, MenuItem, Select, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import {
-  BarChartOutlined,
-  OndemandVideo,
-  Search,
-  ShowChartOutlined,
-} from "@mui/icons-material";
+import { BarChartOutlined, Search, ShowChartOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import OptionChain from "./OptionChain/OptionChain";
@@ -51,28 +40,16 @@ function AboutUs() {
   const ulValue = useSelector((store) => store.OptionChainReducer.ulValue);
   const store = useSelector((store) => store.OptionChainReducer.data);
   console.log(store);
-  const filteredData = useSelector(
-    (store) => store.OptionChainReducer.filteredData
-  );
+  const filteredData = useSelector((store) => store.OptionChainReducer.filteredData);
   const callMax = useSelector((store) => store.OptionChainReducer.callMax);
   const putMax = useSelector((store) => store.OptionChainReducer.putMax);
-  const closestElement = useSelector(
-    (store) => store.OptionChainReducer.closestElement
-  );
+  const closestElement = useSelector((store) => store.OptionChainReducer.closestElement);
   const fontSize = useSelector((store) => store.OptionChainReducer.fontSize);
-  const expiryDates = useSelector(
-    (store) => store.OptionChainReducer.expiryDates
-  );
+  const expiryDates = useSelector((store) => store.OptionChainReducer.expiryDates);
   console.log(expiryDates);
-  const lessThanATM = useSelector(
-    (store) => store.OptionChainReducer.lessThanATM
-  );
-  const greaterThanATM = useSelector(
-    (store) => store.OptionChainReducer.greaterThanATM
-  );
-  const nearestThursday = useSelector(
-    (store) => store.realReducer.nearestThurday
-  );
+  const lessThanATM = useSelector((store) => store.OptionChainReducer.lessThanATM);
+  const greaterThanATM = useSelector((store) => store.OptionChainReducer.greaterThanATM);
+  const nearestThursday = useSelector((store) => store.realReducer.nearestThurday);
   useEffect(() => {
     dispatch(getExpiry(symbol));
     dispatch(getData(symbol));
@@ -132,10 +109,7 @@ function AboutUs() {
   useEffect(() => {
     const closestIndex = filteredData.indexOf(closestElement);
     const startIndex = Math.max(0, closestIndex - lessThanATM);
-    const endIndex = Math.min(
-      filteredData.length - 1,
-      closestIndex + greaterThanATM
-    );
+    const endIndex = Math.min(filteredData.length - 1, closestIndex + greaterThanATM);
 
     const elementsAroundClosest = filteredData.slice(startIndex, endIndex + 1);
     setData(elementsAroundClosest);
@@ -162,14 +136,8 @@ function AboutUs() {
         minHeight="25vh"
         width="100%"
         sx={{
-          backgroundImage: ({
-            functions: { linearGradient, rgba },
-            palette: { gradients },
-          }) =>
-            `${linearGradient(
-              rgba(gradients.dark.main, 0.6),
-              rgba(gradients.dark.state, 0.6)
-            )})`,
+          backgroundImage: ({ functions: { linearGradient, rgba }, palette: { gradients } }) =>
+            `${linearGradient(rgba(gradients.dark.main, 0.6), rgba(gradients.dark.state, 0.6))})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           display: "grid",
@@ -195,7 +163,7 @@ function AboutUs() {
             mt: 0,
             mb: 4,
             width: "80%",
-            bgcolor: "#60AFFF",
+            // bgcolor: "#60AFFF",
             boxShadow: ({ boxShadows: { xxl } }) => xxl,
           }}
         >
@@ -212,17 +180,8 @@ function AboutUs() {
               textAlign: "center",
             }}
           >
-            <MKBox
-              display={"flex"}
-              alignItems={"center"}
-              justifyContent={"center"}
-              color="white"
-            >
-              <MKBox
-                display={"flex"}
-                style={{ padding: "5px" }}
-                justifyContent="space-around"
-              >
+            <MKBox display={"flex"} alignItems={"center"} justifyContent={"center"} color="white">
+              <MKBox display={"flex"} style={{ padding: "5px" }} justifyContent="space-around">
                 <div
                   style={{
                     display: "flex",
@@ -261,11 +220,7 @@ function AboutUs() {
                 >
                   {expiryDates.map((item, ind) => {
                     return (
-                      <MenuItem
-                        key={ind}
-                        value={item}
-                        style={{ textAlign: "center" }}
-                      >
+                      <MenuItem key={ind} value={item} style={{ textAlign: "center" }}>
                         <Typography fontSize={"small"} textAlign={"center"}>
                           {item}
                         </Typography>

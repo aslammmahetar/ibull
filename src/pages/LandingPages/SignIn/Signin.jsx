@@ -19,6 +19,7 @@ import MuiAlert from "@mui/material/Alert";
 import { Logotag } from "../logotag/Logotag";
 import { useDispatch, useSelector } from "react-redux";
 import { loginRequest } from "Redux/authAction";
+import ReCaptcha from "./ReCaptcha";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -121,7 +122,8 @@ const Signin = ({ handleToggle }) => {
                       onChange={(e) => setPassword(e.target.value)}
                     />
                   </MKBox>
-                  <MKBox mt={4} mb={1}>
+                  <ReCaptcha />
+                  <MKBox mt={1}>
                     <MKButton
                       variant="gradient"
                       color="info"
@@ -160,7 +162,7 @@ const Signin = ({ handleToggle }) => {
                         <Alert severity={variant}>{alertt}</Alert>
                       </Snackbar>
                     </Box>
-                    <MKBox mt={3} mb={1} textAlign="center">
+                    <MKBox mb={0.5} textAlign="center">
                       <MKTypography variant="button" color="text">
                         Don&apos;t have an account?{" "}
                         <Button textGradient onClick={() => handleToggle()}>

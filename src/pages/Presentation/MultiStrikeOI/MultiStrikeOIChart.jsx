@@ -14,9 +14,7 @@ HighchartsExporting(Highcharts);
 
 const MultiStrikeOIChart = ({ seriesVisibility }) => {
   const defaultStrikes = useSelector((store) => store.MSreducer.defaltStrikes);
-  const displayLineNamesArray = useSelector(
-    (state) => state.MSreducer.displayLineNamesArray
-  );
+  const displayLineNamesArray = useSelector((state) => state.MSreducer.displayLineNamesArray);
   const defaultGroup = useSelector((state) => state.MSreducer.defaultGroup);
 
   // Create a ref to store the Highcharts chart instance
@@ -73,8 +71,7 @@ const MultiStrikeOIChart = ({ seriesVisibility }) => {
             format: "{value:%H:%M}",
           },
           accessibility: {
-            rangeDescription:
-              "Time Range from 9:30 AM to 3:30 PM with a 15-minute Interval",
+            rangeDescription: "Time Range from 9:30 AM to 3:30 PM with a 15-minute Interval",
           },
         },
         legend: {},
@@ -135,7 +132,7 @@ const MultiStrikeOIChart = ({ seriesVisibility }) => {
           onClick={() => dispatch(selectDefaultGroup(true))}
           style={{ padding: 3, border: "lightgrey 1px solid", borderRadius: 3 }}
         >
-          Selected
+          {defaultGroup ? "Selected" : "Select"}
         </Button>
       </MKBox>
       <div style={{ display: "flex", justifyContent: "center" }}>

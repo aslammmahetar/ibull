@@ -1,13 +1,13 @@
 import CircularIndeterminate from "pages/CircularIndeterminate";
-import React from "react";
+import React, { useEffect } from "react";
 import { Bar } from "react-chartjs-2";
 import { useSelector } from "react-redux";
 
 const OpenInterestChart = () => {
   const strikePrices = useSelector((store) => store.oiReducer.strikePrice);
   const twoMonthdata = useSelector((store) => store.oiReducer.recentTwomonth);
-  console.log(twoMonthdata);
-
+  const { timeBasedrecentTwomonth } = useSelector((store) => store.oiReducer);
+  console.log(timeBasedrecentTwomonth);
   const currentMonthselementsAroundClosest = useSelector(
     (store) => store.oiReducer.currentMonthselementsAroundClosest
   );
@@ -19,14 +19,12 @@ const OpenInterestChart = () => {
 
   const displayDataPe = () => {
     if (currentMonth && nextMonth) {
-      const returnIt = currentMonthselementsAroundClosest.map(
-        (dataPoint, index) => {
-          return (
-            (dataPoint?.pE_openInterest || 0) +
-            (nextMonthselementsAroundClosest[index]?.pE_openInterest || 0)
-          );
-        }
-      );
+      const returnIt = currentMonthselementsAroundClosest.map((dataPoint, index) => {
+        return (
+          (dataPoint?.pE_openInterest || 0) +
+          (nextMonthselementsAroundClosest[index]?.pE_openInterest || 0)
+        );
+      });
       return returnIt;
     } else if (currentMonth && !nextMonth) {
       const returnIt = currentMonthselementsAroundClosest.map(
@@ -49,20 +47,27 @@ const OpenInterestChart = () => {
           0 + nextMonthselementsAroundClosest[index]?.cE_openInterest ||
           0
       );
+      console.log(returnIt);
       return returnIt;
     } else if (currentMonth && !nextMonth) {
       const returnIt = currentMonthselementsAroundClosest.map(
         (dataPoint, index) => dataPoint.cE_openInterest || 0
       );
+      console.log(returnIt);
       return returnIt;
     } else if (!currentMonth && nextMonth) {
       const returnIt = nextMonthselementsAroundClosest.map(
         (dataPoint) => dataPoint.cE_openInterest || 0
       );
+      console.log(returnIt);
       return returnIt;
     }
   };
 
+  useEffect(() => {
+    displayDataPe();
+    displayDataCe();
+  }, [twoMonthdata]);
   const ceDataset = {
     label: "PE Data",
     data: displayDataPe(),
@@ -111,11 +116,7 @@ const OpenInterestChart = () => {
 
   return (
     <div style={{ width: "100%" }}>
-      {twoMonthdata.length > 0 ? (
-        <Bar data={data} options={options} />
-      ) : (
-        <CircularIndeterminate />
-      )}
+      {twoMonthdata.length > 0 ? <Bar data={data} options={options} /> : <CircularIndeterminate />}
     </div>
   );
 };

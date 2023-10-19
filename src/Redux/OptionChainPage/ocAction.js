@@ -10,6 +10,8 @@ export const ltpView = () => {
   return { type: LTP_VIEW_ACTION_TYPE, payload: false };
 };
 
+const api = process.env.REACT_APP_API_URL;
+
 export const allColumnView = () => {
   return { type: ALL_COLUMN_VIEW_ACTION_TYPE };
 };
@@ -29,10 +31,8 @@ export const fontSizeChange = (payload) => {
 
 /// request for data source
 export const GET_REQ_OPTION_CHAIN_DATA = "GET_REQ_OPTION_CHAIN_DATA";
-export const GET_REQ_OPTION_CHAIN_DATA_SUCCESS =
-  "GET_REQ_OPTION_CHAIN_DATA_SUCCESS";
-export const GET_REQ_OPTION_CHAIN_DATA_FAILURE =
-  "GET_REQ_OPTION_CHAIN_DATA_FAILURE";
+export const GET_REQ_OPTION_CHAIN_DATA_SUCCESS = "GET_REQ_OPTION_CHAIN_DATA_SUCCESS";
+export const GET_REQ_OPTION_CHAIN_DATA_FAILURE = "GET_REQ_OPTION_CHAIN_DATA_FAILURE";
 
 export const getOptionChainData = () => {
   return { type: GET_REQ_OPTION_CHAIN_DATA };
@@ -50,11 +50,10 @@ export const getOptionChainDataFailure = () => {
 export const getData =
   (symbol = 1) =>
   (dispatch) => {
+    console.log(api);
     dispatch(getOptionChainData()); // Dispatch the action function
     axios
-      .get(
-        `http://192.168.1.6/NSE/GetAllNSEDataBySym?interval=-15&symbol=${symbol}`
-      )
+      .get(`${api}NSE/GetAllNSEDataBySym?interval=-15&symbol=${symbol}`)
       .then((res) => {
         console.log(res);
         dispatch(getOptionChainDataSuccess(res.data));
@@ -72,7 +71,7 @@ export const getExpiry =
   (symbol = 1) =>
   (dispatch) => {
     axios
-      .get(`http://192.168.1.6/NSE/GetAllExpiries?symbol=${symbol}`)
+      .get(`${api}NSE/GetAllExpiries?symbol=${symbol}`)
       .then((res) => dispatch(getExpirySuc(res.data)))
       .catch((err) => console.log(err));
   };
@@ -82,8 +81,7 @@ export const SET_PUT_MAX_OI = "SET_PUT_MAX_OI";
 export const SET_CLOSEST_ELEMENT = "SET_CLOSEST_ELEMENT";
 export const SET_SYMBOL = "SET_SYMBOL";
 export const SET_ORIGINAL_DATA = "SET_ORIGINAL_DATA";
-export const SET_CLOSEST_AND_NEARBY_ELEMENTS =
-  "SET_CLOSEST_AND_NEARBY_ELEMENTS";
+export const SET_CLOSEST_AND_NEARBY_ELEMENTS = "SET_CLOSEST_AND_NEARBY_ELEMENTS";
 export const setFilteredData = (data) => ({
   type: SET_FILTERED_DATA,
   data,
@@ -120,9 +118,7 @@ export const setOriginalData = (data) => ({
 export const updateDataAndCalculate = (store, selectedExpiryDate, ulValue) => {
   return (dispatch) => {
     const filteredData =
-      store.length > 0
-        ? store.filter((item) => item.cE_expiryDate === selectedExpiryDate)
-        : [];
+      store.length > 0 ? store.filter((item) => item.cE_expiryDate === selectedExpiryDate) : [];
 
     let CEmaxOI = -Infinity;
     let PEmaxOI = -Infinity;

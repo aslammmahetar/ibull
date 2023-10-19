@@ -41,7 +41,7 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
   const [mobileView, setMobileView] = useState(false);
 
   const openMobileNavbar = () => setMobileNavbar(!mobileNavbar);
-
+  const api = process.env.REACT_APP_API_URL;
   useEffect(() => {
     // A function that sets the display state for the DefaultNavbarMobile.
     function displayMobileNavbar() {
@@ -481,9 +481,7 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
             <Button
               onClick={async () => {
                 try {
-                  let req = await axios.post(
-                    "http://192.168.1.6/NSE/GetNSEData?interval=-15&symbol=1"
-                  );
+                  let req = await axios.post(`${api}NSE/GetNSEData?interval=-15&symbol=1`);
                   console.log(req.data);
                 } catch (error) {
                   console.log(error);
@@ -495,9 +493,7 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
             <Button
               onClick={async () => {
                 try {
-                  let req = await axios.post(
-                    "http://192.168.1.6/NSE/GetNSEData?interval=-15&symbol=2"
-                  );
+                  let req = await axios.post(`${api}NSE/GetNSEData?interval=-15&symbol=2`);
                   console.log(req.data);
                 } catch (error) {
                   console.log(error);
@@ -509,9 +505,7 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
             <Button
               onClick={async () => {
                 try {
-                  let req = await axios.post(
-                    "http://192.168.1.6/NSE/GetNSEData?interval=-15&symbol=3"
-                  );
+                  let req = await axios.post(`${api}NSE/GetNSEData?interval=-15&symbol=3`);
                   console.log(req.data);
                 } catch (error) {
                   console.log(error);

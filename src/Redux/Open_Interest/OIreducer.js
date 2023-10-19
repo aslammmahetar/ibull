@@ -1,5 +1,6 @@
 import {
   GET_REQ_OI_NSE_DATA_SUCCESS,
+  GET_TIME_BASED_DATA,
   RESET_SETTINGS,
   SET_SYMBOL,
   SHOW_CURRENT_MONTH_DATA,
@@ -10,30 +11,23 @@ export const initialState = {
   isError: false,
   data: [],
   strikePrice: [],
+  timeBasedstrikePrice: [],
   recentTwomonth: [],
+  timeBasedrecentTwomonth: [],
   ulValue: 0,
+  timeulValue: 0,
   currentMonthselementsAroundClosest: [],
+  timeBasedcurrentMonthselementsAroundClosest: [],
   nextMonthselementsAroundClosest: [],
+  timeBasednextMonthselementsAroundClosest: [],
   currentMonthClosestElement: [],
+  timeBasedcurrentMonthClosestElement: [],
   currentMonth: true,
   nextMonth: true,
   symbol: 1,
 };
 
-const months = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 const currentDate = new Date();
 const currentMonthName = currentDate.getMonth();
@@ -46,15 +40,11 @@ export const oiReducer = (state = initialState, { type, payload, count }) => {
       const ulValue = payload[0][0].cE_underlyingValue;
       console.log(ulValue);
       const currentMonth = payload[0].filter((el) =>
-        el.cE_expiryDate.includes(
-          months[currentMonthName] && months[currentMonthName + 1]
-        )
+        el.cE_expiryDate.includes(months[currentMonthName] && months[currentMonthName + 1])
       );
       console.log(currentMonth);
       const nextMonth = payload[0].filter((el) =>
-        el.cE_expiryDate.includes(
-          months[currentMonthName + 1] && months[currentMonthName + 2]
-        )
+        el.cE_expiryDate.includes(months[currentMonthName + 1] && months[currentMonthName + 2])
       );
       console.log(nextMonth);
       const currentMonthClosestElement = currentMonth.reduce((prev, curr) => {
@@ -63,21 +53,14 @@ export const oiReducer = (state = initialState, { type, payload, count }) => {
         return prevDiff < currDiff ? prev : curr;
       });
       console.log(currentMonthClosestElement);
-      const currentMonthIndex = currentMonth.indexOf(
-        currentMonthClosestElement
-      );
+      const currentMonthIndex = currentMonth.indexOf(currentMonthClosestElement);
       const currentMontstartIndex = Math.max(0, currentMonthIndex - count);
-      const currentMontendIndex = Math.min(
-        currentMonth.length - 1,
-        currentMonthIndex + count
-      );
+      const currentMontendIndex = Math.min(currentMonth.length - 1, currentMonthIndex + count);
       const currentMonthselementsAroundClosest = currentMonth.slice(
         currentMontstartIndex,
         currentMontendIndex + 1
       );
-      const strikePriceArray = currentMonthselementsAroundClosest.map(
-        (el) => el.cE_strikePrice
-      );
+      const strikePriceArray = currentMonthselementsAroundClosest.map((el) => el.cE_strikePrice);
       const uniqueStrikePrices = [];
 
       strikePriceArray.forEach((strikePrice, index) => {
@@ -99,10 +82,7 @@ export const oiReducer = (state = initialState, { type, payload, count }) => {
       const nextMonthindex = nextMonth.indexOf(nextMonthClosestElement);
 
       const nextMonthStartindex = Math.max(0, nextMonthindex - 5);
-      const nextMonthEndindex = Math.min(
-        nextMonth.length - 1,
-        nextMonthindex + 5
-      );
+      const nextMonthEndindex = Math.min(nextMonth.length - 1, nextMonthindex + 5);
       const nextMonthselementsAroundClosest = nextMonth.slice(
         nextMonthStartindex,
         nextMonthEndindex + 1
@@ -142,6 +122,70 @@ export const oiReducer = (state = initialState, { type, payload, count }) => {
         symbol: 1,
         currentMonth: true,
         nextMonth: true,
+      };
+    }
+    case GET_TIME_BASED_DATA: {
+      console.log(payload);
+      const ulValue = payload[1][0].cE_underlyingValue;
+      console.log(ulValue);
+      const currentMonth = payload[0].filter((el) =>
+        el.cE_expiryDate.includes(months[currentMonthName] && months[currentMonthName + 1])
+      );
+      console.log(currentMonth);
+      const nextMonth = payload[0].filter((el) =>
+        el.cE_expiryDate.includes(months[currentMonthName + 1] && months[currentMonthName + 2])
+      );
+      console.log(nextMonth);
+      const currentMonthClosestElement = currentMonth.reduce((prev, curr) => {
+        const prevDiff = Math.abs(prev.cE_strikePrice - ulValue);
+        const currDiff = Math.abs(curr.cE_strikePrice - ulValue);
+        return prevDiff < currDiff ? prev : curr;
+      });
+      console.log(currentMonthClosestElement);
+      const currentMonthIndex = currentMonth.indexOf(currentMonthClosestElement);
+      const currentMontstartIndex = Math.max(0, currentMonthIndex - 5);
+      const currentMontendIndex = Math.min(currentMonth.length - 1, currentMonthIndex + 5);
+      const currentMonthselementsAroundClosest = currentMonth.slice(
+        currentMontstartIndex,
+        currentMontendIndex + 1
+      );
+      const strikePriceArray = currentMonthselementsAroundClosest.map((el) => el.cE_strikePrice);
+      const uniqueStrikePrices = [];
+
+      strikePriceArray.forEach((strikePrice, index) => {
+        if (strikePriceArray.indexOf(strikePrice) === index) {
+          uniqueStrikePrices.push(strikePrice);
+        } else {
+          uniqueStrikePrices.push("");
+        }
+      });
+
+      console.log(currentMonthselementsAroundClosest);
+      console.log(uniqueStrikePrices);
+      const nextMonthClosestElement = nextMonth.reduce((prev, curr) => {
+        const prevDiff = Math.abs(prev.cE_strikePrice - ulValue);
+        const currDiff = Math.abs(curr.cE_strikePrice - ulValue);
+        return prevDiff < currDiff ? prev : curr;
+      });
+
+      const nextMonthindex = nextMonth.indexOf(nextMonthClosestElement);
+
+      const nextMonthStartindex = Math.max(0, nextMonthindex - 5);
+      const nextMonthEndindex = Math.min(nextMonth.length - 1, nextMonthindex + 5);
+      const nextMonthselementsAroundClosest = nextMonth.slice(
+        nextMonthStartindex,
+        nextMonthEndindex + 1
+      );
+      console.log(nextMonthselementsAroundClosest);
+
+      return {
+        ...state,
+        timeBasedrecentTwomonth: currentMonthselementsAroundClosest,
+        timeBasedcurrentMonthselementsAroundClosest: currentMonthselementsAroundClosest,
+        timeBasednextMonthselementsAroundClosest: nextMonthselementsAroundClosest,
+        timeBasedstrikePrice: uniqueStrikePrices,
+        timeulValue: ulValue,
+        timeBasedcurrentMonthClosestElement: currentMonthClosestElement,
       };
     }
     default:
