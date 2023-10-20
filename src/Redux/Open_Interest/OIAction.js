@@ -51,6 +51,6 @@ export const getTimeBasedData = (payload) => {
 export const getDataBasedOnTime = (symbol, interval) => (dispatch) => {
   axios
     .get(`${api}NSE/GetAllNSEDataBySym?interval=${interval}&symbol=${symbol}`)
-    .then((res) => dispatch(getTimeBasedData(res.data)))
+    .then((res) => console.log(res.data))
     .catch((err) => console.log(err));
 };

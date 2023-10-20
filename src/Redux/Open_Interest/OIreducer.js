@@ -37,7 +37,10 @@ export const oiReducer = (state = initialState, { type, payload, count }) => {
     case GET_REQ_OI_NSE_DATA_SUCCESS: {
       console.log(currentMonthName);
       console.log(payload);
-      const ulValue = payload[0][0].cE_underlyingValue;
+      const ulValue =
+        payload[0][0].cE_underlyingValue == 0
+          ? payload[0][0].pE_underlyingValue
+          : payload[0][0].cE_underlyingValue;
       console.log(ulValue);
       const currentMonth = payload[0].filter((el) =>
         el.cE_expiryDate.includes(months[currentMonthName] && months[currentMonthName + 1])
