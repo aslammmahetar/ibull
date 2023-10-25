@@ -40,7 +40,11 @@ const currentMonthName = currentDate.getMonth();
 export const MSreducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_MS_OI_SUCCESS: {
-      const ulValue = action.payload[0][0].cE_underlyingValue;
+      const ulValue =
+        action.payload[0][0].cE_underlyingValue == 0
+          ? action.payload[0][0].pE_underlyingValue
+          : action.payload[0][0].cE_underlyingValue;
+      console.log(ulValue);
       console.log(action);
       const currentMonth = action.payload[0].filter((el) =>
         el.cE_expiryDate.includes(months[currentMonthName] && months[currentMonthName + 1])

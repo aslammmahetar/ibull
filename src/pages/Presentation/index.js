@@ -79,7 +79,6 @@ function Presentation() {
       >
         <Counters />
         <OurFeatureSection />
-        {/* <FeatureSection /> */}
         <ReviewForm />
         {/* <Information />
         <DesignBlocks />

@@ -78,12 +78,7 @@ function OurFeatureSection() {
               >
                 <Icon fontSize="large">{feature.icon}</Icon>
               </Box>
-              <Typography
-                variant="body2"
-                color="text"
-                p={2}
-                className={classes.featureTitle}
-              >
+              <Typography variant="body2" color="text" p={2} className={classes.featureTitle}>
                 <b>{feature.title}</b>
               </Typography>
             </Box>
