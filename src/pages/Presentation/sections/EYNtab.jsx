@@ -27,8 +27,7 @@ export default function ENYTabs() {
         </Box>
         <TabPanel value="1">
           <Typography variant="h4" textAlign={"center"}>
-            Empowering Traders of All Levels with Powerful tool and easy to use
-            interface
+            Empowering Traders of All Levels with Powerful tool and easy to use interface
           </Typography>
           <Box mt={5}>
             <img src={builder} width={"100%"} alt="buider" />
@@ -36,8 +35,7 @@ export default function ENYTabs() {
         </TabPanel>
         <TabPanel value="2">
           <Typography variant="h4" textAlign={"center"}>
-            Empowering Traders of All Levels with Powerful tool and easy to use
-            interface
+            Empowering Traders of All Levels with Powerful tool and easy to use interface
           </Typography>
           <Box mt={5}>
             <img src={optionChain} width={"100%"} alt="buider" />

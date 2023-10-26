@@ -18,38 +18,29 @@ const MSoi = () => {
   const currentMonthClosestElement = useSelector(
     (store) => store.MSreducer.currentMonthClosestElement
   );
+  const token = useSelector((store) => store.authReducer.token);
+  console.log(token);
   useEffect(() => {
-    dispatch(getMSoiData(symbol));
-    dispatch(getExpiry(symbol));
-
+    dispatch(getMSoiData(symbol, token));
+    dispatch(getExpiry(symbol, token));
     dispatch(
       defaultStrikesToShow(
         [
-          currentMonthClosestElement &&
-            currentMonthClosestElement.cE_strikePrice,
-          currentMonthClosestElement &&
-            currentMonthClosestElement.pE_strikePrice,
+          currentMonthClosestElement && currentMonthClosestElement.cE_strikePrice,
+          currentMonthClosestElement && currentMonthClosestElement.pE_strikePrice,
         ],
-        1,
+        symbol,
         [
           {
             name: `${
-              currentMonthClosestElement &&
-              currentMonthClosestElement.cE_expiryDate.slice(0, 6)
-            } ${
-              currentMonthClosestElement &&
-              currentMonthClosestElement.cE_strikePrice
-            } CE`,
+              currentMonthClosestElement && currentMonthClosestElement.cE_expiryDate.slice(0, 6)
+            } ${currentMonthClosestElement && currentMonthClosestElement.cE_strikePrice} CE`,
             visible: true,
           },
           {
             name: `${
-              currentMonthClosestElement &&
-              currentMonthClosestElement.pE_expiryDate.slice(0, 6)
-            } ${
-              currentMonthClosestElement &&
-              currentMonthClosestElement.pE_strikePrice
-            } PE`,
+              currentMonthClosestElement && currentMonthClosestElement.pE_expiryDate.slice(0, 6)
+            } ${currentMonthClosestElement && currentMonthClosestElement.pE_strikePrice} PE`,
             visible: true,
           },
         ]
@@ -75,14 +66,8 @@ const MSoi = () => {
         minHeight="27vh"
         width="100%"
         sx={{
-          backgroundImage: ({
-            functions: { linearGradient, rgba },
-            palette: { gradients },
-          }) =>
-            `${linearGradient(
-              rgba(gradients.dark.main, 0.6),
-              rgba(gradients.dark.state, 0.6)
-            )})`,
+          backgroundImage: ({ functions: { linearGradient, rgba }, palette: { gradients } }) =>
+            `${linearGradient(rgba(gradients.dark.main, 0.6), rgba(gradients.dark.state, 0.6))})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           display: "grid",
@@ -96,7 +81,7 @@ const MSoi = () => {
           mx: { xs: 2, lg: 3 },
           mb: 4,
           mt: -10,
-          backgroundColor: "#E2E8EB",
+          // backgroundColor: "",
           backdropFilter: "saturate(200%) blur(30px)",
           boxShadow: ({ boxShadows: { xxl } }) => xxl,
           position: "sticky",

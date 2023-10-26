@@ -23,10 +23,18 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 export default function MSDrawer({ buttonName, buttonSize, tagLine }) {
   const dispatch = useDispatch();
 
-  const expiryDates = useSelector((store) => store.OptionChainReducer.expiryDates);
-  const selected_CE_StrikePrices = useSelector((store) => store.MSreducer.selected_CE_StrikePrices);
+  const expiryDates = useSelector(
+    (store) => store.OptionChainReducer.expiryDates
+  );
+  const selected_CE_StrikePrices = useSelector(
+    (store) => store.MSreducer.selected_CE_StrikePrices
+  );
 
-  const selected_PE_StrikePrices = useSelector((store) => store.MSreducer.selected_PE_StrikePrices);
+  const selected_PE_StrikePrices = useSelector(
+    (store) => store.MSreducer.selected_PE_StrikePrices
+  );
+  const token = useSelector((store) => store.authReducer.token);
+
   const [selectedExpiryDate, setSelectedExpiryDate] = React.useState("");
   const handleExpiryDateChange = (event) => {
     setSelectedExpiryDate(event.target.value);
@@ -49,7 +57,10 @@ export default function MSDrawer({ buttonName, buttonSize, tagLine }) {
   };
 
   const toggleDrawer = (anchor, open) => (event) => {
-    if (event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
       return;
     }
 
@@ -62,6 +73,7 @@ export default function MSDrawer({ buttonName, buttonSize, tagLine }) {
       CE: [...selected_CE_StrikePrices],
       PE: [...selected_PE_StrikePrices],
     };
+    console.log(newGroup);
     dispatch(makingGroup(newGroup));
   };
 
@@ -139,7 +151,10 @@ export default function MSDrawer({ buttonName, buttonSize, tagLine }) {
                 <TrendingUpOutlinedIcon color="info" />
               </Button>
             </Tooltip>
-            <Button variant="outlined" style={{ width: "5px", color: "blue", marginLeft: "4px" }}>
+            <Button
+              variant="outlined"
+              style={{ width: "5px", color: "blue", marginLeft: "4px" }}
+            >
               info
             </Button>
           </Box>
@@ -179,7 +194,12 @@ export default function MSDrawer({ buttonName, buttonSize, tagLine }) {
   return (
     <Card style={{ padding: 10, width: "48%" }}>
       {["right"].map((anchor) => (
-        <Box key={anchor} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+        <Box
+          key={anchor}
+          display={"flex"}
+          alignItems={"center"}
+          justifyContent={"space-between"}
+        >
           <Typography fontSize={"medium"}>
             <b>{tagLine}</b>
           </Typography>
@@ -191,7 +211,11 @@ export default function MSDrawer({ buttonName, buttonSize, tagLine }) {
           >
             {buttonName}
           </Button>
-          <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
+          <Drawer
+            anchor={anchor}
+            open={state[anchor]}
+            onClose={toggleDrawer(anchor, false)}
+          >
             {list(anchor)}
           </Drawer>
         </Box>

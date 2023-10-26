@@ -53,6 +53,11 @@ export const Filters = () => {
     dispatch(setSymbol(val));
   };
 
+  const handleReset = () => {
+    dispatch(getReqOI(1, 5));
+    dispatch(resetSettings());
+  };
+
   return (
     <MKBox marginBottom="10px">
       <Box
@@ -105,10 +110,7 @@ export const Filters = () => {
                   <TrendingUpOutlinedIcon color="info" />
                 </Button>
               </Tooltip>
-              <Button
-                variant="outlined"
-                style={{ width: "5px", color: "blue", marginLeft: "4px" }}
-              >
+              <Button variant="outlined" style={{ width: "5px", color: "blue", marginLeft: "4px" }}>
                 info
               </Button>
             </Box>
@@ -199,20 +201,12 @@ export const Filters = () => {
                 <Box style={{ display: "flex" }}>
                   <FormControlLabel
                     control={
-                      <Checkbox
-                        checked={currentIsChecked}
-                        onChange={handleCurrentBoxChange}
-                      />
+                      <Checkbox checked={currentIsChecked} onChange={handleCurrentBoxChange} />
                     }
                     label="Current"
                   />
                   <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={nextIscChecked}
-                        onChange={handleNextBoxXChange}
-                      />
-                    }
+                    control={<Checkbox checked={nextIscChecked} onChange={handleNextBoxXChange} />}
                     label="Next"
                   />
                 </Box>
@@ -229,8 +223,7 @@ export const Filters = () => {
                   size="small"
                   variant="outlined"
                   style={{
-                    backgroundColor:
-                      selectFontSize === index ? "blue" : "white",
+                    backgroundColor: selectFontSize === index ? "blue" : "white",
                     color: selectFontSize === index ? "white" : "black",
                     width: "20px",
                     fontSize: "9px",
@@ -244,10 +237,7 @@ export const Filters = () => {
             </Box>
           </Box>
           <Box width={"100%"} textAlign={"right"}>
-            <Button
-              startIcon={<RestartAltIcon />}
-              onClick={() => dispatch(resetSettings())}
-            >
+            <Button startIcon={<RestartAltIcon />} onClick={handleReset}>
               Reset
             </Button>
           </Box>

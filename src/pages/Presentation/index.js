@@ -36,6 +36,7 @@ import SignInBasic from "pages/LandingPages/SignIn";
 import OurFeatureSection from "./sections/OurFeatureSection";
 import ReviewForm from "./sections/ReviewForm";
 import ScrollToTopButton from "./OptionInterest/section/ScrollToTopButton";
+import Information from "./sections/Information";
 
 function Presentation() {
   return (
@@ -80,7 +81,8 @@ function Presentation() {
         <Counters />
         <OurFeatureSection />
         <ReviewForm />
-        {/* <Information />
+        {/* <Information /> */}
+        {/* 
         <DesignBlocks />
         <Pages />
         <Container sx={{ mt: 6 }}>

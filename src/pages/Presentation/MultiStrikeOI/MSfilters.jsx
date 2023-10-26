@@ -25,14 +25,15 @@ import SolarEmploymentChart from "./MultiStrikeOIChart";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { lineSeries } from "Redux/Multi_Strike_OI/MSAction";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { defaultGroup } from "Redux/Multi_Strike_OI/MSAction";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { selectDefaultGroup } from "Redux/Multi_Strike_OI/MSAction";
 import { deleteGroup } from "Redux/Multi_Strike_OI/MSAction";
+import { setMSSymbol } from "Redux/Multi_Strike_OI/MSAction";
 
 const MSfilters = () => {
   const dispatch = useDispatch();
-  const [symbol, setSymbol] = React.useState(1);
+  // const [symbol, setSymbol] = React.useState(1);
+  const symbol = useSelector((store) => store.MSreducer.symbol);
+  console.log(symbol);
   const defaultGroup = useSelector((state) => state.MSreducer.defaultGroup);
 
   const groups = useSelector((store) => store.MSreducer.groups);
@@ -94,6 +95,11 @@ const MSfilters = () => {
     dispatch(dispatch(selectDefaultGroup(true)));
     dispatch(deleteGroup(index));
   };
+
+  const handleSymbol = (val) => {
+    dispatch(setMSSymbol(val));
+  };
+
   return (
     <MKBox width={"100%"} display={{ lg: "block" }}>
       <Box display={{ xs: "block", md: "block", lg: "flex" }} justifyContent={"space-between"}>
@@ -124,14 +130,14 @@ const MSfilters = () => {
                 <Select
                   style={{ height: "37px" }}
                   // value={age}
-                  defaultValue={"NIFTY"}
-                  // onChange={handleChange}
+                  defaultValue={1}
+                  onChange={(e) => handleSymbol(e.target.value)}
                 >
-                  <MenuItem style={{ height: "100%" }} value={"NIFTY"}>
+                  <MenuItem style={{ height: "100%" }} value={1}>
                     NIFTY
                   </MenuItem>
-                  <MenuItem value={"BANKNIFTY"}>BANKNIFTY</MenuItem>
-                  <MenuItem value={"FIN NIFTY"}>FIN NIFTY</MenuItem>
+                  <MenuItem value={2}>BANKNIFTY</MenuItem>
+                  <MenuItem value={3}>FIN NIFTY</MenuItem>
                 </Select>
               </FormControl>
             </div>

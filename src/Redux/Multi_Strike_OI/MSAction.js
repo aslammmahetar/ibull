@@ -107,7 +107,6 @@ export const getSeries = (displayLineNamesArray) => {
 
 export const lineSeries = (strikePrices, displayLineNamesArray, symbol) => (dispach) => {
   console.log(strikePrices);
-  console.log(symbol);
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   var raw = JSON.stringify({
@@ -126,9 +125,7 @@ export const lineSeries = (strikePrices, displayLineNamesArray, symbol) => (disp
     .then((result) => {
       console.log("result,", result);
       const oi = result.map((el) => el);
-      console.log(oi);
       const st = oi.map((el) => el.map((el) => el.cE_openInterest));
-      console.log(st);
       const updatedDisplayLineNamesArray = displayLineNamesArray.map((el, index) => ({
         ...el,
         data: st[index],
@@ -172,16 +169,13 @@ export const defaultStrikesToShow = (strikePrices, symbol, displayLineNamesArray
     .then((result) => {
       console.log("result,", result);
       const oi = result.map((el) => el);
-      console.log(oi.length);
       const st = oi.map((el, index) =>
         el.map((el) => (index !== 0 ? el.pE_openInterest : el.cE_openInterest))
       );
-      console.log(st);
       const updatedDisplayLineNamesArray = displayLineNamesArray.map((el, index) => ({
         ...el,
         data: st[index],
       }));
-      console.log(updatedDisplayLineNamesArray);
       dispach(defaultStrike(updatedDisplayLineNamesArray));
     })
     .catch((error) => console.log("error", error));

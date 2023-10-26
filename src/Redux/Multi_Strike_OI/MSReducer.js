@@ -32,7 +32,20 @@ const initialState = {
   lineVisibilities: {},
   currentMonthClosestElement: null,
 };
-const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const months = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
 
 const currentDate = new Date();
 const currentMonthName = currentDate.getMonth();
@@ -44,14 +57,16 @@ export const MSreducer = (state = initialState, action) => {
         action.payload[0][0].cE_underlyingValue == 0
           ? action.payload[0][0].pE_underlyingValue
           : action.payload[0][0].cE_underlyingValue;
-      console.log(ulValue);
-      console.log(action);
       const currentMonth = action.payload[0].filter((el) =>
-        el.cE_expiryDate.includes(months[currentMonthName] && months[currentMonthName + 1])
+        el.cE_expiryDate.includes(
+          months[currentMonthName] && months[currentMonthName + 1]
+        )
       );
       console.log(currentMonth);
       const nextMonth = action.payload[0].filter((el) =>
-        el.cE_expiryDate.includes(months[currentMonthName + 1] && months[currentMonthName + 2])
+        el.cE_expiryDate.includes(
+          months[currentMonthName + 1] && months[currentMonthName + 2]
+        )
       );
       console.log(nextMonth);
       const currentMonthClosestElement = currentMonth.reduce((prev, curr) => {
@@ -82,7 +97,10 @@ export const MSreducer = (state = initialState, action) => {
     case ADD_SELECTED_CE_STRIKE:
       return {
         ...state,
-        selected_CE_StrikePrices: [...state.selected_CE_StrikePrices, action.payload],
+        selected_CE_StrikePrices: [
+          ...state.selected_CE_StrikePrices,
+          action.payload,
+        ],
       };
     case REMOVE_SELECTED_CE_STRIKE:
       console.log(state.selected_CE_StrikePrices);
@@ -95,7 +113,10 @@ export const MSreducer = (state = initialState, action) => {
     case ADD_SELECTED_PE_STRIKE: {
       return {
         ...state,
-        selected_PE_StrikePrices: [...state.selected_PE_StrikePrices, action.payload],
+        selected_PE_StrikePrices: [
+          ...state.selected_PE_StrikePrices,
+          action.payload,
+        ],
       };
     }
     case REMOVE_SELECTED_PE_STRIKE: {
